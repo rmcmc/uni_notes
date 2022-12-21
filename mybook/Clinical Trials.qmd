@@ -1,0 +1,608 @@
+Don't forget units when reporting point or CI!
+
+Don't report effect size if not significant!
+
+Type 1 : False Positive, treatemnts same but report significant. $\alpha$ is probability of FP.
+
+Type 2 : False Negative, treatemnts different but missed, $\beta$ is probability of FN.
+
+Confidence interval of the mean
+
+$\bar{X} \pm t_{0.975, \nu} \frac{\sigma}{\sqrt{N}}$
+
+# Chapter 1 - Intro
+
+A clinical trial:
+
+- Planned, not observed
+- On patients, not healthy people
+- Use inferential procedures, stats to generalise
+
+Phases are :
+
+- Phase I - Drug safety, on volunteers
+- Phase II - Initial Clinical, dose finding and patient safety
+- Phase III - Evaluation, drug vs placebo (this course)
+- Phase IV - Post marketing surveillance. Checking for long term side effects.
+
+Placebos counter the physcological effect of having a drug/medical attention
+
+Blindness:
+
+- Single : Patient or practioner is unaware of which treatment
+- Double : Both unaware
+
+## Bradford-Hill
+
+If all met does not mean causality, just sensible tests.
+
+- Temporality - Effect follows cause
+- Consistency - Does it happen in multiple groups (gender, countries, etc)
+- Coherence - Do controlled and observational studies agree
+- Strength of Association - Greater effect observed if given treatment
+- Biological Gradient - More agent, more effect
+- Specificity - does agent specifically affect what it is applied to Eg. cream on hand, fixes hand
+- Plausibility - Can it be explained mechanistically
+- Freedom from bias/confounders
+- Analgous results elsewhere - similir agents have similar results
+
+## Ethics
+
+### Medical
+
+Trial design is key
+
+- Only trial if you genuinely don't know whether one is better
+- Poorly planned/exexuted (eg under powered) is very unethical
+- Patients have informed consent
+- Placebos are ethical. The ethics of the population vs individual
+- Ethics commitee buys in
+
+### Publication
+
+Alot of money at stake
+
+- Avoid publication bias, only publishing good results
+- Journal contributors must: declare full responsibilty held over trial, had access to data, made decision to publish.
+
+# Chapter 2 - Trial Design
+
+## Parrallel
+
+k treatments, split into k groups. May aim for equal sized groups, though not mandatory.
+
+Requires large numbers to be sure of treatemtn effects. Robust to withdrawls
+
+## In Series
+
+All patients, recieve all k treatments in same order. Allowing for in patient comparison.
+
+Benefits:
+
+- Patient can express preferences
+- Possiblity for simultaneous treatment
+
+Issues:
+- Patients may naturally imporve over time, making later treatments look better. Progressive disease act oppositely.
+- Carry over effects may exist, short term effects only
+- Withdrawls can be problematic
+- Some orders are impossible
+
+## Cross Over
+
+Improves upon in series to account for treatment, period, carryover.
+
+All aptients get same treatements, but groups recieve in different order.
+
+In the event of dropouts period one could be used as a parrallel study, though very low powered.
+
+Washout may be placed between treatments (no treatment window) to minimise carryover risk.
+
+## Factorial Design
+
+Investigate effect of two or more treatments (factors), by giving combinations. 
+
+Eg 2x2. Each parient takes two drugs, where each drug has a placebo counterpart. Could take any combination of both drugs, one drug/one placebo, all placebo.
+
+May be more efficent design. May also be prone to interactions, though this is of interest.
+
+Mean response plots are useful for visualising effects:
+
+- Two parrallel lines, no interaction
+- One gradient increases more, quantitative interaction
+- opposite gradianets, qualitative interation
+
+TODO : PRACTICE No interaction, qualitative, quantitative
+
+## Sequential Design
+
+Simple form, aptients enter as pairs, and randomly allocated A or B.
+
+Assess which is better and move onto next pair. Cumulatively aggregate the prefference.
+
+You will either cross a diverging boundary and stop early or reach end point and declare no difference.
+
+It's an ethical approach, detecting large differences quickly.
+
+However:
+
+- Need quick response times (before next pair)
+- Dropouts cause issues
+- Requires constant attention
+- Boundary calculation is complex
+
+# Chapter 3 - Protocol
+
+Protocol contains:
+
+- Why do the trial
+- Patient selection/exclusion
+- Sample size calcs
+- Trial design
+- How response evaluated
+- Analysis methods
+
+Protocol deviations are to be expected, but must be recorded. There are two responses to deviation.
+
+- Per Protocol : Just exclude any partient that deviated. Problems are, power loss, affects randomisation, deviation may be a result of side effects.
+- Intention to Treat : Preffered, requires patients to be retained, though may yield curious answers. TODO - This is puzzling p21
+
+Can always report both!
+
+
+# Chapter 5 - Hypothesis Testing
+
+"A null hypothesis which will be adopted unless there is significant evidence from the data that the alternate hypothesis is more viable."
+
+The test statistic has a sampling distribution, under the assumption $H_0$ is true.
+
+Calculate the proability that the test statistics is as or more extreme than that observed. This is done with the sampling distribution.
+
+The course has the following convention for the significance probability (p-value)
+
+p-value| statement
+-----|-----
+p>0.1|No evidence against $H_0$
+0.05<p<0.01 |Weak evidence against $H_0$
+0.05<p<0.01 | Some evidence against
+0.05<p<0.01 | Strong evidence against
+p<0.001 | Very strong evidence against
+
+In this course a conclusion should be as follows:
+
+- Identify evidence strength verbally and quote p-value
+- State the null hypothesis you are rejecting, without using the words Null Hypothesis / $H_0$. Use a description.
+- Do not convert $H_0$ inadvertently to one-sided test
+- State the direction of change and a mean (point value)
+- Provide confidence intervals if significant
+
+
+Care should be taken with p-value:
+- Even with substantial evidence, alternative may not actually be true
+- An effect can be statistically significant, but be too small to matter IRL
+- A large p-value does not mean alterbative is wrong. Could have two little data, poor design or by chance
+
+Tests have assumptions!
+
+## Two-Sample T-Test
+
+One sample required if:
+
+- Comparing matched groups (difference from 0)
+- Comparing to a baseline, fixed value
+
+1) Identify continuous
+
+2) Declare independence and that population variance not known
+3) Declare a two sample t-test
+4) Identify subscripts with "Let X be "
+5) Write that 
+$H_0 : \mu_X = \mu_Y$ and 
+$H_A : \mu_X \neq \mu_Y$
+6) Calculate N, $\bar{X}$ and  $S^2_X$
+7) Calculate $\nu = min(N_X, N_Y)$
+8) Calulate test statistic $T = \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{S_X^2}{N_X} + \frac{S_Y^2}{N_Y}}}$
+
+9) $T \sim t_{\nu}$
+
+10) Look up p value in tables (either neg or pos), DOUBLE IT, it's two sided $P( |t_{\nu}| > T)$
+
+11) Calulate the mean delta and find 95% (0.025-0.975) CI 
+
+As N gets big, t tends to normal, therefore 1.96 (approx. 2) becomes CI multiplier
+
+Assume normally distributed and independent samples
+
+## Chi-Square Test
+
+Uses:
+
+- Comparing two dicscrete groups
+- Deciding whether two factors are independent
+- Test a theory, eg. something can be modelled as a set ratio
+
+1) Identify count based and that $\chi_2$ appropriate
+2) Calculate all row and column totals. Calculate overall total
+3) Calulate each $e_{ij} = \frac{\text{row total}\times \text{col total}}{\text{Overall Total}}$
+4) Calulate $\frac{(o_{ij}-e_{ij})^2}{e_{ij}}$
+4) Sum them to get the test stat $X^2$
+5) State that $X^2 \sim \chi^2_{\nu}$
+6) $\nu = (\text{n row - 1})\times (\text{n col - 1})$ 
+7) This is a one sided test due to squaring!
+8) Convert the coloumns from counts to percents of column total for reporting
+
+TODO: Not worked beyond 5.4
+
+## Further Notes
+
+### Multiple Testing
+
+Just comparing two groups relies heavily on well balanced randomisation.
+
+Using multiple regression we can include and therefore account for covariates (prognostic factors), this is called an ANCOVA (Analysis of Covariance)
+
+### One vs Two sided tests
+
+Always, unless very strong **prior** knowledge, use a two sided test. One sided are more powerful. 
+
+Eg. If you think something will decrease and go one sided, but it actually increased you would miss it, potentailly missing a harmful effect.
+
+### Pooled or seperate variance
+
+Always seperate on the course:
+
+- If you use seperate and they are the same you will still get an unbiased estimateof common variance
+- This case would result in more DoF from welch approx, however this is slightly more conservative anyway
+- However using pooled when not can get you very different DoF, whether pessimistic/optimistic is not possible to know without calcs
+
+We use pooled on power tests otherwise it become impractical to assess.
+
+### Testing for equality of variance
+
+Don't:
+
+- Low powered tests
+- Non-sig does not mean equal, only weak evidence
+- If doing one test followed by another you are multiple testing ? TODO - p44 confusing answer I think hinting at multiple testing
+
+
+TODO 5.6
+
+
+# Chapter 6 - Power
+
+Essential ethically:
+
+- Too few, low power, study could be waste
+- Too mnay, excessive number of people exposed
+
+Six steps:
+
+1) Declare trial type (usually parralel)
+2) Describe outcome $\mu$ or $\theta$ in most of what we do
+3) Describe end test eg. two sample t-test
+4) Declare baseline $\mu$ or $\theta$
+5) Declare CRD (Clinical Relevant Difference) Eg. $\mu_X - \mu_Y$
+6) Set Power , $1- \beta$
+7) Calculate n, **remember it is per group!**
+
+Useful notes:
+
+- $\Phi^{-1}(\beta)$ and $\Phi^{-1}(\frac{\alpha}{2})$ will be negative for sensible values
+- In one sided testing $\Phi^{-1}(\frac{\alpha}{2})$ becomes $\Phi^{-1}(\alpha)$
+- In the binomial case $(\theta_1 - \theta_2)^2$ drives the equation. Therefore to detect a half smaller change requires 4 times the population.
+
+Some lessons from assignment:
+
+- Always $\Phi$ not $\phi$ when doing inv norm cdf
+- Explain why you round up
+- Don't automatically account for dropouts, only if asked
+
+
+# Chapter 7 - Multiplicity
+
+Key takeaways:
+
+- You can break most rules, IF, you declare in protocol
+-Bonferonni is very poor when results corrrelated.
+
+- Multiple Endpoints
+- Subgroup Analysis
+- Interim Analysis
+- Multiple Regression
+- Repeated Measures
+
+Increases risk of false positives. Medical trials are very expensive and ethically can only look at so many people, so tempting to fish.
+
+In one test the p-value controls false positve risk. However in multiple tests, the problem becomes at least one.
+
+A 95% chance of not making an error, then two tests not making an error is $0.95^2 = 0.9025$, so about 1 in 10 and so on. For 10 this becomes 40%. The general formula is, for k tests:
+
+$1-(1-\alpha)^k$
+
+Bonferonni correction is extremely conservative correctiuon based on rearranging it. The correction is:
+
+$\frac{\alpha}{k}$
+
+### Multiple End Points
+
+Apply a therapy and assess multiple outcomes. Eg Give new heart meds, measure pulse, bp standing, bp sitting, etc
+
+- Could apply bonferooni, but alot might be correlated. So the could get lots of low p-values but all rejected
+- In the protocal, declare very limited responses of interest and focus test on these. Caputure and assess others though to verify nothing worrying
+- Multivariate analysis can handle much of the issues of correlation and multiplicity, however very hard to use
+
+### Sub Group Analysis
+
+Sub groups are patient characteristics. Eg. Age brackets, gender, etc.
+
+Again, only acceptable to favour one if declared in the protocol.
+
+Again, you should still study the sub-groups and may wish to use it to inform further research.
+
+Could use:
+
+- Bonferroni adjustment, again conservative, though seperate subgroups tend to be less correlated than end points
+- Use ANOVA across groups, but this only tells you if one is different in the mean
+- If sig detected follow up with additional tests Eg. Dunnets, Tukey Multiple Range
+
+As well as splitting, we must be very careful doing post hoc combinations. PROTOCOL!
+
+### Interim Analysis
+
+Analysing as data streams in from trials.
+
+May want to do it as:
+
+- Check protocol for adherence
+- Catch side effects early
+- Provide feedback, stakeholder engaement
+- Catch large effects early, ethical. You would want an extremely low p-value to justify.
+
+When adding more data and repeating the tests we do not use bonferroni as not independent, other more complicated methods are used.
+
+DECLARE INTERIM CHECK IN PROTOCOL
+
+### Multiple Regression
+
+In multiple regression we typically don't worry about multiplicity, we have purposely chosen to include them.
+
+Problematic when we either just chuck everything in to see what happens. Especially with interactions and high order interactions, the number of variables can balloon.
+
+Solution:
+
+- Use domain knowledge to inform model, create interactions a priori
+- Use bonferonni
+
+### Repeated Measures
+
+Measuring an outcome, on the same person, over time. Eg blood concentration at 1,4,8,16 hours.
+
+You can solve using:
+
+- Summary stats designed for repeat measures Eg. Area Under Curve (AUC)
+- Bonferroni (highly correlated though).
+- Multivariate analysis that models correlation
+
+## Chapter 8 - 
+
+NOT ON THE FORMULA SHEET!!!!!
+
+## Chapter 9 - Combining trials
+
+TODO
+
+## Chapter 10 - Comparing measurement methods
+
+We may want to change measurment equipment due to cost, speed, patient comfort, etc.
+
+Tests are not always appropriate as highly correlated and not independent. 
+
+More interested in Bias (continuous) and agreement (discrete).
+
+Neither provide a statistical test, it is based on judgement.
+
+### Bland Altman
+
+1) Calculate for each two measurements the difference and the mean
+2) Calulate the mean difference and the std
+3) Report a bias by mean difference with a CI ($\bar{X} \pm t_{0.975, \nu} \frac{\sigma}{\sqrt{N}}$)
+4) Create difference bands mean +/- 2sigma 
+5) Plot scattter of x axis = avg, y axis = difference
+6) Add 95% CI from 4 to the y axis as horizontal lines.
+
+You are really interested in whether there is a difference from left to right.
+
+### Kappa
+
+Agreement between
+
+$\kappa =\frac{A_{\text{obs} -  A_{\text{exp}}}}{1 - A_{\text{exp}}}$
+
+kappa | statement
+-------|---------
+$\kappa >0.75$ | Excellent Agreement
+$0.4<\kappa <0.75$ | Fair to good agreement
+$\kappa <0.4$ | poor to moderate
+
+Calculate by:
+
+1) Do row and column totals, as well as overall total
+2) $A_{obs} = \frac{\text{sum of diagonal}}{\text{Overall Total}}$ 
+3) Calc diagonal expected $\frac{\text{row total}\times \text{col total}}{\text{Overall Total}}$
+4) $A_{exp}$ is the sum of diagonal expected divided by overall total
+
+Only care about leading diagonal as these are agreements
+
+In some cases groups may have order, or there may be more than two assessors. Either way more advanced versions required.
+
+
+# Chapter 11 - Not Logistic
+
+## Observational studies
+
+These are referred to as epidemiological studies
+
+Retrospective studies look at a control group who do not exhibit diesease and group who do. Comparing factors between groups.
+
+Prospective studies follow up on a cohort of people who have had some exposure. Eg those with premature birth. They are then compared to the general population for some outcome. Eg. Very poor school grades. 
+
+For prospective, typically very large samples are used due to rare incidence typically of the disease. $\chi^2$ tests therefore are very powerful and flag very minor changes, without giving magnitude.
+
+Typically therefore work with Odds Ratios or Relative Risks and their respective CIs.
+
+### Prospective - Relative Risk
+
+Create following table
+
+Where positive means, tests positive, not an good positive
+
+Exposure    |Positive outcome|Negative outcome|Total
+-------------|--|---|---------
+exposed     | a | b | a + b
+not exposed | c | d | c + d
+
+Then calc:
+
+$RR = \frac{a(c+d)}{c(a+b)}$
+
+If there was no difference RR would equal 1. So test whether CI contains 1.
+
+Working in logs for ease:
+
+First, log the RR. Then calculate the Standard error of the log RR
+
+$\text{S.E}[log(RR)] = 
+\sqrt{
+    \frac{1}{a} - 
+    \frac{1}{a+b}+
+    \frac{1}{c}-
+    \frac{1}{c+d}
+}$
+
+Calc CI, using appropriate Z multiplier:
+
+$log(RR) \pm 1.96 \times \text{S.E}[log(RR)$.
+
+Take exponetial of everything to return to normal scale. 
+
+If contains 1 no evindence at 5% level
+
+RR <1 - risk is decreased by exposure
+RR > 1 - risk increased by exposure
+
+### Retrospective - Odds Ratio
+
+Odds are ratio of 
+
+$\frac{P(\text{Event occuring})}{P(\text{Event not occuring})}$
+
+First construct table:
+
+  .  | Casses|Controls
+----|-------|------
+Exposed | a | b
+Not Exposed | c | d
+Total | a + c| b + d
+
+Odds Ratio (OR) is as follows:
+
+$OR = \frac{ad}{bc}$
+
+Agian, log SE
+
+$\text{S.E}[log(OR)] = 
+\sqrt{
+    \frac{1}{a} +
+    \frac{1}{b}+
+    \frac{1}{c}+
+    \frac{1}{d}
+}$
+
+Repeat as per relative risk.
+
+If above 1, raised risk.
+
+TODO 11.3 makes no sense? (it does but revisit)
+
+# Chapter 11 - Logistic
+
+To perfomr regression we estimate the *Natural logarithm of the odds of success* or Logit. Which is 
+
+## Derivation
+
+$log(\frac{P(Y_i = 1)}{P(Y_i = 0)})$
+
+Therefore to regress (omitting error term)
+
+$log(\frac{P(Y_i = 1)}{P(Y_i = 0)}) = 
+\beta_0 + \beta_1x_{i1} + ... + \beta_px_{ip}$
+
+Simplifying (in this course they take intercept out front instead of 1s in the design matrix)
+
+$log(\frac{P(Y_i = 1)}{P(Y_i = 0)}) = 
+\beta_0 + \beta'\mathbf{x}_i$
+
+Logging both sides leads to 
+
+$\frac{P(Y_i = 1)}{P(Y_i = 0)} = 
+\exp(\beta_0 + \beta'\mathbf{x}_i)$
+
+and also 
+
+$\frac{P(Y_i = 1)}{P(Y_i = 0)} = 
+\exp(\beta_0 + \beta'\mathbf{x}_i)$
+
+And so 
+
+$P(Y_i = 1)= \theta_i = 
+\frac{\exp(\beta_0 + \beta'\mathbf{x}_i)}{1+\exp(\beta_0 + \beta'\mathbf{x}_i)}$
+
+## Treatment
+
+Standard practice is $\beta_1$ is treatement, where x is 0 = placebo or 1 = treatment. So treatment "turns on" $beta_1$
+
+Positive $\beta_1$ the odds of success are greater with treatment, negative means odds of success are greater in placebo.
+
+## Odds ratio
+
+Sometimes Odds ratio is reffered to as relative risk as they are equivalent at small probabilities.
+
+Odds ratio of treatement can be calculated as 
+
+$OR = \exp(\beta_1)$
+
+This is derived from
+
+$\frac{P(Y=1|x_1 = 1)}{P(Y=0|x_1 = 1)}/
+\frac{P(Y=1|x_1 = 0)}{P(Y=0|x_1 = 0)} = OR$
+
+
+$OR = \exp(\beta_1)$ CAn also be used for other binary covariates, or two specicified continuous locations.
+
+## Partial Z Test
+
+$H_0 : \beta_j = 0$
+
+Where:
+
+$\frac{\hat{\beta_j}}{
+    \sqrt{
+        \hat{\text{var}}(\hat{\beta_j)}
+    }
+} \sim Z$
+
+This is the SE $\sqrt{\hat{\text{var}}(\hat{\beta_j)}}$
+
+It is useful to know the following as SE may not be given
+
+$SE = \frac{\beta_j}{Z_j}
+
+## In exam
+
+1) Given R output
+2) Calulcate Z, SE, p-value for all of interest if not already given
+3) State the direction of the coeeficent and the impact therefore on probability.
+3) calulate the odds ratio by $\exp(\beta)$
+4) Report % increase/decrease in odds.
+6) Use SE to caluclate 95% CI for %\beta$ and exponent to get CI for the OR, report as percentage increase/decrease

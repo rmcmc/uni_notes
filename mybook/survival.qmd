@@ -1,0 +1,172 @@
+# Survival
+
+With survival analysis we aim to model lifetimes or populations. Survival analysis is unique as it aims to include censoring.
+
+## Chapter 1 - Intro
+
+We are interested in two types of cencoring
+
+- right : The failure occurs after a set time, died after trial
+- left : The failure occurs before the observations begin, died before trial starts
+
+The fundamental probaility theory required is as follows
+
+### Distribution Function
+
+Let $T$ be the failure time, where $T>0$. Then as expected the distribution function is:
+
+$F(t) = P(T\leq t)$
+
+And therefore the probability density is:
+
+$f(t) = F'(t)$
+
+And so
+
+$F(t) = \int_0^tf(u)du$
+
+
+### Survivor Function
+
+Generally we are interested in whether someone will survive longer than a certain time. So:
+
+$S(t) = P(T\geq t) = 1 - F(t) = \int^{\infty}_t f(u) du$
+
+As it is linked to the distribution function we can therefore say
+
+$f(t) = -S'(t)$
+
+### Hazard Function
+
+The risk of death at time $t$ given survival to time $t$. Or the instantaenous risk of death at time $t$
+
+$h(t) = \frac{f(t)}{S(t)}$
+
+### Integrated Hazard Function
+
+$H(t) = \int^{t}_0 h(u) du = -log(S(t))$
+
+So
+
+$S(t) = e^{\left(-H(t)\right)}$
+
+and
+
+$f(t) = h(t)e^{\left(-H(t)\right)}$
+
+
+
+### Limits worth knowing
+
+$f(t) = lim_{h \rightarrow 0 } \frac{P(t < T < t+h)}{h}$
+
+and
+
+$h(t) = lim_{h \rightarrow 0 } \frac{P(t \leq T < t+h | T \geq t)}{h}$
+
+## Chapter 2 - Distributions
+
+### Exponential
+
+The only distribution with a constant hazard function.
+
+$T_i \sim Exp(\lambda, \gamma)$
+
+Property| equation
+-----|-----
+$f(t)$|$\lambda e^{-\lambda t}$
+$F(t)$|$1 - e^{-\lambda t}$
+$S(t)$|$e^{-\lambda t}$
+$h(t)$ | $\lambda$
+
+
+### Weibull
+
+The weibull can vary by implementation `survreg` uses the following implementation
+
+$T_i \sim Weibull(\lambda, \gamma)$
+
+Properties should be given, **TO BE VERIFIED**
+
+In this course:
+
+- $\lambda$ is the shape
+- $\gamma$ is the rate
+
+It is extremely flexible, but can become unstable near $\gamma = 1$. From $\gamma$ we know the following:
+
+- $\gamma = 1$ - Constant Hazard, becomes the exponential
+- $\gamma > 1$ - Hazard INCREASES with time
+- $\gamma < 1$ - Hazard DECREASES with time
+
+
+**TODO - Add plot to get a feel for various hazrds, etc**
+
+```{python}
+from scipy import stats
+import numpy as np
+import matplotlib.pyplot as plt
+
+xs = np.arange(0,100,0.1)
+s_t = stats.expon(0,10).sf(xs)
+f_t = stats.expon(0,10).pdf(xs)
+plt.plot(xs,s_t)
+
+```
+
+## Chapter 2 - Life Tables
+
+See notes - Two example type to be practiced exhaustively (No loss and loss to follow up)
+
+Lifetables tabulate death rates over a period of time. They are useful non-parametric summaries and help to inform which parametric models might be sensible. 
+
+In the loss to follow up we assume in this course that:
+
+- $p_x$ and $q_x$ are constant over a time period, this is reasonable if short
+- We assume those who withdraw have the same probability of dieing as those who don't
+- We assume withdrawls are evenly spaced through the year
+
+## Chapter 2 - Kaplan-Meier
+
+
+```{r}
+rnorm(1)
+```
+
+
+## Chapter 3  - Two Sample
+
+Kaplan-Meier is just a visual aid, we need to look at tests
+
+### Log Rank Test
+
+Non-parametric.
+
+
+$$ H_0 : S_1(t) = S_2(t)$$
+
+$$ H_A : S_1(t) \neq S_2(t)$$ 
+
+$H_A$ is for some $t$
+
+Steps:
+
+1) Create a table
+2) create an $i$ column for 1,2,..n
+3) create a $t_i$ column and list all the times of deaths only
+4) Create an $r_{1,i}$ and $r_{2,i}$ for at risk (At risk for a time includes those who died at that time and all future censorees)
+5) Sum  $r_{1,i}$ and $r_{2,i}$ to get $r_i$
+6) Create an $d_{1,i}$ and $d_{2,i}$ for death counts at the times
+7) Sum the deaths to get $d_i$
+8) Sum down death column to get observed $O_1$ and $O_2$
+9) Calc $e_{1,i} = (\frac{r_{1,i}}{r_i})d_i$ and $e_{2,i}$
+10) Sum the $e_{1,i}$ and $e_{2,i}$ to get $E_1$ and $E_2$
+11) Calculate using below equation
+
+$$ LR = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2} \sim \chi^2_{1}$$
+
+
+
+### Parametric 
+
+

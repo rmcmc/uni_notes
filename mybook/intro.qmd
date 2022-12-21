@@ -1,0 +1,8 @@
+# Introduction
+
+This book is my personal notes for stats, data and programming.
+
+I primarilly use it for notes around my statistics MSc.
+
+This book has been created with Quarto through VSCode. I highly recommend it.
+

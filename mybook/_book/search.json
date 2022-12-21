@@ -1,0 +1,233 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "mybook",
+    "section": "",
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books."
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This book is my personal notes for stats, data and programming.\nI primarilly use it for notes around my statistics MSc.\nThis book has been created with Quarto through VSCode. I highly recommend it."
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever."
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "survival.html",
+    "href": "survival.html",
+    "title": "3  Survival",
+    "section": "",
+    "text": "The following section is notes for survival analysis"
+  },
+  {
+    "objectID": "survival.html#chapter-1---intro",
+    "href": "survival.html#chapter-1---intro",
+    "title": "4  Survival",
+    "section": "4.1 Chapter 1 - Intro",
+    "text": "4.1 Chapter 1 - Intro\nWe are interested in two types of cencoring\n\nright : The failure occurs after a set time, died after trial\nleft : The failure occurs before the observations begin, died before trial starts\n\nThe fundamental probaility theory required is as follows\n\n4.1.1 Distribution Function\nLet \\(T\\) be the failure time, where \\(T>0\\). Then as expected the distribution function is:\n\\(F(t) = P(T\\leq t)\\)\nAnd therefore the probability density is:\n\\(f(t) = F'(t)\\)\nAnd so\n\\(F(t) = \\int_0^tf(u)du\\)\n\n\n4.1.2 Survivor Function\nGenerally we are interested in whether someone will survive longer than a certain time. So:\n\\(S(t) = P(T\\geq t) = 1 - F(t) = \\int^{\\infty}_t f(u) du\\)\nAs it is linked to the distribution function we can therefore say\n\\(f(t) = -S'(t)\\)\n\n\n4.1.3 Hazard Function\nThe risk of death at time \\(t\\) given survival to time \\(t\\). Or the instantaenous risk of death at time \\(t\\)\n\\(h(t) = \\frac{f(t)}{S(t)}\\)\n\n\n4.1.4 Integrated Hazard Function\n\\(H(t) = \\int^{t}_0 h(u) du = -log(S(t))\\)\nSo\n\\(S(t) = e^{\\left(-H(t)\\right)}\\)\nand\n\\(f(t) = h(t)e^{\\left(-H(t)\\right)}\\)\n\n\n4.1.5 Limits worth knowing\n\\(f(t) = lim_{h \\rightarrow 0 } \\frac{P(t < T < t+h)}{h}\\)\nand\n\\(h(t) = lim_{h \\rightarrow 0 } \\frac{P(t \\leq T < t+h | T \\geq t)}{h}\\)"
+  },
+  {
+    "objectID": "survival.html#we-are-primarily-interested-in",
+    "href": "survival.html#we-are-primarily-interested-in",
+    "title": "3  Survival",
+    "section": "3.2 We are primarily interested in:",
+    "text": "3.2 We are primarily interested in:"
+  },
+  {
+    "objectID": "survival.html#chapter-2---distributions",
+    "href": "survival.html#chapter-2---distributions",
+    "title": "4  Survival",
+    "section": "4.2 Chapter 2 - Distributions",
+    "text": "4.2 Chapter 2 - Distributions\n\n4.2.1 Exponential\nThe only distribution with a constant hazard function.\n\\(T_i \\sim Exp(\\lambda, \\gamma)\\)\n\n\n\nProperty\nequation\n\n\n\n\n\\(f(t)\\)\n\\(\\lambda e^{-\\lambda t}\\)\n\n\n\\(F(t)\\)\n\\(1 - e^{-\\lambda t}\\)\n\n\n\\(S(t)\\)\n\\(e^{-\\lambda t}\\)\n\n\n\\(h(t)\\)\n\\(\\lambda\\)\n\n\n\n\n\n4.2.2 Weibull\nThe weibull can vary by implementation survreg uses the following implementation\n\\(T_i \\sim Weibull(\\lambda, \\gamma)\\)\nProperties should be given, TO BE VERIFIED\nIn this course:\n\n\\(\\lambda\\) is the shape\n\\(\\gamma\\) is the rate\n\nIt is extremely flexible, but can become unstable near \\(\\gamma = 1\\). From \\(\\gamma\\) we know the following:\n\n\\(\\gamma = 1\\) - Constant Hazard, becomes the exponential\n\\(\\gamma > 1\\) - Hazard INCREASES with time\n\\(\\gamma < 1\\) - Hazard DECREASES with time\n\nTODO - Add plot to get a feel for various hazrds, etc\n\nfrom scipy import stats\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nxs = np.arange(0,100,0.1)\ns_t = stats.expon(0,10).sf(xs)\nf_t = stats.expon(0,10).pdf(xs)\nplt.plot(xs,s_t)"
+  },
+  {
+    "objectID": "survival.html#chapter-2---life-tables",
+    "href": "survival.html#chapter-2---life-tables",
+    "title": "4  Survival",
+    "section": "4.3 Chapter 2 - Life Tables",
+    "text": "4.3 Chapter 2 - Life Tables\nSee notes - Two example type to be practiced exhaustively (No loss and loss to follow up)\nLifetables tabulate death rates over a period of time. They are useful non-parametric summaries and help to inform which parametric models might be sensible.\nIn the loss to follow up we assume in this course that:\n\n\\(p_x\\) and \\(q_x\\) are constant over a time period, this is reasonable if short\nWe assume those who withdraw have the same probability of dieing as those who don’t\nWe assume withdrawls are evenly spaced through the year"
+  },
+  {
+    "objectID": "survival.html#chapter-2---kaplan-meier",
+    "href": "survival.html#chapter-2---kaplan-meier",
+    "title": "4  Survival",
+    "section": "4.4 Chapter 2 - Kaplan-Meier",
+    "text": "4.4 Chapter 2 - Kaplan-Meier\n\nrnorm(1)\n\n[1] 1.380991"
+  },
+  {
+    "objectID": "survival.html#chapter-3---two-sample",
+    "href": "survival.html#chapter-3---two-sample",
+    "title": "4  Survival",
+    "section": "4.5 Chapter 3 - Two Sample",
+    "text": "4.5 Chapter 3 - Two Sample\nKaplan-Meier is just a visual aid, we need to look at tests\n\n4.5.1 Log Rank Test\nNon-parametric.\n\\[ H_0 : S_1(t) = S_2(t)\\]\n\\[ H_A : S_1(t) \\neq S_2(t)\\]\n\\(H_A\\) is for some \\(t\\)\nSteps:\n\nCreate a table\ncreate an \\(i\\) column for 1,2,..n\ncreate a \\(t_i\\) column and list all the times of deaths only\nCreate an \\(r_{1,i}\\) and \\(r_{2,i}\\) for at risk (At risk for a time includes those who died at that time and all future censorees)\nSum \\(r_{1,i}\\) and \\(r_{2,i}\\) to get \\(r_i\\)\nCreate an \\(d_{1,i}\\) and \\(d_{2,i}\\) for death counts at the times\nSum the deaths to get \\(d_i\\)\nSum down death column to get observed \\(O_1\\) and \\(O_2\\)\nCalc \\(e_{1,i} = (\\frac{r_{1,i}}{r_i})d_i\\) and \\(e_{2,i}\\)\nSum the \\(e_{1,i}\\) and \\(e_{2,i}\\) to get \\(E_1\\) and \\(E_2\\)\nCalculate using below equation\n\n\\[ LR = \\frac{(O_1 - E_1)^2}{E_1} + \\frac{(O_2 - E_2)^2}{E_2} \\sim \\chi^2_{1}\\]\n\n\n4.5.2 Parametric"
+  },
+  {
+    "objectID": "Clinical Trials.html",
+    "href": "Clinical Trials.html",
+    "title": "3  Chapter 1 - Intro",
+    "section": "",
+    "text": "4 Chapter 2 - Trial Design\nProtocol contains:\nProtocol deviations are to be expected, but must be recorded. There are two responses to deviation.\nCan always report both!\n“A null hypothesis which will be adopted unless there is significant evidence from the data that the alternate hypothesis is more viable.”\nThe test statistic has a sampling distribution, under the assumption \\(H_0\\) is true.\nCalculate the proability that the test statistics is as or more extreme than that observed. This is done with the sampling distribution.\nThe course has the following convention for the significance probability (p-value)\nIn this course a conclusion should be as follows:\nCare should be taken with p-value: - Even with substantial evidence, alternative may not actually be true - An effect can be statistically significant, but be too small to matter IRL - A large p-value does not mean alterbative is wrong. Could have two little data, poor design or by chance\nTests have assumptions!\nEssential ethically:\nSix steps:\nUseful notes:\nSome lessons from assignment:\nKey takeaways:\nIncreases risk of false positives. Medical trials are very expensive and ethically can only look at so many people, so tempting to fish.\nIn one test the p-value controls false positve risk. However in multiple tests, the problem becomes at least one.\nA 95% chance of not making an error, then two tests not making an error is \\(0.95^2 = 0.9025\\), so about 1 in 10 and so on. For 10 this becomes 40%. The general formula is, for k tests:\n\\(1-(1-\\alpha)^k\\)\nBonferonni correction is extremely conservative correctiuon based on rearranging it. The correction is:\n\\(\\frac{\\alpha}{k}\\)\nTo perfomr regression we estimate the Natural logarithm of the odds of success or Logit. Which is"
+  },
+  {
+    "objectID": "Clinical Trials.html#two-sample-t-test",
+    "href": "Clinical Trials.html#two-sample-t-test",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.1 Two-Sample T-Test",
+    "text": "6.1 Two-Sample T-Test\nOne sample required if:\n\nComparing matched groups (difference from 0)\nComparing to a baseline, fixed value\n\n\nIdentify continuous\nDeclare independence and that population variance not known\nDeclare a two sample t-test\nIdentify subscripts with “Let X be”\nWrite that \\(H_0 : \\mu_X = \\mu_Y\\) and \\(H_A : \\mu_X \\neq \\mu_Y\\)\nCalculate N, \\(\\bar{X}\\) and \\(S^2_X\\)\nCalculate \\(\\nu = min(N_X, N_Y)\\)\nCalulate test statistic \\(T = \\frac{\\bar{X} - \\bar{Y}}{\\sqrt{\\frac{S_X^2}{N_X} + \\frac{S_Y^2}{N_Y}}}\\)\n\\(T \\sim t_{\\nu}\\)\nLook up p value in tables (either neg or pos), DOUBLE IT, it’s two sided \\(P( |t_{\\nu}| > T)\\)\nCalulate the mean delta and find 95% (0.025-0.975) CI\n\nAs N gets big, t tends to normal, therefore 1.96 (approx. 2) becomes CI multiplier\nAssume normally distributed and independent samples"
+  },
+  {
+    "objectID": "Clinical Trials.html#chi-square-test",
+    "href": "Clinical Trials.html#chi-square-test",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.2 Chi-Square Test",
+    "text": "6.2 Chi-Square Test\nUses:\n\nComparing two dicscrete groups\nDeciding whether two factors are independent\nTest a theory, eg. something can be modelled as a set ratio\n\n\nIdentify count based and that \\(\\chi_2\\) appropriate\nCalculate all row and column totals. Calculate overall total\nCalulate each \\(e_{ij} = \\frac{\\text{row total}\\times \\text{col total}}{\\text{Overall Total}}\\)\nCalulate \\(\\frac{(o_{ij}-e_{ij})^2}{e_{ij}}\\)\nSum them to get the test stat \\(X^2\\)\nState that \\(X^2 \\sim \\chi^2_{\\nu}\\)\n\\(\\nu = (\\text{n row - 1})\\times (\\text{n col - 1})\\)\nThis is a one sided test due to squaring!\nConvert the coloumns from counts to percents of column total for reporting\n\nTODO: Not worked beyond 5.4"
+  },
+  {
+    "objectID": "Clinical Trials.html#further-notes",
+    "href": "Clinical Trials.html#further-notes",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.3 Further Notes",
+    "text": "6.3 Further Notes\n\n6.3.1 Multiple Testing\nJust comparing two groups relies heavily on well balanced randomisation.\nUsing multiple regression we can include and therefore account for covariates (prognostic factors), this is called an ANCOVA (Analysis of Covariance)\n\n\n6.3.2 One vs Two sided tests\nAlways, unless very strong prior knowledge, use a two sided test. One sided are more powerful.\nEg. If you think something will decrease and go one sided, but it actually increased you would miss it, potentailly missing a harmful effect.\n\n\n6.3.3 Pooled or seperate variance\nAlways seperate on the course:\n\nIf you use seperate and they are the same you will still get an unbiased estimateof common variance\nThis case would result in more DoF from welch approx, however this is slightly more conservative anyway\nHowever using pooled when not can get you very different DoF, whether pessimistic/optimistic is not possible to know without calcs\n\nWe use pooled on power tests otherwise it become impractical to assess.\n\n\n6.3.4 Testing for equality of variance\nDon’t:\n\nLow powered tests\nNon-sig does not mean equal, only weak evidence\nIf doing one test followed by another you are multiple testing ? TODO - p44 confusing answer I think hinting at multiple testing\n\nTODO 5.6"
+  },
+  {
+    "objectID": "Clinical Trials.html#bradford-hill",
+    "href": "Clinical Trials.html#bradford-hill",
+    "title": "3  Chapter 1 - Intro",
+    "section": "3.1 Bradford-Hill",
+    "text": "3.1 Bradford-Hill\nIf all met does not mean causality, just sensible tests.\n\nTemporality - Effect follows cause\nConsistency - Does it happen in multiple groups (gender, countries, etc)\nCoherence - Do controlled and observational studies agree\nStrength of Association - Greater effect observed if given treatment\nBiological Gradient - More agent, more effect\nSpecificity - does agent specifically affect what it is applied to Eg. cream on hand, fixes hand\nPlausibility - Can it be explained mechanistically\nFreedom from bias/confounders\nAnalgous results elsewhere - similir agents have similar results"
+  },
+  {
+    "objectID": "Clinical Trials.html#ethics",
+    "href": "Clinical Trials.html#ethics",
+    "title": "3  Chapter 1 - Intro",
+    "section": "3.2 Ethics",
+    "text": "3.2 Ethics\n\n3.2.1 Medical\nTrial design is key\n\nOnly trial if you genuinely don’t know whether one is better\nPoorly planned/exexuted (eg under powered) is very unethical\nPatients have informed consent\nPlacebos are ethical. The ethics of the population vs individual\nEthics commitee buys in\n\n\n\n3.2.2 Publication\nAlot of money at stake\n\nAvoid publication bias, only publishing good results\nJournal contributors must: declare full responsibilty held over trial, had access to data, made decision to publish."
+  },
+  {
+    "objectID": "Clinical Trials.html#parrallel",
+    "href": "Clinical Trials.html#parrallel",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.1 Parrallel",
+    "text": "4.1 Parrallel\nk treatments, split into k groups. May aim for equal sized groups, though not mandatory.\nRequires large numbers to be sure of treatemtn effects. Robust to withdrawls"
+  },
+  {
+    "objectID": "Clinical Trials.html#in-series",
+    "href": "Clinical Trials.html#in-series",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.2 In Series",
+    "text": "4.2 In Series\nAll patients, recieve all k treatments in same order. Allowing for in patient comparison.\nBenefits:\n\nPatient can express preferences\nPossiblity for simultaneous treatment\n\nIssues: - Patients may naturally imporve over time, making later treatments look better. Progressive disease act oppositely. - Carry over effects may exist, short term effects only - Withdrawls can be problematic - Some orders are impossible"
+  },
+  {
+    "objectID": "Clinical Trials.html#carry-over",
+    "href": "Clinical Trials.html#carry-over",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.3 Carry Over",
+    "text": "4.3 Carry Over\nImproves upon in series to account for treatment, period, carryover.\nAll aptients get same treatements, but groups recieve in different order.\nIn the event of dropouts period one could be used as a parrallel study, though very low powered.\nWashout may be placed between treatments (no treatment window) to minimise carryover risk."
+  },
+  {
+    "objectID": "Clinical Trials.html#factorial-design",
+    "href": "Clinical Trials.html#factorial-design",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.4 Factorial Design",
+    "text": "4.4 Factorial Design\nInvestigate effect of two or more treatments (factors), by giving combinations.\nEg 2x2. Each parient takes two drugs, where each drug has a placebo counterpart. Could take any combination of both drugs, one drug/one placebo, all placebo.\nMay be more efficent design. May also be prone to interactions, though this is of interest.\nMean response plots are useful for visualising effects:\n\nTwo parrallel lines, no interaction\nOne gradient increases more, quantitative interaction\nopposite gradianets, qualitative interation\n\nTODO : PRACTICE No interaction, qualitative, quantitative"
+  },
+  {
+    "objectID": "Clinical Trials.html#sequential-design",
+    "href": "Clinical Trials.html#sequential-design",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.5 Sequential Design",
+    "text": "4.5 Sequential Design\nSimple form, aptients enter as pairs, and randomly allocated A or B.\nAssess which is better and move onto next pair. Cumulatively aggregate the prefference.\nYou will either cross a diverging boundary and stop early or reach end point and declare no difference.\nIt’s an ethical approach, detecting large differences quickly.\nHowever:\n\nNeed quick response times (before next pair)\nDropouts cause issues\nRequires constant attention\nBoundary calculation is complex"
+  },
+  {
+    "objectID": "Clinical Trials.html#cross-over",
+    "href": "Clinical Trials.html#cross-over",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.3 Cross Over",
+    "text": "4.3 Cross Over\nImproves upon in series to account for treatment, period, carryover.\nAll aptients get same treatements, but groups recieve in different order.\nIn the event of dropouts period one could be used as a parrallel study, though very low powered.\nWashout may be placed between treatments (no treatment window) to minimise carryover risk."
+  },
+  {
+    "objectID": "Clinical Trials.html#chapter-9---combining-trials",
+    "href": "Clinical Trials.html#chapter-9---combining-trials",
+    "title": "3  Chapter 1 - Intro",
+    "section": "8.2 Chapter 9 - Combining trials",
+    "text": "8.2 Chapter 9 - Combining trials\nTODO"
+  },
+  {
+    "objectID": "Clinical Trials.html#chapter-10---comparing-measurement-methods",
+    "href": "Clinical Trials.html#chapter-10---comparing-measurement-methods",
+    "title": "3  Chapter 1 - Intro",
+    "section": "8.3 Chapter 10 - Comparing measurement methods",
+    "text": "8.3 Chapter 10 - Comparing measurement methods\nWe may want to change measurment equipment due to cost, speed, patient comfort, etc.\nTests are not always appropriate as highly correlated and not independent.\nMore interested in Bias (continuous) and agreement (discrete).\nNeither provide a statistical test, it is based on judgement.\n\n8.3.1 Bland Altman\n\nCalculate for each two measurements the difference and the mean\nCalulate the mean difference and the std\nReport a bias by mean difference with a CI (\\(\\bar{X} \\pm t_{0.975, \\nu} \\frac{\\sigma}{\\sqrt{N}}\\))\nCreate difference bands mean +/- 2sigma\nPlot scattter of x axis = avg, y axis = difference\nAdd 95% CI from 4 to the y axis as horizontal lines.\n\nYou are really interested in whether there is a difference from left to right.\n\n\n8.3.2 Kappa\nAgreement between\n\\(\\kappa =\\frac{A_{\\text{obs} - A_{\\text{exp}}}}{1 - A_{\\text{exp}}}\\)\n\n\n\nkappa\nstatement\n\n\n\n\n\\(\\kappa >0.75\\)\nExcellent Agreement\n\n\n\\(0.4<\\kappa <0.75\\)\nFair to good agreement\n\n\n\\(\\kappa <0.4\\)\npoor to moderate\n\n\n\nCalculate by:\n\nDo row and column totals, as well as overall total\n\\(A_{obs} = \\frac{\\text{sum of diagonal}}{\\text{Overall Total}}\\)\nCalc diagonal expected \\(\\frac{\\text{row total}\\times \\text{col total}}{\\text{Overall Total}}\\)\n\\(A_{exp}\\) is the sum of diagonal expected divided by overall total\n\nOnly care about leading diagonal as these are agreements\nIn some cases groups may have order, or there may be more than two assessors. Either way more advanced versions required."
+  },
+  {
+    "objectID": "Clinical Trials.html#kappa-statement",
+    "href": "Clinical Trials.html#kappa-statement",
+    "title": "3  Chapter 1 - Intro",
+    "section": "8.3 kappa | statement",
+    "text": "8.3 kappa | statement\n\\(\\kappa >0.75\\) | Excellent Agreement \\(0.4<\\kappa <0.75\\) | Fair to good agreement \\(\\kappa <0.4\\) | poor to moderate"
+  },
+  {
+    "objectID": "Clinical Trials.html#observational-studies",
+    "href": "Clinical Trials.html#observational-studies",
+    "title": "3  Chapter 1 - Intro",
+    "section": "9.1 Observational studies",
+    "text": "9.1 Observational studies\nThese are referred to as epidemiological studies\nRetrospective studies look at a control group who do not exhibit diesease and group who do. Comparing factors between groups.\nProspective studies follow up on a cohort of people who have had some exposure. Eg those with premature birth. They are then compared to the general population for some outcome. Eg. Very poor school grades.\nFor prospective, typically very large samples are used due to rare incidence typically of the disease. \\(\\chi^2\\) tests therefore are very powerful and flag very minor changes, without giving magnitude.\nTypically therefore work with Odds Ratios or Relative Risks and their respective CIs.\n\n9.1.1 Prospective - Relative Risk\nCreate following table\nWhere positive means, tests positive, not an good positive\n\n\n\nExposure\nPositive outcome\nNegative outcome\nTotal\n\n\n\n\nexposed\na\nb\na + b\n\n\nnot exposed\nc\nd\nc + d\n\n\n\nThen calc:\n\\(RR = \\frac{a(c+d)}{c(a+b)}\\)\nIf there was no difference RR would equal 1. So test whether CI contains 1.\nWorking in logs for ease:\nFirst, log the RR. Then calculate the Standard error of the log RR\n\\(\\text{S.E}[log(RR)] = \\sqrt{  \\frac{1}{a} -  \\frac{1}{a+b}+  \\frac{1}{c}-  \\frac{1}{c+d} }\\)\nCalc CI, using appropriate Z multiplier:\n\\(log(RR) \\pm 1.96 \\times \\text{S.E}[log(RR)\\).\nTake exponetial of everything to return to normal scale.\nIf contains 1 no evindence at 5% level\nRR <1 - risk is decreased by exposure RR > 1 - risk increased by exposure\n\n\n9.1.2 Retrospective - Odds Ratio\nOdds are ratio of\n\\(\\frac{P(\\text{Event occuring})}{P(\\text{Event not occuring})}\\)\nFirst construct table:\n\n\n\n.\nCasses\nControls\n\n\n\n\nExposed\na\nb\n\n\nNot Exposed\nc\nd\n\n\nTotal\na + c\nb + d\n\n\n\nOdds Ratio (OR) is as follows:\n\\(OR = \\frac{ad}{bc}\\)\nAgian, log SE\n\\(\\text{S.E}[log(OR)] = \\sqrt{  \\frac{1}{a} +  \\frac{1}{b}+  \\frac{1}{c}+  \\frac{1}{d} }\\)\nRepeat as per relative risk.\nIf above 1, raised risk.\nTODO 11.3 makes no sense? (it does but revisit)"
+  },
+  {
+    "objectID": "Clinical Trials.html#exposure-posnegtotal",
+    "href": "Clinical Trials.html#exposure-posnegtotal",
+    "title": "3  Chapter 1 - Intro",
+    "section": "9.2 Exposure |Pos|Neg|Total",
+    "text": "9.2 Exposure |Pos|Neg|Total\nexposed | a | b | a + b not exposed | c | d | c + d —————————-"
+  },
+  {
+    "objectID": "Clinical Trials.html#derivation",
+    "href": "Clinical Trials.html#derivation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "10.1 Derivation",
+    "text": "10.1 Derivation\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)})\\)\nTherefore to regress (omitting error term)\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)}) = \\beta_0 + \\beta_1x_{i1} + ... + \\beta_px_{ip}\\)\nSimplifying (in this course they take intercept out front instead of 1s in the design matrix)\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)}) = \\beta_0 + \\beta'\\mathbf{x}_i\\)\nLogging both sides leads to\n\\(\\frac{P(Y_i = 1)}{P(Y_i = 0)} = \\exp(\\beta_0 + \\beta'\\mathbf{x}_i)\\)\nand also\n\\(\\frac{P(Y_i = 1)}{P(Y_i = 0)} = \\exp(\\beta_0 + \\beta'\\mathbf{x}_i)\\)\nAnd so\n\\(P(Y_i = 1)= \\theta_i = \\frac{\\exp(\\beta_0 + \\beta'\\mathbf{x}_i)}{1+\\exp(\\beta_0 + \\beta'\\mathbf{x}_i)}\\)"
+  },
+  {
+    "objectID": "Clinical Trials.html#treatment",
+    "href": "Clinical Trials.html#treatment",
+    "title": "3  Chapter 1 - Intro",
+    "section": "10.2 Treatment",
+    "text": "10.2 Treatment\nStandard practice is \\(\\beta_1\\) is treatement, where x is 0 = placebo or 1 = treatment. So treatment “turns on” \\(beta_1\\)\nPositive \\(\\beta_1\\) the odds of success are greater with treatment, negative means odds of success are greater in placebo."
+  },
+  {
+    "objectID": "Clinical Trials.html#odds-ratio",
+    "href": "Clinical Trials.html#odds-ratio",
+    "title": "3  Chapter 1 - Intro",
+    "section": "10.3 Odds ratio",
+    "text": "10.3 Odds ratio\nSometimes Odds ratio is reffered to as relative risk as they are equivalent at small probabilities.\nOdds ratio of treatement can be calculated as\n\\(OR = \\exp(\\beta_1)\\)\nThis is derived from\n\\(\\frac{P(Y=1|x_1 = 1)}{P(Y=0|x_1 = 1)}/ \\frac{P(Y=1|x_1 = 0)}{P(Y=0|x_1 = 0)} = OR\\)\n\\(OR = \\exp(\\beta_1)\\) CAn also be used for other binary covariates, or two specicified continuous locations."
+  },
+  {
+    "objectID": "Clinical Trials.html#partial-z-test",
+    "href": "Clinical Trials.html#partial-z-test",
+    "title": "3  Chapter 1 - Intro",
+    "section": "10.4 Partial Z Test",
+    "text": "10.4 Partial Z Test\n\\(H_0 : \\beta_j = 0\\)\nWhere:\n\\(\\frac{\\hat{\\beta_j}}{  \\sqrt{  \\hat{\\text{var}}(\\hat{\\beta_j)}  } } \\sim Z\\)\nThis is the SE \\(\\sqrt{\\hat{\\text{var}}(\\hat{\\beta_j)}}\\)\nIt is useful to know the following as SE may not be given\n$SE = \n## In exam\n\nGiven R output\nCalulcate Z, SE, p-value for all of interest if not already given\nState the direction of the coeeficent and the impact therefore on probability.\ncalulate the odds ratio by \\(\\exp(\\beta)\\)\nReport % increase/decrease in odds.\nUse SE to caluclate 95% CI for %$ and exponent to get CI for the OR, report as percentage increase/decrease"
+  },
+  {
+    "objectID": "Clinical Trials.html#chapter-8--",
+    "href": "Clinical Trials.html#chapter-8--",
+    "title": "3  Chapter 1 - Intro",
+    "section": "8.1 Chapter 8 -",
+    "text": "8.1 Chapter 8 -\nNOT ON THE FORMULA SHEET!!!!!"
+  }
+]

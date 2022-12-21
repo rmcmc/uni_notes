@@ -1,0 +1,20 @@
+{
+  "index.qmd": {
+    "index.html": "8f4be5da"
+  },
+  "intro.qmd": {
+    "intro.html": "591bd10a"
+  },
+  "summary.qmd": {
+    "summary.html": "702b795d"
+  },
+  "references.qmd": {
+    "references.html": "29908818"
+  },
+  "survival.qmd": {
+    "survival.html": "08b881ef"
+  },
+  "Clinical Trials.qmd": {
+    "Clinical Trials.html": "3c42d2dc"
+  }
+}

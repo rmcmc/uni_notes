@@ -1,0 +1,22 @@
+project:
+  type: book
+
+book:
+  title: "mybook"
+  author: "Jane Doe"
+  date: "01/12/2022"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - Clinical Trials.qmd
+    - survival.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
