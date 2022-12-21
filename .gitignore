@@ -2,3 +2,4 @@ env/
 .RData
 .RHistory
 .Rproj.user/
+mybook/.quarto/
