@@ -547,9 +547,33 @@ Then $D_{ik} = Y_{i1k} - Y_{i2k}$ calculated and as before
 
 $\frac{\bar{D_1} - \bar{D_2}}
 {\sqrt{
-    \frac{S^2_{T_1}}{n_1} +
-    \frac{S^2_{T_2}}{n_2}
+    \frac{S^2_{D_1}}{n_1} +
+    \frac{S^2_{D_2}}{n_2}
 }} \sim t_r$
+
+#### Assess Period
+
+Assumes no carryover
+
+$H_0 : \pi_1 = \pi_2$ 
+
+Then $D_{ik} = Y_{i1k} - Y_{i2k}$ calculated and as before
+
+$\frac{\bar{D_1} - (-\bar{D_2})}
+{\sqrt{
+    \frac{S^2_{D_1}}{n_1} +
+    \frac{S^2_{D_2}}{n_2}
+}} \sim t_r$
+
+#### Sample SIze
+
+Sample size can be calulated as follows
+
+Where n is the calculated number required for a parrallel arm and $\rho$ is the correlation between two measurments on each patient. So clearly less patient.
+
+$N = n(1-\rho)$
+
+TODO 8.6 onwards
 
 ## Chapter 9 - Combining trials
 
