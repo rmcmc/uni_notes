@@ -87,22 +87,22 @@
     "objectID": "Clinical Trials.html#two-sample-t-test",
     "href": "Clinical Trials.html#two-sample-t-test",
     "title": "3  Chapter 1 - Intro",
-    "section": "6.1 Two-Sample T-Test",
-    "text": "6.1 Two-Sample T-Test\nOne sample required if:\n\nComparing matched groups (difference from 0)\nComparing to a baseline, fixed value\n\n\nIdentify continuous\nDeclare independence and that population variance not known\nDeclare a two sample t-test\nIdentify subscripts with “Let X be”\nWrite that \\(H_0 : \\mu_X = \\mu_Y\\) and \\(H_A : \\mu_X \\neq \\mu_Y\\)\nCalculate N, \\(\\bar{X}\\) and \\(S^2_X\\)\nCalculate \\(\\nu = min(N_X, N_Y)\\)\nCalulate test statistic \\(T = \\frac{\\bar{X} - \\bar{Y}}{\\sqrt{\\frac{S_X^2}{N_X} + \\frac{S_Y^2}{N_Y}}}\\)\n\\(T \\sim t_{\\nu}\\)\nLook up p value in tables (either neg or pos), DOUBLE IT, it’s two sided \\(P( |t_{\\nu}| > T)\\)\nCalulate the mean delta and find 95% (0.025-0.975) CI\n\nAs N gets big, t tends to normal, therefore 1.96 (approx. 2) becomes CI multiplier\nAssume normally distributed and independent samples"
+    "section": "7.1 Two-Sample T-Test",
+    "text": "7.1 Two-Sample T-Test\nOne sample required if:\n\nComparing matched groups (difference from 0)\nComparing to a baseline, fixed value\n\n\nIdentify continuous\nDeclare independence and that population variance not known\nDeclare a two sample t-test\nIdentify subscripts with “Let X be”\nWrite that \\(H_0 : \\mu_X = \\mu_Y\\) and \\(H_A : \\mu_X \\neq \\mu_Y\\)\nCalculate N, \\(\\bar{X}\\) and \\(S^2_X\\)\nCalculate \\(\\nu = min(N_X, N_Y)\\)\nCalulate test statistic \\(T = \\frac{\\bar{X} - \\bar{Y}}{\\sqrt{\\frac{S_X^2}{N_X} + \\frac{S_Y^2}{N_Y}}}\\)\n\\(T \\sim t_{\\nu}\\)\nLook up p value in tables (either neg or pos), DOUBLE IT, it’s two sided \\(P( |t_{\\nu}| > T)\\)\nCalulate the mean delta and find 95% (0.025-0.975) CI\n\nAs N gets big, t tends to normal, therefore 1.96 (approx. 2) becomes CI multiplier\nAssume normally distributed and independent samples"
   },
   {
     "objectID": "Clinical Trials.html#chi-square-test",
     "href": "Clinical Trials.html#chi-square-test",
     "title": "3  Chapter 1 - Intro",
-    "section": "6.2 Chi-Square Test",
-    "text": "6.2 Chi-Square Test\nUses:\n\nComparing two dicscrete groups\nDeciding whether two factors are independent\nTest a theory, eg. something can be modelled as a set ratio\n\n\nIdentify count based and that \\(\\chi_2\\) appropriate\nCalculate all row and column totals. Calculate overall total\nCalulate each \\(e_{ij} = \\frac{\\text{row total}\\times \\text{col total}}{\\text{Overall Total}}\\)\nCalulate \\(\\frac{(o_{ij}-e_{ij})^2}{e_{ij}}\\)\nSum them to get the test stat \\(X^2\\)\nState that \\(X^2 \\sim \\chi^2_{\\nu}\\)\n\\(\\nu = (\\text{n row - 1})\\times (\\text{n col - 1})\\)\nThis is a one sided test due to squaring!\nConvert the coloumns from counts to percents of column total for reporting\n\nTODO: Not worked beyond 5.4"
+    "section": "7.2 Chi-Square Test",
+    "text": "7.2 Chi-Square Test\nUses:\n\nComparing two dicscrete groups\nDeciding whether two factors are independent\nTest a theory, eg. something can be modelled as a set ratio\n\n\nIdentify count based and that \\(\\chi_2\\) appropriate\nCalculate all row and column totals. Calculate overall total\nCalulate each \\(e_{ij} = \\frac{\\text{row total}\\times \\text{col total}}{\\text{Overall Total}}\\)\nCalulate \\(\\frac{(o_{ij}-e_{ij})^2}{e_{ij}}\\)\nSum them to get the test stat \\(X^2\\)\nState that \\(X^2 \\sim \\chi^2_{\\nu}\\)\n\\(\\nu = (\\text{n row - 1})\\times (\\text{n col - 1})\\)\nThis is a one sided test due to squaring!\nConvert the coloumns from counts to percents of column total for reporting\n\nTODO: Not worked beyond 5.4"
   },
   {
     "objectID": "Clinical Trials.html#further-notes",
     "href": "Clinical Trials.html#further-notes",
     "title": "3  Chapter 1 - Intro",
-    "section": "6.3 Further Notes",
-    "text": "6.3 Further Notes\n\n6.3.1 Multiple Testing\nJust comparing two groups relies heavily on well balanced randomisation.\nUsing multiple regression we can include and therefore account for covariates (prognostic factors), this is called an ANCOVA (Analysis of Covariance)\n\n\n6.3.2 One vs Two sided tests\nAlways, unless very strong prior knowledge, use a two sided test. One sided are more powerful.\nEg. If you think something will decrease and go one sided, but it actually increased you would miss it, potentailly missing a harmful effect.\n\n\n6.3.3 Pooled or seperate variance\nAlways seperate on the course:\n\nIf you use seperate and they are the same you will still get an unbiased estimateof common variance\nThis case would result in more DoF from welch approx, however this is slightly more conservative anyway\nHowever using pooled when not can get you very different DoF, whether pessimistic/optimistic is not possible to know without calcs\n\nWe use pooled on power tests otherwise it become impractical to assess.\n\n\n6.3.4 Testing for equality of variance\nDon’t:\n\nLow powered tests\nNon-sig does not mean equal, only weak evidence\nIf doing one test followed by another you are multiple testing ? TODO - p44 confusing answer I think hinting at multiple testing\n\nTODO 5.6"
+    "section": "7.3 Further Notes",
+    "text": "7.3 Further Notes\n\n7.3.1 Multiple Testing\nJust comparing two groups relies heavily on well balanced randomisation.\nUsing multiple regression we can include and therefore account for covariates (prognostic factors), this is called an ANCOVA (Analysis of Covariance)\n\n\n7.3.2 One vs Two sided tests\nAlways, unless very strong prior knowledge, use a two sided test. One sided are more powerful.\nEg. If you think something will decrease and go one sided, but it actually increased you would miss it, potentailly missing a harmful effect.\n\n\n7.3.3 Pooled or seperate variance\nAlways seperate on the course:\n\nIf you use seperate and they are the same you will still get an unbiased estimateof common variance\nThis case would result in more DoF from welch approx, however this is slightly more conservative anyway\nHowever using pooled when not can get you very different DoF, whether pessimistic/optimistic is not possible to know without calcs\n\nWe use pooled on power tests otherwise it become impractical to assess.\n\n\n7.3.4 Testing for equality of variance\nDon’t:\n\nLow powered tests\nNon-sig does not mean equal, only weak evidence\nIf doing one test followed by another you are multiple testing ? TODO - p44 confusing answer I think hinting at multiple testing\n\nTODO 5.6"
   },
   {
     "objectID": "Clinical Trials.html#bradford-hill",
@@ -164,15 +164,15 @@
     "objectID": "Clinical Trials.html#chapter-9---combining-trials",
     "href": "Clinical Trials.html#chapter-9---combining-trials",
     "title": "3  Chapter 1 - Intro",
-    "section": "8.2 Chapter 9 - Combining trials",
-    "text": "8.2 Chapter 9 - Combining trials\nTODO"
+    "section": "9.2 Chapter 9 - Combining trials",
+    "text": "9.2 Chapter 9 - Combining trials\nTODO"
   },
   {
     "objectID": "Clinical Trials.html#chapter-10---comparing-measurement-methods",
     "href": "Clinical Trials.html#chapter-10---comparing-measurement-methods",
     "title": "3  Chapter 1 - Intro",
-    "section": "8.3 Chapter 10 - Comparing measurement methods",
-    "text": "8.3 Chapter 10 - Comparing measurement methods\nWe may want to change measurment equipment due to cost, speed, patient comfort, etc.\nTests are not always appropriate as highly correlated and not independent.\nMore interested in Bias (continuous) and agreement (discrete).\nNeither provide a statistical test, it is based on judgement.\n\n8.3.1 Bland Altman\n\nCalculate for each two measurements the difference and the mean\nCalulate the mean difference and the std\nReport a bias by mean difference with a CI (\\(\\bar{X} \\pm t_{0.975, \\nu} \\frac{\\sigma}{\\sqrt{N}}\\))\nCreate difference bands mean +/- 2sigma\nPlot scattter of x axis = avg, y axis = difference\nAdd 95% CI from 4 to the y axis as horizontal lines.\n\nYou are really interested in whether there is a difference from left to right.\n\n\n8.3.2 Kappa\nAgreement between\n\\(\\kappa =\\frac{A_{\\text{obs} - A_{\\text{exp}}}}{1 - A_{\\text{exp}}}\\)\n\n\n\nkappa\nstatement\n\n\n\n\n\\(\\kappa >0.75\\)\nExcellent Agreement\n\n\n\\(0.4<\\kappa <0.75\\)\nFair to good agreement\n\n\n\\(\\kappa <0.4\\)\npoor to moderate\n\n\n\nCalculate by:\n\nDo row and column totals, as well as overall total\n\\(A_{obs} = \\frac{\\text{sum of diagonal}}{\\text{Overall Total}}\\)\nCalc diagonal expected \\(\\frac{\\text{row total}\\times \\text{col total}}{\\text{Overall Total}}\\)\n\\(A_{exp}\\) is the sum of diagonal expected divided by overall total\n\nOnly care about leading diagonal as these are agreements\nIn some cases groups may have order, or there may be more than two assessors. Either way more advanced versions required."
+    "section": "9.3 Chapter 10 - Comparing measurement methods",
+    "text": "9.3 Chapter 10 - Comparing measurement methods\nWe may want to change measurment equipment due to cost, speed, patient comfort, etc.\nTests are not always appropriate as highly correlated and not independent.\nMore interested in Bias (continuous) and agreement (discrete).\nNeither provide a statistical test, it is based on judgement.\n\n9.3.1 Bland Altman\n\nCalculate for each two measurements the difference and the mean\nCalulate the mean difference and the std\nReport a bias by mean difference with a CI (\\(\\bar{X} \\pm t_{0.975, \\nu} \\frac{\\sigma}{\\sqrt{N}}\\))\nCreate difference bands mean +/- 2sigma\nPlot scattter of x axis = avg, y axis = difference\nAdd 95% CI from 4 to the y axis as horizontal lines.\n\nYou are really interested in whether there is a difference from left to right.\n\n\n9.3.2 Kappa\nAgreement between\n\\(\\kappa =\\frac{A_{\\text{obs} - A_{\\text{exp}}}}{1 - A_{\\text{exp}}}\\)\n\n\n\nkappa\nstatement\n\n\n\n\n\\(\\kappa >0.75\\)\nExcellent Agreement\n\n\n\\(0.4<\\kappa <0.75\\)\nFair to good agreement\n\n\n\\(\\kappa <0.4\\)\npoor to moderate\n\n\n\nCalculate by:\n\nDo row and column totals, as well as overall total\n\\(A_{obs} = \\frac{\\text{sum of diagonal}}{\\text{Overall Total}}\\)\nCalc diagonal expected \\(\\frac{\\text{row total}\\times \\text{col total}}{\\text{Overall Total}}\\)\n\\(A_{exp}\\) is the sum of diagonal expected divided by overall total\n\nOnly care about leading diagonal as these are agreements\nIn some cases groups may have order, or there may be more than two assessors. Either way more advanced versions required."
   },
   {
     "objectID": "Clinical Trials.html#kappa-statement",
@@ -185,8 +185,8 @@
     "objectID": "Clinical Trials.html#observational-studies",
     "href": "Clinical Trials.html#observational-studies",
     "title": "3  Chapter 1 - Intro",
-    "section": "9.1 Observational studies",
-    "text": "9.1 Observational studies\nThese are referred to as epidemiological studies\nRetrospective studies look at a control group who do not exhibit diesease and group who do. Comparing factors between groups.\nProspective studies follow up on a cohort of people who have had some exposure. Eg those with premature birth. They are then compared to the general population for some outcome. Eg. Very poor school grades.\nFor prospective, typically very large samples are used due to rare incidence typically of the disease. \\(\\chi^2\\) tests therefore are very powerful and flag very minor changes, without giving magnitude.\nTypically therefore work with Odds Ratios or Relative Risks and their respective CIs.\n\n9.1.1 Prospective - Relative Risk\nCreate following table\nWhere positive means, tests positive, not an good positive\n\n\n\nExposure\nPositive outcome\nNegative outcome\nTotal\n\n\n\n\nexposed\na\nb\na + b\n\n\nnot exposed\nc\nd\nc + d\n\n\n\nThen calc:\n\\(RR = \\frac{a(c+d)}{c(a+b)}\\)\nIf there was no difference RR would equal 1. So test whether CI contains 1.\nWorking in logs for ease:\nFirst, log the RR. Then calculate the Standard error of the log RR\n\\(\\text{S.E}[log(RR)] = \\sqrt{  \\frac{1}{a} -  \\frac{1}{a+b}+  \\frac{1}{c}-  \\frac{1}{c+d} }\\)\nCalc CI, using appropriate Z multiplier:\n\\(log(RR) \\pm 1.96 \\times \\text{S.E}[log(RR)\\).\nTake exponetial of everything to return to normal scale.\nIf contains 1 no evindence at 5% level\nRR <1 - risk is decreased by exposure RR > 1 - risk increased by exposure\n\n\n9.1.2 Retrospective - Odds Ratio\nOdds are ratio of\n\\(\\frac{P(\\text{Event occuring})}{P(\\text{Event not occuring})}\\)\nFirst construct table:\n\n\n\n.\nCasses\nControls\n\n\n\n\nExposed\na\nb\n\n\nNot Exposed\nc\nd\n\n\nTotal\na + c\nb + d\n\n\n\nOdds Ratio (OR) is as follows:\n\\(OR = \\frac{ad}{bc}\\)\nAgian, log SE\n\\(\\text{S.E}[log(OR)] = \\sqrt{  \\frac{1}{a} +  \\frac{1}{b}+  \\frac{1}{c}+  \\frac{1}{d} }\\)\nRepeat as per relative risk.\nIf above 1, raised risk.\nTODO 11.3 makes no sense? (it does but revisit)"
+    "section": "10.1 Observational studies",
+    "text": "10.1 Observational studies\nThese are referred to as epidemiological studies\nRetrospective studies look at a control group who do not exhibit diesease and group who do. Comparing factors between groups.\nProspective studies follow up on a cohort of people who have had some exposure. Eg those with premature birth. They are then compared to the general population for some outcome. Eg. Very poor school grades.\nFor prospective, typically very large samples are used due to rare incidence typically of the disease. \\(\\chi^2\\) tests therefore are very powerful and flag very minor changes, without giving magnitude.\nTypically therefore work with Odds Ratios or Relative Risks and their respective CIs.\n\n10.1.1 Prospective - Relative Risk\nCreate following table\nWhere positive means, tests positive, not an good positive\n\n\n\nExposure\nPositive outcome\nNegative outcome\nTotal\n\n\n\n\nexposed\na\nb\na + b\n\n\nnot exposed\nc\nd\nc + d\n\n\n\nThen calc:\n\\(RR = \\frac{a(c+d)}{c(a+b)}\\)\nIf there was no difference RR would equal 1. So test whether CI contains 1.\nWorking in logs for ease:\nFirst, log the RR. Then calculate the Standard error of the log RR\n\\(\\text{S.E}[log(RR)] = \\sqrt{  \\frac{1}{a} -  \\frac{1}{a+b}+  \\frac{1}{c}-  \\frac{1}{c+d} }\\)\nCalc CI, using appropriate Z multiplier:\n\\(log(RR) \\pm 1.96 \\times \\text{S.E}[log(RR)\\).\nTake exponetial of everything to return to normal scale.\nIf contains 1 no evindence at 5% level\nRR <1 - risk is decreased by exposure RR > 1 - risk increased by exposure\n\n\n10.1.2 Retrospective - Odds Ratio\nOdds are ratio of\n\\(\\frac{P(\\text{Event occuring})}{P(\\text{Event not occuring})}\\)\nFirst construct table:\n\n\n\n.\nCasses\nControls\n\n\n\n\nExposed\na\nb\n\n\nNot Exposed\nc\nd\n\n\nTotal\na + c\nb + d\n\n\n\nOdds Ratio (OR) is as follows:\n\\(OR = \\frac{ad}{bc}\\)\nAgian, log SE\n\\(\\text{S.E}[log(OR)] = \\sqrt{  \\frac{1}{a} +  \\frac{1}{b}+  \\frac{1}{c}+  \\frac{1}{d} }\\)\nRepeat as per relative risk.\nIf above 1, raised risk.\nTODO 11.3 makes no sense? (it does but revisit)"
   },
   {
     "objectID": "Clinical Trials.html#exposure-posnegtotal",
@@ -199,35 +199,84 @@
     "objectID": "Clinical Trials.html#derivation",
     "href": "Clinical Trials.html#derivation",
     "title": "3  Chapter 1 - Intro",
-    "section": "10.1 Derivation",
-    "text": "10.1 Derivation\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)})\\)\nTherefore to regress (omitting error term)\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)}) = \\beta_0 + \\beta_1x_{i1} + ... + \\beta_px_{ip}\\)\nSimplifying (in this course they take intercept out front instead of 1s in the design matrix)\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)}) = \\beta_0 + \\beta'\\mathbf{x}_i\\)\nLogging both sides leads to\n\\(\\frac{P(Y_i = 1)}{P(Y_i = 0)} = \\exp(\\beta_0 + \\beta'\\mathbf{x}_i)\\)\nand also\n\\(\\frac{P(Y_i = 1)}{P(Y_i = 0)} = \\exp(\\beta_0 + \\beta'\\mathbf{x}_i)\\)\nAnd so\n\\(P(Y_i = 1)= \\theta_i = \\frac{\\exp(\\beta_0 + \\beta'\\mathbf{x}_i)}{1+\\exp(\\beta_0 + \\beta'\\mathbf{x}_i)}\\)"
+    "section": "11.1 Derivation",
+    "text": "11.1 Derivation\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)})\\)\nTherefore to regress (omitting error term)\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)}) = \\beta_0 + \\beta_1x_{i1} + ... + \\beta_px_{ip}\\)\nSimplifying (in this course they take intercept out front instead of 1s in the design matrix)\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)}) = \\beta_0 + \\beta'\\mathbf{x}_i\\)\nLogging both sides leads to\n\\(\\frac{P(Y_i = 1)}{P(Y_i = 0)} = \\exp(\\beta_0 + \\beta'\\mathbf{x}_i)\\)\nand also\n\\(\\frac{P(Y_i = 1)}{P(Y_i = 0)} = \\exp(\\beta_0 + \\beta'\\mathbf{x}_i)\\)\nAnd so\n\\(P(Y_i = 1)= \\theta_i = \\frac{\\exp(\\beta_0 + \\beta'\\mathbf{x}_i)}{1+\\exp(\\beta_0 + \\beta'\\mathbf{x}_i)}\\)"
   },
   {
     "objectID": "Clinical Trials.html#treatment",
     "href": "Clinical Trials.html#treatment",
     "title": "3  Chapter 1 - Intro",
-    "section": "10.2 Treatment",
-    "text": "10.2 Treatment\nStandard practice is \\(\\beta_1\\) is treatement, where x is 0 = placebo or 1 = treatment. So treatment “turns on” \\(beta_1\\)\nPositive \\(\\beta_1\\) the odds of success are greater with treatment, negative means odds of success are greater in placebo."
+    "section": "11.2 Treatment",
+    "text": "11.2 Treatment\nStandard practice is \\(\\beta_1\\) is treatement, where x is 0 = placebo or 1 = treatment. So treatment “turns on” \\(beta_1\\)\nPositive \\(\\beta_1\\) the odds of success are greater with treatment, negative means odds of success are greater in placebo."
   },
   {
     "objectID": "Clinical Trials.html#odds-ratio",
     "href": "Clinical Trials.html#odds-ratio",
     "title": "3  Chapter 1 - Intro",
-    "section": "10.3 Odds ratio",
-    "text": "10.3 Odds ratio\nSometimes Odds ratio is reffered to as relative risk as they are equivalent at small probabilities.\nOdds ratio of treatement can be calculated as\n\\(OR = \\exp(\\beta_1)\\)\nThis is derived from\n\\(\\frac{P(Y=1|x_1 = 1)}{P(Y=0|x_1 = 1)}/ \\frac{P(Y=1|x_1 = 0)}{P(Y=0|x_1 = 0)} = OR\\)\n\\(OR = \\exp(\\beta_1)\\) CAn also be used for other binary covariates, or two specicified continuous locations."
+    "section": "11.3 Odds ratio",
+    "text": "11.3 Odds ratio\nSometimes Odds ratio is reffered to as relative risk as they are equivalent at small probabilities.\nOdds ratio of treatement can be calculated as\n\\(OR = \\exp(\\beta_1)\\)\nThis is derived from\n\\(\\frac{P(Y=1|x_1 = 1)}{P(Y=0|x_1 = 1)}/ \\frac{P(Y=1|x_1 = 0)}{P(Y=0|x_1 = 0)} = OR\\)\n\\(OR = \\exp(\\beta_1)\\) CAn also be used for other binary covariates, or two specicified continuous locations."
   },
   {
     "objectID": "Clinical Trials.html#partial-z-test",
     "href": "Clinical Trials.html#partial-z-test",
     "title": "3  Chapter 1 - Intro",
-    "section": "10.4 Partial Z Test",
-    "text": "10.4 Partial Z Test\n\\(H_0 : \\beta_j = 0\\)\nWhere:\n\\(\\frac{\\hat{\\beta_j}}{  \\sqrt{  \\hat{\\text{var}}(\\hat{\\beta_j)}  } } \\sim Z\\)\nThis is the SE \\(\\sqrt{\\hat{\\text{var}}(\\hat{\\beta_j)}}\\)\nIt is useful to know the following as SE may not be given\n$SE = \n## In exam\n\nGiven R output\nCalulcate Z, SE, p-value for all of interest if not already given\nState the direction of the coeeficent and the impact therefore on probability.\ncalulate the odds ratio by \\(\\exp(\\beta)\\)\nReport % increase/decrease in odds.\nUse SE to caluclate 95% CI for %$ and exponent to get CI for the OR, report as percentage increase/decrease"
+    "section": "11.4 Partial Z Test",
+    "text": "11.4 Partial Z Test\n\\(H_0 : \\beta_j = 0\\)\nWhere:\n\\(\\frac{\\hat{\\beta_j}}{  \\sqrt{  \\hat{\\text{var}}(\\hat{\\beta_j)}  } } \\sim Z\\)\nThis is the SE \\(\\sqrt{\\hat{\\text{var}}(\\hat{\\beta_j)}}\\)\nIt is useful to know the following as SE may not be given\n$SE = \n## In exam\n\nGiven R output\nCalulcate Z, SE, p-value for all of interest if not already given\nState the direction of the coeeficent and the impact therefore on probability.\ncalulate the odds ratio by \\(\\exp(\\beta)\\)\nReport % increase/decrease in odds.\nUse SE to caluclate 95% CI for %$ and exponent to get CI for the OR, report as percentage increase/decrease"
   },
   {
     "objectID": "Clinical Trials.html#chapter-8--",
     "href": "Clinical Trials.html#chapter-8--",
     "title": "3  Chapter 1 - Intro",
-    "section": "8.1 Chapter 8 -",
-    "text": "8.1 Chapter 8 -\nNOT ON THE FORMULA SHEET!!!!!"
+    "section": "9.1 Chapter 8 -",
+    "text": "9.1 Chapter 8 -\nNOT ON THE FORMULA SHEET!!!!!"
+  },
+  {
+    "objectID": "Clinical Trials.html#historic",
+    "href": "Clinical Trials.html#historic",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.1 Historic",
+    "text": "6.1 Historic\nTODO p24"
+  },
+  {
+    "objectID": "Clinical Trials.html#simple-randomisation",
+    "href": "Clinical Trials.html#simple-randomisation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.2 Simple Randomisation",
+    "text": "6.2 Simple Randomisation\nGenerate or look up sequence of numbers. Bin the numbers into equally sized groups.\nIf there is surplus, eg 3 groups, 10 Rand No. Then ignore the designated surplus number and move to next.\nEg.\n0 1 6 7 3 2 6 8 9 5 3 2 2\nA : 1-3 B : 4-6 C : 7-9 0 : ignore and try again\nNegative :\n\nIn small trial balance can be poor\n\nPositive :\n\nCompletely unpredictable\nIn long run will create equal groups"
+  },
+  {
+    "objectID": "Clinical Trials.html#blocking",
+    "href": "Clinical Trials.html#blocking",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.3 Blocking",
+    "text": "6.3 Blocking\nBlocking is where we create clusters of treatment assignments, to ensure balanced groups.\nEg. AB, BA 0-4 = AB 5-9 = BA\nJust move along the random numbers in sequence, don’t do every second, etc\nBlock size can be increased to make it harder to crack Eg\nAABB, ABBA, ABAB, BBAA, BABA, etc\nBlocking may be crackable with small block sizes and thus may risk double blindness.\nBlocking can also be used for imbalance setting.\nBlock size should be as large as possible to minimise risk of cracking. But not so large that the last block would be highly imbalanced if split as it reached the end."
+  },
+  {
+    "objectID": "Clinical Trials.html#stratified-randomisation",
+    "href": "Clinical Trials.html#stratified-randomisation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.4 Stratified Randomisation",
+    "text": "6.4 Stratified Randomisation\nTODO : Watch the video on this and verify below notes (I’m 99% sure they are good)\nTreatment (control included) groups should be as equal as possible in terms of patient characterirstics (Age, gender, etc). Imblances could confound treatments with characteristics. Solve with stratified randomisation.\nSay we have M/F, Over, under 50\n\n\n\nCat.\nSchema\n\n\n\n\nM, <50\nA B B A B B A A\n\n\nF, <50\nB A B A B A A B\n\n\nM, >50\nA B A B B A A B\n\n\nF, >50\nA B A B A B B A\n\n\n\nInstead of now applying patient count numbers, we move through the list of patients (which should itself be random), sequentially crossing off as we go."
+  },
+  {
+    "objectID": "Clinical Trials.html#minimisation",
+    "href": "Clinical Trials.html#minimisation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.5 Minimisation",
+    "text": "6.5 Minimisation"
+  },
+  {
+    "objectID": "Clinical Trials.html#minimisationadaptive-randomisation",
+    "href": "Clinical Trials.html#minimisationadaptive-randomisation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.5 Minimisation/Adaptive randomisation",
+    "text": "6.5 Minimisation/Adaptive randomisation\nWhere there are lots of factors strification can become impractical.\nMinimisation is dynamic assignment of patients to different treatments to achieve.\nSteps:\n\nCreate a table where first column is characteristics, second col is factor, all other columns are treatment tallys for the characteristics\nSum down the columns and look for lowest score\nAdd the patient to that group and update the tally\nRepeat\nIf score are equal, randomise.\n\nThis is not truely random and could lead to a level of prediction if the assignent history is known. To add randomisation you might add a probability of assignment to the smaller so if it is smaller there is some p between 0.5 and 1 whether it is assigned"
+  },
+  {
+    "objectID": "Clinical Trials.html#chapter-8---crossover",
+    "href": "Clinical Trials.html#chapter-8---crossover",
+    "title": "3  Chapter 1 - Intro",
+    "section": "9.1 Chapter 8 - Crossover",
+    "text": "9.1 Chapter 8 - Crossover\nNOT ON THE FORMULA SHEET!!!!!\nCrossover trials offer more efficiency over parrallel due to within patient comparisons.\nTwo groups recieve two treatments but at different periods.\nPossible obsevred effects include:\n\nTreatment effects, what we are trying to find, a difference in treatments\nPeriod effect, different responses between periods could be due to seasonal effects or all patients improving over time\nCarryover (also know as treatement x period interaction)\n\nTODO - 8.2\n\n\n\nGroups\nPeriod 1\nPeriod 2\n\n\n\n\nGroup 1\nA , \\(Y_{11k}\\)\nB , \\(Y_{12k}\\)\n\n\nGroup 2\nB , \\(Y_{21k}\\)\nA , \\(Y_{22k}\\)\n\n\n\nWe model the following:\n\n\\(\\mu\\) - overall mean\n\\(\\tau_A , \\tau_B\\) - Treatment effects\n\\(\\pi_1, \\pi_2\\) - Period effects\n\\(\\lambda_1, \\lambda_2\\) - carryover effects\n\\(\\alpha_k\\) random patient effect \\(\\sim N(0, \\phi^2)\\) between patients\n\\(epsilon_{ijk}\\) independent random error\n\n\\(\\alpha\\) and \\(\\epsilon\\) disappear by taking expectations\nFrom this we can conclude that:\n\n\n\nGroups\nPeriod 1\nPeriod 2\n\n\n\n\nGroup 1\n\\(\\mu + \\tau_A + \\pi_1\\)\n\\(\\mu + \\tau_B + \\pi_2 + \\lambda_A\\)\n\n\nGroup 2\n\\(\\mu + \\tau_B + \\pi_1\\)\n\\(\\mu + \\tau_A + \\pi_2 + \\lambda_B\\)\n\n\n\n\n9.1.1 Workflow\nThere is more detail in the notes\n\n9.1.1.1 Assess Carryover\nIdeally carryover effects would be none or equal, so under\n\\(H_0 : \\lambda_A = \\lambda_B\\)\nSo two sample t-test\n\\(T = (Y_{i1k} +Y_{i2k})/2\\), the average across each patient\n\\(\\frac{\\bar{T_1} - \\bar{T_2}} {\\sqrt{  \\frac{S^2_{T_1}}{n_1} +  \\frac{S^2_{T_2}}{n_2} }} \\sim t_r\\)\nWhere\n\\(r = min(n_1, n_2)\\)\nSome info:\n\nWe don’t test that \\(H_0 : \\lambda_A = \\lambda_B= 0\\) as inseperable from period effects\nIt is low powered due to between patient comparison\nIf detected, results are contaminated, do not test for period and treatment, fallback to a parrallel study in period 1. Power however will be too low.\nIt is fine to use the sum of the two values for each patient over the average, the t test will be the same, just don’t have to divide by two.\n\n\n\n9.1.1.2 Assess Treatment\nAssumes no carryover\n\\(H_0 : \\tau_A = \\tau_B\\)\nThen \\(D_{ik} = Y_{i1k} - Y_{i2k}\\) calculated and as before\n\\(\\frac{\\bar{D_1} - \\bar{D_2}} {\\sqrt{  \\frac{S^2_{T_1}}{n_1} +  \\frac{S^2_{T_2}}{n_2} }} \\sim t_r\\)"
   }
 ]

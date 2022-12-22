@@ -149,6 +149,89 @@ Protocol deviations are to be expected, but must be recorded. There are two resp
 
 Can always report both!
 
+# Chapter 4 - Randomisation
+
+## Historic
+
+TODO p24
+
+## Simple Randomisation
+
+Generate or look up sequence of numbers. Bin the numbers into equally sized groups.
+
+If there is surplus, eg 3 groups, 10 Rand No. Then ignore the designated surplus number and move to next.
+
+Eg.
+
+0 1 6 7 3 2 6 8 9 5 3 2 2
+
+A : 1-3
+B : 4-6
+C : 7-9
+0 : ignore and try again
+
+Negative :
+
+- In small trial balance can be poor
+
+Positive :
+
+- Completely unpredictable
+- In long run will create equal groups
+
+## Blocking
+
+Blocking is where we create clusters of treatment assignments, to ensure balanced groups.
+
+Eg.
+AB, BA
+0-4 = AB
+5-9 = BA
+
+Just move along the random numbers in sequence, don't do every second, etc
+
+Block size can be increased to make it harder to crack Eg
+
+AABB, ABBA, ABAB, BBAA, BABA, etc
+
+Blocking may be crackable with small block sizes and thus may risk double blindness.
+
+Blocking can also be used for imbalance setting.
+
+Block size should be as large as possible to minimise risk of cracking. But not so large that the last block would be highly imbalanced if split as it reached the end.
+
+## Stratified Randomisation
+
+TODO : Watch the video on this and verify below notes (I'm 99% sure they are good)
+
+Treatment (control included) groups should be as equal as possible in terms of patient characterirstics (Age, gender, etc). Imblances could confound treatments with characteristics. Solve with stratified randomisation.
+
+Say we have M/F, Over, under 50
+
+Cat.   | Schema
+-------|----------------
+M, <50 | A B B A B B A A
+F, <50 | B A B A B A A B
+M, >50 | A B A B B A A B
+F, >50 | A B A B A B B A
+
+Instead of now applying patient count numbers, we move through the list of patients (which should itself be random), sequentially crossing off as we go.
+
+## Minimisation/Adaptive randomisation
+
+Where there are lots of factors strification can become impractical.
+
+Minimisation is dynamic assignment of patients to different treatments to achieve.
+
+Steps:
+
+1) Create a table where first column is characteristics, second col is factor, all other columns are treatment tallys for the characteristics
+2) Sum down the columns and look for lowest score
+3) Add the patient to that group and update the tally
+4) Repeat
+5) If score are equal, randomise.
+
+This is not truely random and could lead to a level of prediction if the assignent history is known. To add randomisation you might add a probability of assignment to the smaller so if it is smaller there is some p between 0.5 and 1 whether it is assigned 
 
 # Chapter 5 - Hypothesis Testing
 
@@ -384,9 +467,89 @@ You can solve using:
 - Bonferroni (highly correlated though).
 - Multivariate analysis that models correlation
 
-## Chapter 8 - 
+## Chapter 8 - Crossover
 
 NOT ON THE FORMULA SHEET!!!!!
+
+Crossover trials offer more efficiency over parrallel due to within patient comparisons.
+
+Two groups recieve two treatments but at different periods.
+
+Possible obsevred effects include:
+
+- Treatment effects, what we are trying to find, a difference in treatments
+- Period effect, different responses between periods could be due to seasonal effects or all patients improving over time
+- Carryover (also know as treatement x period interaction)
+
+TODO - 8.2
+
+Groups | Period 1 | Period 2
+-------|-----------|----------
+Group 1 | A  ,  $Y_{11k}$ | B  ,  $Y_{12k}$
+Group 2 | B  ,  $Y_{21k}$ | A  ,  $Y_{22k}$
+
+We model the following:
+
+- $\mu$ - overall mean
+- $\tau_A , \tau_B$ - Treatment effects
+- $\pi_1, \pi_2$ - Period effects
+- $\lambda_1, \lambda_2$ - carryover effects
+- $\alpha_k$ random patient effect $\sim N(0, \phi^2)$ between patients
+- $epsilon_{ijk}$ independent random error
+
+$\alpha$ and $\epsilon$ disappear by taking expectations
+
+From this we can conclude that:
+
+Groups | Period 1 | Period 2
+-------|-----------|----------
+Group 1 | $\mu + \tau_A + \pi_1$ | $\mu + \tau_B + \pi_2 + \lambda_A$
+Group 2 | $\mu + \tau_B + \pi_1$ | $\mu + \tau_A + \pi_2 + \lambda_B$
+
+### Workflow
+
+There is more detail in the notes
+
+#### Assess Carryover
+
+Ideally carryover effects would be none or equal, so under 
+
+$H_0 : \lambda_A = \lambda_B$
+
+So two sample t-test
+
+$T = (Y_{i1k} +Y_{i2k})/2$, the average across each patient
+
+$\frac{\bar{T_1} - \bar{T_2}}
+{\sqrt{
+    \frac{S^2_{T_1}}{n_1} +
+    \frac{S^2_{T_2}}{n_2}
+}} \sim t_r$
+
+Where 
+
+$r = min(n_1, n_2)$
+
+Some info:
+
+- We don't test that $H_0 : \lambda_A = \lambda_B= 0$ as inseperable from period effects
+- It is low powered due to between patient comparison
+- If detected, results are contaminated, do not test for period and treatment, fallback to a parrallel study in period 1. Power however will be too low.
+- It is fine to use the sum of the two values for each patient over the average, the t test will be the same, just don't have to divide by two.
+
+#### Assess Treatment
+
+Assumes no carryover
+
+$H_0 : \tau_A = \tau_B$ 
+
+Then $D_{ik} = Y_{i1k} - Y_{i2k}$ calculated and as before
+
+$\frac{\bar{D_1} - \bar{D_2}}
+{\sqrt{
+    \frac{S^2_{T_1}}{n_1} +
+    \frac{S^2_{T_2}}{n_2}
+}} \sim t_r$
 
 ## Chapter 9 - Combining trials
 
