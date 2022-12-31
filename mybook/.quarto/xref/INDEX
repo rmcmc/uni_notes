@@ -16,5 +16,11 @@
   },
   "Clinical Trials.qmd": {
     "Clinical Trials.html": "3c42d2dc"
+  },
+  "linear_models.qmd": {
+    "linear_models.html": "4311ec95"
+  },
+  "survival_regression.qmd": {
+    "survival_regression.html": "44c0b495"
   }
 }

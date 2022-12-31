@@ -1,0 +1,38 @@
+# Linear Models
+
+## Intro
+
+Categorical variables are called factors, they may be binary or have levels
+
+y may be reffered to as dependnent or response variable(s)
+
+x may be called independent , explanatory, predictor variables.
+
+We use $n$ to denote observations
+
+We use $r$ for the number of explanatory variables.
+
+A model might look like
+
+$y_i = \beta_0 + \beta_1x_{i1} + ... \beta_{ir} + \epsilon_i$
+
+The $\beta_0 + \beta_1x_{i1} + ... \beta_{ir}$ is reffered to as the linear predictor. Epsilon is the random error.
+
+When r=2 we fit a plane! Then hyper-planes in higher dimensions.
+
+Remember a linear model is linear in the parameters (betas), it is allowed to include logs, quadratics.
+
+It is easier to work in matrix notation. Parameter vector:
+
+$\boldsymbol{\beta} = (\beta_0, \beta_1, ...)^T$
+
+The $\boldsymbol{x} = (x_1, x_2...)^T$ is combined with a vector of ones to create the design matrix $\boldsymbol{X}$.
+
+This combined creates
+
+$\boldsymbol{y} = 
+\boldsymbol{X}
+\boldsymbol{\beta}+
+\boldsymbol{\epsilon}$
+
+$\boldsymbol{X}$ has the shape $n \times p$
