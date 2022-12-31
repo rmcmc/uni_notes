@@ -1,172 +1,81 @@
 # Survival
 
-With survival analysis we aim to model lifetimes or populations. Survival analysis is unique as it aims to include censoring.
+The first thing we are interested in is setting a baseline for the explanatory variables $\textbf{x}$. Where $\textbf{x}$ becomes the zero vector $\textbf{0}$. Eg. $\textbf{x} = (0,0,0...,0)$. 
 
-## Chapter 1 - Intro
+It is very common for age to be standardised around some age of interest. Eg 50, so all ages would be given as 5, -10, etc which equates to 55 and 40.
 
-We are interested in two types of cencoring
+The two common methods are :
 
-- right : The failure occurs after a set time, died after trial
-- left : The failure occurs before the observations begin, died before trial starts
+- Accelarated Failure Time (AFT)
+- Proportional Hazards (PH)
 
-The fundamental probaility theory required is as follows
+## AFT
 
-### Distribution Function
+### Two Group Example
 
-Let $T$ be the failure time, where $T>0$. Then as expected the distribution function is:
+In the simplests case we model survival times $T$ as a random variable. But with two groups we want to model them both as seperate RVs. Where the baseline RV is $T_0$ and the treatment (or other covariate) is given by $T_1$. As we now have times we can therefore model survivor functions $S$. However in AFTs we don't want $S_0$ and $S_1$ we want a single survivor function that is scaled.
 
-$F(t) = P(T\leq t)$
+We therefore look to the following:
 
-And therefore the probability density is:
+$\text{Group 0 :   } S(t ; x_i=0) = P(T_0>t) = S_0(t))$
+$\text{Group 1 :   } S(t ; x_i=1) = P(T_1>t) = P(\frac{T_0}{\psi}> t) = P(T_0>\psi t) = S_0(\psi t))$
 
-$f(t) = F'(t)$
+So $\psi$ "accelrates time" and hence AFT and so the RVs are related by $T_1 = \frac{T_0}{\psi}$ and so $S_1(t) = S_0(\psi t)$.
 
-And so
+Thinking back to graphing, any multiplier of a function value is a stretch in x, whose magnitude is the reciprical. So a $\psi >1$ will shrink survival time by $\frac{1}{\psi}$ and a $\psi <1$ will extend survival time.
 
-$F(t) = \int_0^tf(u)du$
+So $\psi >1$ accelrates time for the patient (so they are more likely to die faster). Less than one Deaccelerates!
 
+> Scale factor is $\frac{1}{\psi}$ , less than 1 means better survival times for the patient
 
-### Survivor Function
+So $\psi$ is a function of $\textbf{x}$, all of our covariates, which determine the "acceleration"
 
-Generally we are interested in whether someone will survive longer than a certain time. So:
+### Generalising to two groups
 
-$S(t) = P(T\geq t) = 1 - F(t) = \int^{\infty}_t f(u) du$
+Instead of now having a $\psi$ to turn on and off we now require $\psi(\textbf{x})$ so that we can create a scaling factor for each individual. We therefore assume that (Where $S_0$ is $S(t)$ at the baseline consitions where $\textbf{x} = \textbf{0}$):
 
-As it is linked to the distribution function we can therefore say
+$S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))$
 
-$f(t) = -S'(t)$
+From this it can be shown that the following are true:
 
-### Hazard Function
+$f(t;\textbf{x}) = f_0(t\psi(\textbf{x}))\psi(\textbf{x})$
 
-The risk of death at time $t$ given survival to time $t$. Or the instantaenous risk of death at time $t$
+$h(t;\textbf{x}) = h_0(t\psi(\textbf{x}))\psi(\textbf{x})$
 
-$h(t) = \frac{f(t)}{S(t)}$
+This can be derived by showing that that $t$ being multiplie by $\psi$ and has $S_0$ applied to it as a function. We know the relationship between the survival function and the density fuinction. $S(t) = 1- F(t)$ differentiatiing we get negative density function. A function of a function, means that we need to use the chain rul and therefore gets the above. From the desnity we can get the hazard. TODO : Write out derivation. More details can be found at 25mins, 8/12. 
 
-### Integrated Hazard Function
+So again:
+$T = \frac{T_0}{\psi(\textbf{x})}$
 
-$H(t) = \int^{t}_0 h(u) du = -log(S(t))$
+We are yet to define $\psi(\textbf{x})$ but tow conditions must be met:
 
-So
+- $\psi(\textbf{x})\geq 0$, so cannot have a negative time
+- $\psi(\textbf{0}) = 1$, so that the basline has no strethcing effects. 
 
-$S(t) = e^{\left(-H(t)\right)}$
+From this a naturual choice is (it could be any functiion though):
 
-and
+${\psi(\textbf{x})} = \exp(-\beta'\textbf{x})$
 
-$f(t) = h(t)e^{\left(-H(t)\right)}$
+This gives us our parameters, but excludes the intercept terms. Recalling $T = \frac{T_0}{\psi(\textbf{x})}$ then 
 
+$E[T] = \exp(\beta'\textbf{x})E[T_0]$
 
+If $\beta_i x_i$ is positive then the expected survival time increases (good fro patient)
 
-### Limits worth knowing
+### Exponetial Case
 
-$f(t) = lim_{h \rightarrow 0 } \frac{P(t < T < t+h)}{h}$
+Using the above we can therefore start to create an exponential AFT. We already know that for the exponential distribution:
 
-and
+Property| equation | AFT
+-----|-----|----
+$S(t)_0$|$e^{-\lambda t}$ | $S(t;\textbf{x}) = \exp(-\lambda t e^{-\beta'\textbf{x}})$
+$h(t)_0$ | $\lambda$ | $\lambda e^{-\beta'\textbf{x}}$
+$f(t)_0$|$\lambda e^{-\lambda t}$ | $\lambda e^{-\beta'\textbf{x}} \exp(-\lambda t e^{-\beta'\textbf{x}})$
 
-$h(t) = lim_{h \rightarrow 0 } \frac{P(t \leq T < t+h | T \geq t)}{h}$
+So if $\textbf{x}_i$ is a p dimensional vector of explanatory variables then we ca n by MLE find p+1 parameters $(\lambda, \beta_1, \beta_2...\beta_p)$.
 
-## Chapter 2 - Distributions
+MLE is found by usual method, get derivative, set to 0, solve iteratively. $\hat{\lambda}$ and $\hat{\beta}$ are found any by the asymptopic properties of the MLE we know that:
 
-### Exponential
+$\hat{\lambda} \sim N(\lambda, \text{Var}(\hat{\lambda}))$
 
-The only distribution with a constant hazard function.
-
-$T_i \sim Exp(\lambda, \gamma)$
-
-Property| equation
------|-----
-$f(t)$|$\lambda e^{-\lambda t}$
-$F(t)$|$1 - e^{-\lambda t}$
-$S(t)$|$e^{-\lambda t}$
-$h(t)$ | $\lambda$
-
-
-### Weibull
-
-The weibull can vary by implementation `survreg` uses the following implementation
-
-$T_i \sim Weibull(\lambda, \gamma)$
-
-Properties should be given, **TO BE VERIFIED**
-
-In this course:
-
-- $\lambda$ is the shape
-- $\gamma$ is the rate
-
-It is extremely flexible, but can become unstable near $\gamma = 1$. From $\gamma$ we know the following:
-
-- $\gamma = 1$ - Constant Hazard, becomes the exponential
-- $\gamma > 1$ - Hazard INCREASES with time
-- $\gamma < 1$ - Hazard DECREASES with time
-
-
-**TODO - Add plot to get a feel for various hazrds, etc**
-
-```{python}
-from scipy import stats
-import numpy as np
-import matplotlib.pyplot as plt
-
-xs = np.arange(0,100,0.1)
-s_t = stats.expon(0,10).sf(xs)
-f_t = stats.expon(0,10).pdf(xs)
-plt.plot(xs,s_t)
-
-```
-
-## Chapter 2 - Life Tables
-
-See notes - Two example type to be practiced exhaustively (No loss and loss to follow up)
-
-Lifetables tabulate death rates over a period of time. They are useful non-parametric summaries and help to inform which parametric models might be sensible. 
-
-In the loss to follow up we assume in this course that:
-
-- $p_x$ and $q_x$ are constant over a time period, this is reasonable if short
-- We assume those who withdraw have the same probability of dieing as those who don't
-- We assume withdrawls are evenly spaced through the year
-
-## Chapter 2 - Kaplan-Meier
-
-
-```{r}
-rnorm(1)
-```
-
-
-## Chapter 3  - Two Sample
-
-Kaplan-Meier is just a visual aid, we need to look at tests
-
-### Log Rank Test
-
-Non-parametric.
-
-
-$$ H_0 : S_1(t) = S_2(t)$$
-
-$$ H_A : S_1(t) \neq S_2(t)$$ 
-
-$H_A$ is for some $t$
-
-Steps:
-
-1) Create a table
-2) create an $i$ column for 1,2,..n
-3) create a $t_i$ column and list all the times of deaths only
-4) Create an $r_{1,i}$ and $r_{2,i}$ for at risk (At risk for a time includes those who died at that time and all future censorees)
-5) Sum  $r_{1,i}$ and $r_{2,i}$ to get $r_i$
-6) Create an $d_{1,i}$ and $d_{2,i}$ for death counts at the times
-7) Sum the deaths to get $d_i$
-8) Sum down death column to get observed $O_1$ and $O_2$
-9) Calc $e_{1,i} = (\frac{r_{1,i}}{r_i})d_i$ and $e_{2,i}$
-10) Sum the $e_{1,i}$ and $e_{2,i}$ to get $E_1$ and $E_2$
-11) Calculate using below equation
-
-$$ LR = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2} \sim \chi^2_{1}$$
-
-
-
-### Parametric 
-
-
+We can obtain $\text{Var}(\hat{\lambda}))$ from the expected/observed stuff covered in chapter 3 (TODO: find this out!)
