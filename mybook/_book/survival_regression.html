@@ -148,6 +148,15 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#two-group-example" id="toc-two-group-example" class="nav-link" data-scroll-target="#two-group-example"><span class="toc-section-number">6.1.1</span>  Two Group Example</a></li>
   <li><a href="#generalising-to-two-groups" id="toc-generalising-to-two-groups" class="nav-link" data-scroll-target="#generalising-to-two-groups"><span class="toc-section-number">6.1.2</span>  Generalising to two groups</a></li>
   <li><a href="#exponetial-case" id="toc-exponetial-case" class="nav-link" data-scroll-target="#exponetial-case"><span class="toc-section-number">6.1.3</span>  Exponetial Case</a></li>
+  <li><a href="#weibull" id="toc-weibull" class="nav-link" data-scroll-target="#weibull"><span class="toc-section-number">6.1.4</span>  Weibull</a></li>
+  <li><a href="#testing-exp-vs-weibull" id="toc-testing-exp-vs-weibull" class="nav-link" data-scroll-target="#testing-exp-vs-weibull"><span class="toc-section-number">6.1.5</span>  Testing Exp vs Weibull</a></li>
+  </ul></li>
+  <li><a href="#proportional-hazards" id="toc-proportional-hazards" class="nav-link" data-scroll-target="#proportional-hazards"><span class="toc-section-number">6.2</span>  Proportional Hazards</a>
+  <ul class="collapse">
+  <li><a href="#why-is-it-called-proportional-hazards" id="toc-why-is-it-called-proportional-hazards" class="nav-link" data-scroll-target="#why-is-it-called-proportional-hazards"><span class="toc-section-number">6.2.1</span>  Why is it called proportional hazards</a></li>
+  <li><a href="#advantagedisadvantage" id="toc-advantagedisadvantage" class="nav-link" data-scroll-target="#advantagedisadvantage"><span class="toc-section-number">6.2.2</span>  Advantage/Disadvantage</a></li>
+  <li><a href="#estimating-beta" id="toc-estimating-beta" class="nav-link" data-scroll-target="#estimating-beta"><span class="toc-section-number">6.2.3</span>  Estimating <span class="math inline">\(\beta\)</span></a></li>
+  <li><a href="#intrepreting-r-output" id="toc-intrepreting-r-output" class="nav-link" data-scroll-target="#intrepreting-r-output"><span class="toc-section-number">6.2.4</span>  Intrepreting R output</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="survival_regression.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
@@ -252,6 +261,87 @@ ul.task-list li input[type="checkbox"] {
 <p>MLE is found by usual method, get derivative, set to 0, solve iteratively. <span class="math inline">\(\hat{\lambda}\)</span> and <span class="math inline">\(\hat{\beta}\)</span> are found any by the asymptopic properties of the MLE we know that:</p>
 <p><span class="math inline">\(\hat{\lambda} \sim N(\lambda, \text{Var}(\hat{\lambda}))\)</span></p>
 <p>We can obtain <span class="math inline">\(\text{Var}(\hat{\lambda}))\)</span> from the expected/observed stuff covered in chapter 3 (TODO: find this out!)</p>
+<section id="final-model" class="level4" data-number="6.1.3.1">
+<h4 data-number="6.1.3.1" class="anchored" data-anchor-id="final-model"><span class="header-section-number">6.1.3.1</span> Final model</h4>
+<p>If we are extra explicit with <span class="math inline">\(\lambda_0\)</span> we can say that <span class="math inline">\(T_0 \sim \text{exp}(\lambda_0)\)</span> so <span class="math inline">\(S(t;\textbf{x}) = \exp(-\lambda_0 t e^{-\beta'\textbf{x}})\)</span>. Then it is more convinient to say that <span class="math inline">\(\lambda_0 = \exp(-\beta_0)\)</span></p>
+<p>Then we can lift the <span class="math inline">\(\lambda\)</span> into the exponent. Thus:</p>
+<p><span class="math inline">\(S(t;\textbf{x}) = \exp(- t e^{(-(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...))})\)</span></p>
+<p>This then looks alot like <span class="math inline">\(e^{-t\lambda}\)</span> but we now have <span class="math inline">\(e^{-t\lambda(\textbf{x})}\)</span> and so we can conclude:</p>
+<p><span class="math inline">\(T \sim exp(\lambda(\textbf{x}))\)</span></p>
+<p>So <span class="math inline">\(\lambda(x) = exp(-(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...))\)</span></p>
+<p>And from standard properties we therefor know that <span class="math inline">\(E[T] = \frac{1}{\lambda(\textbf{x})}\)</span> and therefore thre MLE fo the mean is:</p>
+<p><span class="math inline">\(\frac{1}{\hat{\lambda}(x)} = exp(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...)\)</span></p>
+<blockquote class="blockquote">
+<p><span class="math inline">\(\lambda_0 = \exp(-\beta_0)\)</span> or <span class="math inline">\(\lambda_0 = \exp(-\text{Intercept})\)</span> in <code>survreg</code></p>
+</blockquote>
+</section>
+</section>
+<section id="weibull" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="weibull"><span class="header-section-number">6.1.4</span> Weibull</h3>
+<p>In R we use the following implementation of the weibull distribution, it’s survivor function is as follows:</p>
+<p><span class="math inline">\(S(t) = \exp{\(\lambda t )^{\gamma}}\)</span></p>
+<p>SO repeating the same steps as for the exponential we can say that the RV <span class="math inline">\(T_0\)</span> is:</p>
+<p>$T_0 (_0, )</p>
+<p>Add the scalling factor:</p>
+<p><span class="math inline">\(S(t;\textbf{x}) = exp(-(\lambda t e^{-\beta ' \textbf{x}})^{\gamma})\)</span></p>
+<p>Agian let <span class="math inline">\(\lambda_0 = exp(-\beta_0)\)</span></p>
+<p><span class="math inline">\(S(t;\textbf{x}) = exp(-( t e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 ...)})^{\gamma})\)</span></p>
+<p>So <span class="math inline">\(\lambda(\textbf{x}) = e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 ...)}\)</span></p>
+<p>The rate <span class="math inline">\(\gamma\)</span> is unaffected by the covariates, so only <span class="math inline">\(\lambda(\textbf{x})\)</span> is required.</p>
+</section>
+<section id="testing-exp-vs-weibull" class="level3" data-number="6.1.5">
+<h3 data-number="6.1.5" class="anchored" data-anchor-id="testing-exp-vs-weibull"><span class="header-section-number">6.1.5</span> Testing Exp vs Weibull</h3>
+<p>The defualt distribution in <code>survreg</code> is the weibull.</p>
+<p>It will also report the log(scale) in the summary. This is a test that <span class="math inline">\(H_0 \text{ : log(scale)} = 0\)</span>, basically whether <span class="math inline">\(\gamma = 1\)</span> as <span class="math inline">\(\gamma = \frac{1}{scale}\)</span>. If we don’t reject probably better to stick with the exponential as it is the simpler model.</p>
+</section>
+</section>
+<section id="proportional-hazards" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="proportional-hazards"><span class="header-section-number">6.2</span> Proportional Hazards</h2>
+<p>In AFTs we were concerned with scaling time by <span class="math inline">\(S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))\)</span>, so survivor function depends on <span class="math inline">\(\textbf{x}\)</span>.</p>
+<p>In proportional hazards, the hazard function depends on through the hazard function so. Agian we consider the baseline <span class="math inline">\(h_0\)</span> where the covariates <span class="math inline">\(\textbf{x}\)</span> are the zero vector <span class="math inline">\(\textbf{0}\)</span></p>
+<p><span class="math inline">\(h(t;\textbf{x}) = \psi(\textbf{x};\beta) h_0(t)\)</span></p>
+<p>So again it’s just deviation from the baseline. Again therefore we need a sensible function. There is only one constraint here and that is <span class="math inline">\(\psi(\textbf{x}=0;\beta)\)</span> must equal 1. So</p>
+<p><span class="math inline">\(\psi(\textbf{x};\beta) = e^{\beta'\textbf{x}}\)</span></p>
+<p>Note that in AFT the exponent is negative, whereas it is positive here. We could use negative in AFT to make it consistent with the other parameter estimates, eg lambda as the intercept. A negative here would make it harder to interpret the hazards.</p>
+<section id="why-is-it-called-proportional-hazards" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="why-is-it-called-proportional-hazards"><span class="header-section-number">6.2.1</span> Why is it called proportional hazards</h3>
+<p>The hazard ratio is independent of time. As the baseline hazard cancels we are left with a time invariant ratio.</p>
+<p><span class="math inline">\(\frac{h(t;x_1)}{h(t;x_2)} = \frac{h_0(t)e^{\beta_1 x_1}}{h_0(t)e^{\beta_2 x_2}} = \frac{e^{\beta_1 x_1}}{e^{\beta_2 x_2}}\)</span></p>
+<p>The first part is reffered to as the hazard ratio.</p>
+<p>This is a strong assumption, which we must make sure to check.</p>
+</section>
+<section id="advantagedisadvantage" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="advantagedisadvantage"><span class="header-section-number">6.2.2</span> Advantage/Disadvantage</h3>
+<p>Advantages:</p>
+<ul>
+<li>We don’t have to make assumptions on the underlying distribution of the baseline hazard/survival functions. This is mitigates some of the strong assumptions required for AFTs (Weibull vs Exp, etc)</li>
+<li>We are directly modelling the effect of the covariate on the hazard. To understand teh effects on hazard we just have to look at the signs of the covariates. In AFTs however it is not alwatys obvious and needs further calculation.</li>
+</ul>
+<p>Disadvantages: - As we haven’t specified a <span class="math inline">\(h_0\)</span> then given a vector of patient characteristics it it not possible to actually specify the hazard.</p>
+<p>If you are just interested in which covariates effect hazard/survival then PH is fine. If you want to want to actually compute probabilities of survival/times, expectations, etc then AFTs are required. So for instance in a PH model you would be able to say:</p>
+<ul>
+<li>smoking triples hazard relative to not</li>
+<li>treaetment halves hazard relative to placebo</li>
+</ul>
+<p>However you could not say that smoking 10 cigs a day decrease expected survival time by 2 or probability of a cancer paitient surving more than two years on new meds is 0.6.</p>
+</section>
+<section id="estimating-beta" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="estimating-beta"><span class="header-section-number">6.2.3</span> Estimating <span class="math inline">\(\beta\)</span></h3>
+<p>We use likeihood methods. However notrmally we would say that</p>
+<p><span class="math inline">\(Likelihood = \Pi^n_{i=1} f(t_i;\textbf{x}_i)^{\delta_i} S(t_i ; \textbf{x}_i)^{1-\delta_i}\)</span></p>
+<p>This is also equal to (as <span class="math inline">\(f(t) = h(t)S(t)\)</span>)</p>
+<p><span class="math inline">\(Likelihood = \Pi^n_{i=1} h(t;\textbf{x})^{\delta_i} S(t_i ; \textbf{x}_i)\)</span></p>
+<p>Where <span class="math inline">\(t_i\)</span> is the min(Failure time, time of right censor) and <span class="math inline">\(\delta_i\)</span> is the indicator function where 1=death, 0 = censor.</p>
+<p>However in PH we havent specified <span class="math inline">\(h_0(t)\)</span> so MLE isn’t possible. We therefore hae to use partial likelihood.</p>
+<section id="partial-likelihood" class="level4" data-number="6.2.3.1">
+<h4 data-number="6.2.3.1" class="anchored" data-anchor-id="partial-likelihood"><span class="header-section-number">6.2.3.1</span> Partial Likelihood</h4>
+<p>If we know the times of which people died, then we want to understand the probability that they died in that particular observed order order.</p>
+<p><span class="math inline">\(P(\text{Death}) \propto h\)</span></p>
+<p>TODO : review partial likelihood!</p>
+</section>
+</section>
+<section id="intrepreting-r-output" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="intrepreting-r-output"><span class="header-section-number">6.2.4</span> Intrepreting R output</h3>
 
 
 </section>
