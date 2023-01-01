@@ -1,5 +1,6 @@
 # Survival
 
+
 The first thing we are interested in is setting a baseline for the explanatory variables $\textbf{x}$. Where $\textbf{x}$ becomes the zero vector $\textbf{0}$. Eg. $\textbf{x} = (0,0,0...,0)$. 
 
 It is very common for age to be standardised around some age of interest. Eg 50, so all ages would be given as 5, -10, etc which equates to 55 and 40.
@@ -79,3 +80,118 @@ MLE is found by usual method, get derivative, set to 0, solve iteratively. $\hat
 $\hat{\lambda} \sim N(\lambda, \text{Var}(\hat{\lambda}))$
 
 We can obtain $\text{Var}(\hat{\lambda}))$ from the expected/observed stuff covered in chapter 3 (TODO: find this out!)
+
+#### Final model
+
+If we are extra explicit with $\lambda_0$ we can say that $T_0 \sim \text{exp}(\lambda_0)$ so $S(t;\textbf{x}) = \exp(-\lambda_0 t e^{-\beta'\textbf{x}})$. Then it is more convinient to say that  $\lambda_0 = \exp(-\beta_0)$
+
+Then we can lift the $\lambda$ into the exponent. Thus:
+
+$S(t;\textbf{x}) = \exp(- t e^{(-(\beta_0 + \beta_1\textbf{x}_1 +  \beta_2\textbf{x}_2 ...))})$
+
+This then looks alot like $e^{-t\lambda}$ but we now have $e^{-t\lambda(\textbf{x})}$ and so we can conclude:
+
+$T \sim exp(\lambda(\textbf{x}))$ 
+
+So $\lambda(x) = exp(-(\beta_0 + \beta_1\textbf{x}_1 +  \beta_2\textbf{x}_2 ...))$
+
+And from standard properties we therefor know that $E[T] = \frac{1}{\lambda(\textbf{x})}$ and therefore thre MLE fo the mean is:
+
+$\frac{1}{\hat{\lambda}(x)} = exp(\beta_0 + \beta_1\textbf{x}_1 +  \beta_2\textbf{x}_2 ...)$
+
+> $\lambda_0 = \exp(-\beta_0)$ or $\lambda_0 = \exp(-\text{Intercept})$ in `survreg`
+
+### Weibull
+
+In R we use the following implementation of the weibull distribution, it's survivor function is as follows:
+
+$S(t) = \exp{\(\lambda t )^{\gamma}}$
+
+SO repeating the same steps as for the exponential we can say that the RV $T_0$ is:
+
+$T_0 \sim \text{Weibull}(\lambda_0, \gamma)
+
+Add the scalling factor:
+
+$S(t;\textbf{x}) = exp(-(\lambda t e^{-\beta ' \textbf{x}})^{\gamma})$
+
+Agian let $\lambda_0 = exp(-\beta_0)$
+
+$S(t;\textbf{x}) = exp(-( t e^{-(\beta_0  + \beta_1 x_1 + \beta_2 x_2 ...)})^{\gamma})$
+
+So $\lambda(\textbf{x}) = e^{-(\beta_0  + \beta_1 x_1 + \beta_2 x_2 ...)}$
+
+The rate $\gamma$ is unaffected by the covariates, so only $\lambda(\textbf{x})$ is required.
+
+### Testing Exp vs Weibull 
+
+The defualt distribution in `survreg` is the weibull.
+
+It will also report the log(scale) in the summary. This is a test that $H_0 \text{ : log(scale)} = 0$, basically whether $\gamma = 1$ as $\gamma = \frac{1}{scale}$. If we don't reject probably better to stick with the exponential as it is the simpler model.
+
+## Proportional Hazards
+
+In AFTs we were concerned with scaling time by $S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))$, so survivor function depends on $\textbf{x}$.
+
+In proportional hazards, the hazard function depends on \textbf{x} through the hazard function so. Agian we consider the baseline $h_0$ where the covariates $\textbf{x}$ are the zero vector $\textbf{0}$
+
+$h(t;\textbf{x}) = \psi(\textbf{x};\beta) h_0(t)$
+
+So again it's just deviation from the baseline. Again therefore we need a sensible function. There is only one constraint here and that is $\psi(\textbf{x}=0;\beta)$ must equal 1. So
+
+$\psi(\textbf{x};\beta) = e^{\beta'\textbf{x}}$
+
+Note that in AFT the exponent is negative, whereas it is positive here. We could use negative in AFT to make it consistent with the other parameter estimates, eg lambda as the intercept. A negative here would make it harder to interpret the hazards. 
+
+### Why is it called proportional hazards
+
+The hazard ratio is independent of time. As the baseline hazard cancels we are left with a time invariant ratio.
+
+$\frac{h(t;x_1)}{h(t;x_2)} = \frac{h_0(t)e^{\beta_1 x_1}}{h_0(t)e^{\beta_2 x_2}} = \frac{e^{\beta_1 x_1}}{e^{\beta_2 x_2}}$
+
+The first part is reffered to as the hazard ratio.
+
+This is a strong assumption, which we must make sure to check.
+
+### Advantage/Disadvantage
+
+Advantages:
+
+- We don't have to make assumptions on the underlying distribution of the baseline hazard/survival functions. This is mitigates some of the strong assumptions required for AFTs (Weibull vs Exp, etc)
+- We are directly modelling the effect of the covariate on the hazard. To understand teh effects on hazard we just have to look at the signs of the covariates. In AFTs however it is not alwatys obvious and needs further calculation.
+
+Disadvantages:
+- As we haven't specified a $h_0$ then given a vector of patient characteristics it it not possible to actually specify the hazard.
+
+If you are just interested in which covariates effect hazard/survival then PH is fine. If you want to want to actually compute probabilities of survival/times, expectations, etc then AFTs are required. So for instance in a PH model you would be able to say:
+
+- smoking triples hazard relative to not
+- treaetment halves hazard relative to placebo
+
+However you could not say that smoking 10 cigs a day decrease expected survival time by 2  or probability of a cancer paitient surving more than two years on new meds is 0.6.
+
+### Estimating $\beta$
+
+We use likeihood methods. However notrmally we would say that 
+
+$Likelihood = \Pi^n_{i=1} f(t_i;\textbf{x}_i)^{\delta_i} S(t_i ; \textbf{x}_i)^{1-\delta_i}$
+
+This is also equal to (as $f(t) = h(t)S(t)$)
+
+$Likelihood = \Pi^n_{i=1} h(t;\textbf{x})^{\delta_i} S(t_i ; \textbf{x}_i)$
+
+Where $t_i$ is the min(Failure time, time of right censor) and $\delta_i$ is the indicator function where 1=death, 0 = censor.
+
+However in PH we havent specified $h_0(t)$ so MLE isn't possible. We therefore hae to use partial likelihood.
+
+#### Partial Likelihood
+
+If we know the times of which people died, then we want to understand the probability that they died in that particular observed order order.
+
+$P(\text{Death})  \propto h$
+
+TODO : review partial likelihood!
+
+### Intrepreting R output
+
+ 
