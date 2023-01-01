@@ -194,4 +194,53 @@ TODO : review partial likelihood!
 
 ### Intrepreting R output
 
- 
+The wald score is the coeff/S.E. This is standard normal. It's square is the $\chi^2_1$ which is useful in multi-level factors. 
+
+For an set of covariates $\textbf{x} = (x_1, x_2, x_3....)'$ you will get the the following hazard:
+
+$h(t;\textbf{x}  = h_0(t)e^{\beta_1 x_1 + \beta_2 x_2 ...}$.
+
+Where you havea two level factopr Eg treatment. This becomes a binary case of x = 0 or 1. Therefore if we calculate the hazard for both case we get (assuming treatment has been set as the first variable and A = 0, B =1)
+
+$\text{Treatment A :} $h(t;\textbf{x}  = h_0(t)e^{\beta_1(0) + \beta_2 x_2 ...}$
+
+$\text{Treatment B :} $h(t;\textbf{x}  = h_0(t)e^{\beta_1(1) + \beta_2 x_2 ...}$.
+
+And if we calculate the hazard ratio of $\frac{\text{Treatment B}}{\text{Treatment A}}$ then the terms cancel to leave only $e^{\beta_1}$. And so this is simply the hazard ratio for treatment on these covariates. This in turn means that the coeffieicnt itself is the log of the hazard ratio. 
+
+
+#### Significance
+
+By asymptopic variance of the MLE
+
+$\hat{\beta} \sim N(\beta, s.e.(\hat{\beta})^2)$
+
+So if you have either a two factor or continuous covariate you can compare either 
+
+- the $\hat{\beta}/s.e.(\hat{\beta})$ to a $N(0,1)$ 
+- or  $(\hat{\beta}/s.e.(\hat{\beta}))^2$ to a $\chi_1^2$ 
+
+Or where you have $k >2$ factors you do the following:
+
+- Calculate the $\chi_i^2 = (\hat{\beta}_i/s.e.(\hat{\beta}_i))^2$ for each of the k-1 variables
+- $\sum^{k-1}_{i=1}\chi_i^2$ and compare to the $\chi_{k-1}^2$ dist.
+
+#### Process
+
+
+- Significance 
+- Direction
+- Quantify
+
+Say we are interested in a treatment B and A where. B is 1 and A is 0 in the model. It is $\beta_1$ in the model.
+
+The first look at $e^{\beta_1} = \frac{h{t;x_1=1}}{t;x_1=0}$:
+
+- If $e^{\beta_1} <1$ Then the factor with value 1 (often the treatment B) **decreases** the hazard **relative** to teatment A
+- If $e^{\beta_1} >1$ Then the factor with value 1 (often the treatment B) **Increases** the hazard **relative** to teatment A
+
+We can put a CI on the Hazard ratio by taking the $e^{\hat{\beta_1} \pm 1.96(s.e.(\hat{\beta_1}))}$. As it is a monotonic transform it holds.
+
+The ratio can be directly reported as a percentage which is often easier for audience to understand. So a CI of hazard ratio 0.25 to 0.75 would be:
+
+"Relapse Hazard on Treatmnt B is likley to be between 25% ad 75% of realpse hazard on Treatment A."

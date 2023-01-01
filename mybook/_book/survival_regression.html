@@ -342,8 +342,47 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="intrepreting-r-output" class="level3" data-number="6.2.4">
 <h3 data-number="6.2.4" class="anchored" data-anchor-id="intrepreting-r-output"><span class="header-section-number">6.2.4</span> Intrepreting R output</h3>
+<p>The wald score is the coeff/S.E. This is standard normal. It’s square is the <span class="math inline">\(\chi^2_1\)</span> which is useful in multi-level factors.</p>
+<p>For an set of covariates <span class="math inline">\(\textbf{x} = (x_1, x_2, x_3....)'\)</span> you will get the the following hazard:</p>
+<p><span class="math inline">\(h(t;\textbf{x} = h_0(t)e^{\beta_1 x_1 + \beta_2 x_2 ...}\)</span>.</p>
+<p>Where you havea two level factopr Eg treatment. This becomes a binary case of x = 0 or 1. Therefore if we calculate the hazard for both case we get (assuming treatment has been set as the first variable and A = 0, B =1)</p>
+<p>$ <span class="math inline">\(h(t;\textbf{x} = h_0(t)e^{\beta_1(0) + \beta_2 x_2 ...}\)</span></p>
+<p>$ <span class="math inline">\(h(t;\textbf{x} = h_0(t)e^{\beta_1(1) + \beta_2 x_2 ...}\)</span>.</p>
+<p>And if we calculate the hazard ratio of <span class="math inline">\(\frac{\text{Treatment B}}{\text{Treatment A}}\)</span> then the terms cancel to leave only <span class="math inline">\(e^{\beta_1}\)</span>. And so this is simply the hazard ratio for treatment on these covariates. This in turn means that the coeffieicnt itself is the log of the hazard ratio.</p>
+<section id="significance" class="level4" data-number="6.2.4.1">
+<h4 data-number="6.2.4.1" class="anchored" data-anchor-id="significance"><span class="header-section-number">6.2.4.1</span> Significance</h4>
+<p>By asymptopic variance of the MLE</p>
+<p><span class="math inline">\(\hat{\beta} \sim N(\beta, s.e.(\hat{\beta})^2)\)</span></p>
+<p>So if you have either a two factor or continuous covariate you can compare either</p>
+<ul>
+<li>the <span class="math inline">\(\hat{\beta}/s.e.(\hat{\beta})\)</span> to a <span class="math inline">\(N(0,1)\)</span></li>
+<li>or <span class="math inline">\((\hat{\beta}/s.e.(\hat{\beta}))^2\)</span> to a <span class="math inline">\(\chi_1^2\)</span></li>
+</ul>
+<p>Or where you have <span class="math inline">\(k &gt;2\)</span> factors you do the following:</p>
+<ul>
+<li>Calculate the <span class="math inline">\(\chi_i^2 = (\hat{\beta}_i/s.e.(\hat{\beta}_i))^2\)</span> for each of the k-1 variables</li>
+<li><span class="math inline">\(\sum^{k-1}_{i=1}\chi_i^2\)</span> and compare to the <span class="math inline">\(\chi_{k-1}^2\)</span> dist.</li>
+</ul>
+</section>
+<section id="process" class="level4" data-number="6.2.4.2">
+<h4 data-number="6.2.4.2" class="anchored" data-anchor-id="process"><span class="header-section-number">6.2.4.2</span> Process</h4>
+<ul>
+<li>Significance</li>
+<li>Direction</li>
+<li>Quantify</li>
+</ul>
+<p>Say we are interested in a treatment B and A where. B is 1 and A is 0 in the model. It is <span class="math inline">\(\beta_1\)</span> in the model.</p>
+<p>The first look at <span class="math inline">\(e^{\beta_1} = \frac{h{t;x_1=1}}{t;x_1=0}\)</span>:</p>
+<ul>
+<li>If <span class="math inline">\(e^{\beta_1} &lt;1\)</span> Then the factor with value 1 (often the treatment B) <strong>decreases</strong> the hazard <strong>relative</strong> to teatment A</li>
+<li>If <span class="math inline">\(e^{\beta_1} &gt;1\)</span> Then the factor with value 1 (often the treatment B) <strong>Increases</strong> the hazard <strong>relative</strong> to teatment A</li>
+</ul>
+<p>We can put a CI on the Hazard ratio by taking the <span class="math inline">\(e^{\hat{\beta_1} \pm 1.96(s.e.(\hat{\beta_1}))}\)</span>. As it is a monotonic transform it holds.</p>
+<p>The ratio can be directly reported as a percentage which is often easier for audience to understand. So a CI of hazard ratio 0.25 to 0.75 would be:</p>
+<p>“Relapse Hazard on Treatmnt B is likley to be between 25% ad 75% of realpse hazard on Treatment A.”</p>
 
 
+</section>
 </section>
 </section>
 
