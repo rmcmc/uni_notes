@@ -364,8 +364,8 @@ ul.task-list li input[type="checkbox"] {
 <li><span class="math inline">\(\sum^{k-1}_{i=1}\chi_i^2\)</span> and compare to the <span class="math inline">\(\chi_{k-1}^2\)</span> dist.</li>
 </ul>
 </section>
-<section id="process" class="level4" data-number="6.2.4.2">
-<h4 data-number="6.2.4.2" class="anchored" data-anchor-id="process"><span class="header-section-number">6.2.4.2</span> Process</h4>
+<section id="process---binary" class="level4" data-number="6.2.4.2">
+<h4 data-number="6.2.4.2" class="anchored" data-anchor-id="process---binary"><span class="header-section-number">6.2.4.2</span> Process - Binary</h4>
 <ul>
 <li>Significance</li>
 <li>Direction</li>
@@ -380,6 +380,36 @@ ul.task-list li input[type="checkbox"] {
 <p>We can put a CI on the Hazard ratio by taking the <span class="math inline">\(e^{\hat{\beta_1} \pm 1.96(s.e.(\hat{\beta_1}))}\)</span>. As it is a monotonic transform it holds.</p>
 <p>The ratio can be directly reported as a percentage which is often easier for audience to understand. So a CI of hazard ratio 0.25 to 0.75 would be:</p>
 <p>“Relapse Hazard on Treatmnt B is likley to be between 25% ad 75% of realpse hazard on Treatment A.”</p>
+</section>
+<section id="process---continuous" class="level4" data-number="6.2.4.3">
+<h4 data-number="6.2.4.3" class="anchored" data-anchor-id="process---continuous"><span class="header-section-number">6.2.4.3</span> Process - Continuous</h4>
+<p>In the case of the continuous what were are doing is calulating the following hazard ratio (this example used heart volume):</p>
+<p><span class="math inline">\(\frac{h(t; \textbf{x}_4 = volume + 1)}{h(t; \textbf{x}_4 = volume)}\)</span></p>
+<p>So how does hazard increase when a continuous unit increase by one. Which much like the hazard ratio for a bianry case you will get alot of cancellation. Obviously the other covariates just cancel based on the baseline and:</p>
+<p>$ = e^{_4} $</p>
+</section>
+<section id="process---multi-level-factors" class="level4" data-number="6.2.4.4">
+<h4 data-number="6.2.4.4" class="anchored" data-anchor-id="process---multi-level-factors"><span class="header-section-number">6.2.4.4</span> Process - Multi level factors</h4>
+<p>Take k-1 factors and compute the available <span class="math inline">\(\chi^2\)</span> sum them and compare to the <span class="math inline">\(\chi^2_{k-1}\)</span>. Remeber the baseline is just absorbed into the intercept like any linear model.</p>
+<p>Remember <span class="math inline">\(\chi^2\)</span> is one sided and therefore compare directly to 0.95 and not 0.975.</p>
+</section>
+<section id="in-the-examirl" class="level4" data-number="6.2.4.5">
+<h4 data-number="6.2.4.5" class="anchored" data-anchor-id="in-the-examirl"><span class="header-section-number">6.2.4.5</span> In the exam/IRL</h4>
+<blockquote class="blockquote">
+<p>If you are asked to **Interpret the output uou must do the following:</p>
+<ul>
+<li>Significance : Does p-value drop below threshhold</li>
+<li>Direction : Is hazard increased or decreased relative to the baseline</li>
+<li>Quantify : Give a 95% CI for the hazard ratio.</li>
+</ul>
+</blockquote>
+<p>TODO:</p>
+<ul>
+<li>Go through and derive log-log</li>
+<li>Do the residual stuff</li>
+<li>tito correction?</li>
+<li>Revisit entire likelihood partial aspect 14:00 - 30:20 last lecture</li>
+</ul>
 
 
 </section>

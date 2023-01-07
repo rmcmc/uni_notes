@@ -225,7 +225,7 @@ Or where you have $k >2$ factors you do the following:
 - Calculate the $\chi_i^2 = (\hat{\beta}_i/s.e.(\hat{\beta}_i))^2$ for each of the k-1 variables
 - $\sum^{k-1}_{i=1}\chi_i^2$ and compare to the $\chi_{k-1}^2$ dist.
 
-#### Process
+#### Process - Binary
 
 
 - Significance 
@@ -244,3 +244,37 @@ We can put a CI on the Hazard ratio by taking the $e^{\hat{\beta_1} \pm 1.96(s.e
 The ratio can be directly reported as a percentage which is often easier for audience to understand. So a CI of hazard ratio 0.25 to 0.75 would be:
 
 "Relapse Hazard on Treatmnt B is likley to be between 25% ad 75% of realpse hazard on Treatment A."
+
+#### Process - Continuous
+
+In the case of the continuous what were are doing is calulating the following hazard ratio (this example used heart volume):
+
+$\frac{h(t; \textbf{x}_4 = volume + 1)}{h(t; \textbf{x}_4 = volume)}$
+
+So how does hazard increase when a continuous unit increase by one. Which much like the hazard ratio for a bianry case you will get alot of cancellation. Obviously the other covariates just cancel based on the baseline and:
+
+$\frac{e^{\beta_4(x_4+1)}}{e^{\beta_4(x_4)}} = e^{\beta_4} $
+
+#### Process - Multi level factors
+
+Take k-1 factors and compute the available $\chi^2$ sum them and compare to the $\chi^2_{k-1}$. Remeber the baseline is just absorbed into the intercept like any linear model.
+
+Remember $\chi^2$ is one sided and therefore compare directly to 0.95 and not 0.975.
+
+#### In the exam/IRL
+
+> If you are asked to **Interpret the output uou must do the following:
+>
+> - Significance : Does p-value drop below threshhold
+> - Direction : Is hazard increased or decreased relative to the baseline
+> - Quantify : Give a 95% CI for the hazard ratio.
+
+
+
+
+TODO:
+
+- Go through and derive log-log
+- Do the residual stuff
+- tito correction?
+- Revisit entire likelihood partial aspect 14:00 - 30:20 last lecture

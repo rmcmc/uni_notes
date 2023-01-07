@@ -129,12 +129,127 @@ In the loss to follow up we assume in this course that:
 - We assume those who withdraw have the same probability of dieing as those who don't
 - We assume withdrawls are evenly spaced through the year
 
-## Chapter 2 - Kaplan-Meier
+TODO: Finalise life tables with method.
 
+## Chapter 2.4 - Kaplan-Meier
 
-```{r}
-rnorm(1)
-```
+Life tables are just summaries. They result in a loss of alot of information as the bin dates. Kaplan-Meir is more useful if you have access to the raw data.
+
+The full name of this chapter is the "Kaplan-Meier Product Limit Estimate of S(t)"
+
+> This can be practised endlessly using `survfit`
+
+### No Censoring
+
+Note - The somewhat obscure inclusion of at risk becomes clear when you include censored values.
+
+If there are $n$ observed times to failures ($t_i$) we can order the times (provided there are k distinct). So 
+
+$t_1, t_2, ... t_n$ becomes $t_{(1)} < t_{(2)} < ... < t_{(k)}$. If $d_i$ is the number of deaths at time $t_{(i)}$ then :
+
+$\sum_{i=1}^k d_i = n$ 
+
+If we knwo this then we can estimate the CDF by:
+
+$\hat{F}(t) = \text{Proprtion of lifetimes that are} < t$
+
+So if we are given a time $t$ to calculate we can use the following equation to approximate:
+
+$\frac{1}{n} \sum^{s}_{i=1}d_i$ where $t_s\leq t \leq t_{s+1}$
+
+So as $\hat{S}(t) = 1 - \hat{F}(t)$  we can easily calc by 
+
+$1 - \frac{1}{n} \sum^{s}_{i=1}d_i = \frac{n - \sum^{s}_{i=1}d_i }{n}$ 
+
+A useful trick however is to consider $r_j$ those "at risk" (those who are still alive) just before time $t_j$. Just before $t_j$ we know that $r_{j+1} = r_j - d_j$. In lay terms the number at risk next is the number who were previoulsy at risk less those who just died.
+
+By a telescoping series like effect it can be shown that (notice trailing numerator cancel leading denominator)
+
+$\hat{S}(t) = \frac{n-d_1}{n} \times \frac{n-d_1 - d_2}{n - d_1} \times \frac{n-d_1 - d_2- d_3}{n - d_1 - d_2} \times ... \times \frac{n - d_1 - ... - d_s}{n - d_1 - ... - d_{s-1}}$
+
+At risk $r$ can now be incorperated. as 
+
+$\hat{S}(t) = (1 - \frac{d_1}{r_1}) \times (1 - \frac{d_2}{r_2}) \times ... \times (1 - \frac{d_s}{r_s})$
+
+Simuplifying by notation therefore:
+
+$\hat{S}(t) = \prod^s_{j=1}( 1 - \frac{d_j}{r_j})$ for $t_s\leq t \leq t_{s+1}$
+
+It must hold that $s\geq 1$ and anything before then is assume to equal 1. If everyone dies then the KP curve will go to zero.
+
+### With Censoring
+
+Because we have included the at risk aspecty, censoring is treated in a very similar way except the at risk aspect is modified.
+
+To calculate those at risk just before time $t$ we need to know who was cencosred. We introduce an $I_j$ term which is the number of people censored in the time interval $t_{j-1} \leq t \leq t_j$
+
+$r_1 = n - I_1$
+
+More generally 
+
+$r_j = r_{j-1} - d_{j-1} - I_j$
+
+### Calculating median S(t) with KM
+
+The median survival time is the smallest value of time where the survivor function takes a value of 0.5 or less. 
+
+So for instance in your Kaplan-Meier table you have a something like this
+
+time | S(t)
+----|-----
+4|0.55
+8|0.47
+
+Then the median survival time is 8
+
+### Notes
+
+- KM relies on short intervals for recording death, if not completely continuous. It will not work for things like lifetables
+- If uncencorsed $I_j$ is always 0 so you get the same thing again
+- If the last observation(s) are censcored then the KM curve never reaches 0 but carries on forever. Obviously this isn't real and so becomes biased if the last observation(s) are censored. 
+- Greenwoods provides a formula for sampling error $var(\hat{S}(t)) = (\hat{S}(t))^2 \sum^s_{j=1} \frac{d_j}{r_j(r_j - d_j)}$ for $t_s\leq t \leq t_{s+1}$
+- Hazard can also be calculated as $\hat{H}(t) = -log\hat{S}(t)$. A simplae approiximation for hazard can be shown to be $H(t) \approx \sum_{j-1}^s\frac{d_j}{r_j}$
+
+### Exam method
+
+> This can be practised endlessly using `survfit`
+
+TODO: COMPLETE THIS AFTER SIME PRACTICE 
+
+1) Create a j col from 0 .... to number of unique death timestamp
+2) List all unique deaths in $t_{(j)}$ column. DO NOT INCLUDE CENSOR TIMES
+3) Leave 0 row blank with exception of \hat{S(t)} column, set that to 1.
+4) At risk column 
+
+## Chapter 2.5 - Parametric 
+
+TODO : In this I largely gloss over the likelihood stuff. It feels unlikely it will be examined and I will retun if time.
+
+This chapter assumes an exponetial distribution $T \sim Exp(\lambda)$ is being used.
+
+When doing likelihood for uncensored data you follwo the usual path of finding the Likelihood by multiplying through, get log likelihood if convinient and differentiating with respect to the paramater. So 
+
+$L(\lambda ; t_1, t_2 ... t_n) = \prod^n_{i=1}f(t_i)$
+
+In the censored case however this becomes a little more complicated. You cannot just multiply by the desnities as you do not know the density for the censored values.
+
+If we observed a death then $f(t)$ contributes to the likelihood. However if we do not observed the death $t_i > c_i$ then we say that we know they survived longer than some time so $P(T > c_i) = S(c_i)$. And this contributes to the likelihood.
+
+By combining density and survivor functions and applying the indicator 0=censor, 1=death. The following form of the likelihood can be created:
+
+$L(\lambda) = \prod_{i=1}^n f(t_i)^{\delta_i}S(c_i)^{1-\delta_i} = $
+
+$L(\lambda) = \prod_{i=1}^n [\lambda e^{-\lambda t_i}]^{\delta_i}[e^{-\lambda c_i}]^{1-\delta_i}$
+
+It can then be shown that:
+ 
+$\hat{\lambda} = \frac{\sum^n_{i=1} \delta_i}{\sum^n_{i=1}(t_i\delta_i +(1-\delta_i)c_i)}$
+
+And 
+
+$var(\hat{\lambda}) \approx \frac{\hat{\lambda}^2}{\sum^n_{i=1} \delta_i}$
+
+By asymptopic normality of the MLE the 95% CI is $\hat{\lambda}\pm 1.96\sqrt{var(\hat{\lambda}}$
 
 
 ## Chapter 3  - Two Sample

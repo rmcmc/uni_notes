@@ -220,11 +220,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#weibull" id="toc-weibull" class="nav-link" data-scroll-target="#weibull"><span class="toc-section-number">4.2.2</span>  Weibull</a></li>
   </ul></li>
   <li><a href="#chapter-2---life-tables" id="toc-chapter-2---life-tables" class="nav-link" data-scroll-target="#chapter-2---life-tables"><span class="toc-section-number">4.3</span>  Chapter 2 - Life Tables</a></li>
-  <li><a href="#chapter-2---kaplan-meier" id="toc-chapter-2---kaplan-meier" class="nav-link" data-scroll-target="#chapter-2---kaplan-meier"><span class="toc-section-number">4.4</span>  Chapter 2 - Kaplan-Meier</a></li>
-  <li><a href="#chapter-3---two-sample" id="toc-chapter-3---two-sample" class="nav-link" data-scroll-target="#chapter-3---two-sample"><span class="toc-section-number">4.5</span>  Chapter 3 - Two Sample</a>
+  <li><a href="#chapter-2.4---kaplan-meier" id="toc-chapter-2.4---kaplan-meier" class="nav-link" data-scroll-target="#chapter-2.4---kaplan-meier"><span class="toc-section-number">4.4</span>  Chapter 2.4 - Kaplan-Meier</a>
   <ul class="collapse">
-  <li><a href="#log-rank-test" id="toc-log-rank-test" class="nav-link" data-scroll-target="#log-rank-test"><span class="toc-section-number">4.5.1</span>  Log Rank Test</a></li>
-  <li><a href="#parametric" id="toc-parametric" class="nav-link" data-scroll-target="#parametric"><span class="toc-section-number">4.5.2</span>  Parametric</a></li>
+  <li><a href="#no-censoring" id="toc-no-censoring" class="nav-link" data-scroll-target="#no-censoring"><span class="toc-section-number">4.4.1</span>  No Censoring</a></li>
+  <li><a href="#with-censoring" id="toc-with-censoring" class="nav-link" data-scroll-target="#with-censoring"><span class="toc-section-number">4.4.2</span>  With Censoring</a></li>
+  <li><a href="#calculating-median-st-with-km" id="toc-calculating-median-st-with-km" class="nav-link" data-scroll-target="#calculating-median-st-with-km"><span class="toc-section-number">4.4.3</span>  Calculating median S(t) with KM</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="toc-section-number">4.4.4</span>  Notes</a></li>
+  <li><a href="#exam-method" id="toc-exam-method" class="nav-link" data-scroll-target="#exam-method"><span class="toc-section-number">4.4.5</span>  Exam method</a></li>
+  </ul></li>
+  <li><a href="#chapter-2.5---parametric" id="toc-chapter-2.5---parametric" class="nav-link" data-scroll-target="#chapter-2.5---parametric"><span class="toc-section-number">4.5</span>  Chapter 2.5 - Parametric</a></li>
+  <li><a href="#chapter-3---two-sample" id="toc-chapter-3---two-sample" class="nav-link" data-scroll-target="#chapter-3---two-sample"><span class="toc-section-number">4.6</span>  Chapter 3 - Two Sample</a>
+  <ul class="collapse">
+  <li><a href="#log-rank-test" id="toc-log-rank-test" class="nav-link" data-scroll-target="#log-rank-test"><span class="toc-section-number">4.6.1</span>  Log Rank Test</a></li>
+  <li><a href="#parametric" id="toc-parametric" class="nav-link" data-scroll-target="#parametric"><span class="toc-section-number">4.6.2</span>  Parametric</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="survival.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
@@ -345,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><span class="math inline">\(\gamma &lt; 1\)</span> - Hazard DECREASES with time</li>
 </ul>
 <p><strong>TODO - Add plot to get a feel for various hazrds, etc</strong></p>
-<div class="cell">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -354,8 +362,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>s_t <span class="op">=</span> stats.expon(<span class="dv">0</span>,<span class="dv">10</span>).sf(xs)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>f_t <span class="op">=</span> stats.expon(<span class="dv">0</span>,<span class="dv">10</span>).pdf(xs)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.plot(xs,s_t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="survival_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<div class="cell-output cell-output-display">
+<p><img src="survival_files/figure-html/cell-2-output-1.png" width="571" height="411"></p>
 </div>
 </div>
 </section>
@@ -370,21 +378,114 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>We assume those who withdraw have the same probability of dieing as those who don’t</li>
 <li>We assume withdrawls are evenly spaced through the year</li>
 </ul>
+<p>TODO: Finalise life tables with method.</p>
 </section>
-<section id="chapter-2---kaplan-meier" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="chapter-2---kaplan-meier"><span class="header-section-number">4.4</span> Chapter 2 - Kaplan-Meier</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2110337</code></pre>
-</div>
-</div>
+<section id="chapter-2.4---kaplan-meier" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="chapter-2.4---kaplan-meier"><span class="header-section-number">4.4</span> Chapter 2.4 - Kaplan-Meier</h2>
+<p>Life tables are just summaries. They result in a loss of alot of information as the bin dates. Kaplan-Meir is more useful if you have access to the raw data.</p>
+<p>The full name of this chapter is the “Kaplan-Meier Product Limit Estimate of S(t)”</p>
+<blockquote class="blockquote">
+<p>This can be practised endlessly using <code>survfit</code></p>
+</blockquote>
+<section id="no-censoring" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="no-censoring"><span class="header-section-number">4.4.1</span> No Censoring</h3>
+<p>Note - The somewhat obscure inclusion of at risk becomes clear when you include censored values.</p>
+<p>If there are <span class="math inline">\(n\)</span> observed times to failures (<span class="math inline">\(t_i\)</span>) we can order the times (provided there are k distinct). So</p>
+<p><span class="math inline">\(t_1, t_2, ... t_n\)</span> becomes <span class="math inline">\(t_{(1)} &lt; t_{(2)} &lt; ... &lt; t_{(k)}\)</span>. If <span class="math inline">\(d_i\)</span> is the number of deaths at time <span class="math inline">\(t_{(i)}\)</span> then :</p>
+<p><span class="math inline">\(\sum_{i=1}^k d_i = n\)</span></p>
+<p>If we knwo this then we can estimate the CDF by:</p>
+<p><span class="math inline">\(\hat{F}(t) = \text{Proprtion of lifetimes that are} &lt; t\)</span></p>
+<p>So if we are given a time <span class="math inline">\(t\)</span> to calculate we can use the following equation to approximate:</p>
+<p><span class="math inline">\(\frac{1}{n} \sum^{s}_{i=1}d_i\)</span> where <span class="math inline">\(t_s\leq t \leq t_{s+1}\)</span></p>
+<p>So as <span class="math inline">\(\hat{S}(t) = 1 - \hat{F}(t)\)</span> we can easily calc by</p>
+<p><span class="math inline">\(1 - \frac{1}{n} \sum^{s}_{i=1}d_i = \frac{n - \sum^{s}_{i=1}d_i }{n}\)</span></p>
+<p>A useful trick however is to consider <span class="math inline">\(r_j\)</span> those “at risk” (those who are still alive) just before time <span class="math inline">\(t_j\)</span>. Just before <span class="math inline">\(t_j\)</span> we know that <span class="math inline">\(r_{j+1} = r_j - d_j\)</span>. In lay terms the number at risk next is the number who were previoulsy at risk less those who just died.</p>
+<p>By a telescoping series like effect it can be shown that (notice trailing numerator cancel leading denominator)</p>
+<p><span class="math inline">\(\hat{S}(t) = \frac{n-d_1}{n} \times \frac{n-d_1 - d_2}{n - d_1} \times \frac{n-d_1 - d_2- d_3}{n - d_1 - d_2} \times ... \times \frac{n - d_1 - ... - d_s}{n - d_1 - ... - d_{s-1}}\)</span></p>
+<p>At risk <span class="math inline">\(r\)</span> can now be incorperated. as</p>
+<p><span class="math inline">\(\hat{S}(t) = (1 - \frac{d_1}{r_1}) \times (1 - \frac{d_2}{r_2}) \times ... \times (1 - \frac{d_s}{r_s})\)</span></p>
+<p>Simuplifying by notation therefore:</p>
+<p><span class="math inline">\(\hat{S}(t) = \prod^s_{j=1}( 1 - \frac{d_j}{r_j})\)</span> for <span class="math inline">\(t_s\leq t \leq t_{s+1}\)</span></p>
+<p>It must hold that <span class="math inline">\(s\geq 1\)</span> and anything before then is assume to equal 1. If everyone dies then the KP curve will go to zero.</p>
 </section>
-<section id="chapter-3---two-sample" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="chapter-3---two-sample"><span class="header-section-number">4.5</span> Chapter 3 - Two Sample</h2>
+<section id="with-censoring" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="with-censoring"><span class="header-section-number">4.4.2</span> With Censoring</h3>
+<p>Because we have included the at risk aspecty, censoring is treated in a very similar way except the at risk aspect is modified.</p>
+<p>To calculate those at risk just before time <span class="math inline">\(t\)</span> we need to know who was cencosred. We introduce an <span class="math inline">\(I_j\)</span> term which is the number of people censored in the time interval <span class="math inline">\(t_{j-1} \leq t \leq t_j\)</span></p>
+<p><span class="math inline">\(r_1 = n - I_1\)</span></p>
+<p>More generally</p>
+<p><span class="math inline">\(r_j = r_{j-1} - d_{j-1} - I_j\)</span></p>
+</section>
+<section id="calculating-median-st-with-km" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="calculating-median-st-with-km"><span class="header-section-number">4.4.3</span> Calculating median S(t) with KM</h3>
+<p>The median survival time is the smallest value of time where the survivor function takes a value of 0.5 or less.</p>
+<p>So for instance in your Kaplan-Meier table you have a something like this</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>time</th>
+<th>S(t)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>0.55</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>0.47</td>
+</tr>
+</tbody>
+</table>
+<p>Then the median survival time is 8</p>
+</section>
+<section id="notes" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="notes"><span class="header-section-number">4.4.4</span> Notes</h3>
+<ul>
+<li>KM relies on short intervals for recording death, if not completely continuous. It will not work for things like lifetables</li>
+<li>If uncencorsed <span class="math inline">\(I_j\)</span> is always 0 so you get the same thing again</li>
+<li>If the last observation(s) are censcored then the KM curve never reaches 0 but carries on forever. Obviously this isn’t real and so becomes biased if the last observation(s) are censored.</li>
+<li>Greenwoods provides a formula for sampling error <span class="math inline">\(var(\hat{S}(t)) = (\hat{S}(t))^2 \sum^s_{j=1} \frac{d_j}{r_j(r_j - d_j)}\)</span> for <span class="math inline">\(t_s\leq t \leq t_{s+1}\)</span></li>
+<li>Hazard can also be calculated as <span class="math inline">\(\hat{H}(t) = -log\hat{S}(t)\)</span>. A simplae approiximation for hazard can be shown to be <span class="math inline">\(H(t) \approx \sum_{j-1}^s\frac{d_j}{r_j}\)</span></li>
+</ul>
+</section>
+<section id="exam-method" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="exam-method"><span class="header-section-number">4.4.5</span> Exam method</h3>
+<blockquote class="blockquote">
+<p>This can be practised endlessly using <code>survfit</code></p>
+</blockquote>
+<p>TODO: COMPLETE THIS AFTER SIME PRACTICE</p>
+<ol type="1">
+<li>Create a j col from 0 …. to number of unique death timestamp</li>
+<li>List all unique deaths in <span class="math inline">\(t_{(j)}\)</span> column. DO NOT INCLUDE CENSOR TIMES</li>
+<li>Leave 0 row blank with exception of column, set that to 1.</li>
+<li>At risk column</li>
+</ol>
+</section>
+</section>
+<section id="chapter-2.5---parametric" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="chapter-2.5---parametric"><span class="header-section-number">4.5</span> Chapter 2.5 - Parametric</h2>
+<p>TODO : In this I largely gloss over the likelihood stuff. It feels unlikely it will be examined and I will retun if time.</p>
+<p>This chapter assumes an exponetial distribution <span class="math inline">\(T \sim Exp(\lambda)\)</span> is being used.</p>
+<p>When doing likelihood for uncensored data you follwo the usual path of finding the Likelihood by multiplying through, get log likelihood if convinient and differentiating with respect to the paramater. So</p>
+<p><span class="math inline">\(L(\lambda ; t_1, t_2 ... t_n) = \prod^n_{i=1}f(t_i)\)</span></p>
+<p>In the censored case however this becomes a little more complicated. You cannot just multiply by the desnities as you do not know the density for the censored values.</p>
+<p>If we observed a death then <span class="math inline">\(f(t)\)</span> contributes to the likelihood. However if we do not observed the death <span class="math inline">\(t_i &gt; c_i\)</span> then we say that we know they survived longer than some time so <span class="math inline">\(P(T &gt; c_i) = S(c_i)\)</span>. And this contributes to the likelihood.</p>
+<p>By combining density and survivor functions and applying the indicator 0=censor, 1=death. The following form of the likelihood can be created:</p>
+<p>$L() = _{i=1}^n f(t_i)^{_i}S(c_i)^{1-_i} = $</p>
+<p><span class="math inline">\(L(\lambda) = \prod_{i=1}^n [\lambda e^{-\lambda t_i}]^{\delta_i}[e^{-\lambda c_i}]^{1-\delta_i}\)</span></p>
+<p>It can then be shown that:</p>
+<p><span class="math inline">\(\hat{\lambda} = \frac{\sum^n_{i=1} \delta_i}{\sum^n_{i=1}(t_i\delta_i +(1-\delta_i)c_i)}\)</span></p>
+<p>And</p>
+<p><span class="math inline">\(var(\hat{\lambda}) \approx \frac{\hat{\lambda}^2}{\sum^n_{i=1} \delta_i}\)</span></p>
+<p>By asymptopic normality of the MLE the 95% CI is <span class="math inline">\(\hat{\lambda}\pm 1.96\sqrt{var(\hat{\lambda}}\)</span></p>
+</section>
+<section id="chapter-3---two-sample" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="chapter-3---two-sample"><span class="header-section-number">4.6</span> Chapter 3 - Two Sample</h2>
 <p>Kaplan-Meier is just a visual aid, we need to look at tests</p>
-<section id="log-rank-test" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="log-rank-test"><span class="header-section-number">4.5.1</span> Log Rank Test</h3>
+<section id="log-rank-test" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="log-rank-test"><span class="header-section-number">4.6.1</span> Log Rank Test</h3>
 <p>Non-parametric.</p>
 <p><span class="math display">\[ H_0 : S_1(t) = S_2(t)\]</span></p>
 <p><span class="math display">\[ H_A : S_1(t) \neq S_2(t)\]</span></p>
@@ -405,8 +506,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p><span class="math display">\[ LR = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2} \sim \chi^2_{1}\]</span></p>
 </section>
-<section id="parametric" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="parametric"><span class="header-section-number">4.5.2</span> Parametric</h3>
+<section id="parametric" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="parametric"><span class="header-section-number">4.6.2</span> Parametric</h3>
 
 
 </section>
