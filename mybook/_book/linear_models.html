@@ -144,6 +144,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro"><span class="toc-section-number">5.1</span>  Intro</a></li>
+  <li><a href="#chapter-4---hypothesis-testing" id="toc-chapter-4---hypothesis-testing" class="nav-link" data-scroll-target="#chapter-4---hypothesis-testing"><span class="toc-section-number">5.2</span>  Chapter 4 - Hypothesis testing</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="linear_models.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -185,6 +186,19 @@ ul.task-list li input[type="checkbox"] {
 <p>This combined creates</p>
 <p><span class="math inline">\(\boldsymbol{y} = \boldsymbol{X} \boldsymbol{\beta}+ \boldsymbol{\epsilon}\)</span></p>
 <p><span class="math inline">\(\boldsymbol{X}\)</span> has the shape <span class="math inline">\(n \times p\)</span></p>
+</section>
+<section id="chapter-4---hypothesis-testing" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="chapter-4---hypothesis-testing"><span class="header-section-number">5.2</span> Chapter 4 - Hypothesis testing</h2>
+<p>The most natural and simple hypothesis is whether a given <span class="math inline">\(\beta\)</span> is equal to 0. It has no effect on the model.</p>
+<p>However there might be more general null hypothesis. Eg:</p>
+<ul>
+<li><span class="math inline">\(\beta_1 = \beta_2 = \beta_3 = 0\)</span></li>
+<li><span class="math inline">\(\beta_1 = \beta_2\)</span></li>
+</ul>
+<p>To cover all bases (for linear hypothesis) however we can say:</p>
+<p><span class="math inline">\(H_0 : \boldsymbol{C\beta} = c\)</span></p>
+<p>C is <span class="math inline">\(q \times p\)</span> and c is <span class="math inline">\(q \times 1\)</span> of known constants. C has rank q, so full rank.</p>
+<p>So at each row of C and c we are asserting some hypothesis that the linear combination of C is equal to c.</p>
 
 
 </section>

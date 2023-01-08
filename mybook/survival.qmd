@@ -251,6 +251,36 @@ $var(\hat{\lambda}) \approx \frac{\hat{\lambda}^2}{\sum^n_{i=1} \delta_i}$
 
 By asymptopic normality of the MLE the 95% CI is $\hat{\lambda}\pm 1.96\sqrt{var(\hat{\lambda}}$
 
+For the exponential we calculate the mean by $\frac{1}{var(\hat{\lambda})}$ and the variance of this can be shown to be 
+
+$var(\hat{\mu}) = \frac{\hat{\mu}^2}{\sum_{i=1}^n \delta_i}$
+
+TODO: What is the value in learning equation 56/61 with exp denom.
+TODO: RAndom censoring, log normal and others (2.5.6)
+
+### Using R - Exponetial
+
+The exponetial model can be fitted in r with `survreg`, where `dist='exponential'`.
+
+For the MLE of $\hat{\lambda}$ you take $exp(-\beta_0)$ assuming no covariates  eg `time ~ 1`. The easiest way to get the CI is to apply +/- 1.96 standard error to beta pre exponent. This will give some minor disagreement though to the division by death count method.
+
+>$\hat{\lambda} = exp(-\hat{\beta_0} \pm 1.96\times se(\hat{\beta_0}))$
+
+
+### Using R - Weibull
+
+Under the weibull again $\hat{\lambda} = exp(-\hat{\beta_0} \pm 1.96\times se(\hat{\beta_0}))$ and $\hat{\gamma} = \frac{1}{\text{scale}}$
+
+The weibull is summarised in our work as $T \sim Weibull(\lambda, \gamma)$
+
+When $\gamma = 1$ we are left with the exponential distribution.
+
+### Workflow:
+
+1. fit a kaplan-meier. Is the decay expoenntial? then exp could make sense
+
+
+
 
 ## Chapter 3  - Two Sample
 
@@ -283,8 +313,34 @@ Steps:
 
 $$ LR = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2} \sim \chi^2_{1}$$
 
-
+To perform the logrank in r perform the following `survdiff(formula = 'time ~ treatment')`
 
 ### Parametric 
+
+There are two types of parametric methods of interest MLE test and Likelihood ratio
+
+### MLE Test
+
+Effectively looks at the paramters as normally distributed (though any test, distribution is applicable). Then performs standard tests upon them. So in the case of lambda, given it is normally distributed as an estimator.
+
+$\frac{\hat{\lambda}_1 - \hat{\lambda}_2}{\sqrt{\frac{\hat{\lambda}_1^2}{\Delta_1}-\frac{\hat{\lambda}_2^2}{\Delta_2}}} \sim N(0,1)$
+
+Here $\Delta$ is the number of deaths and $\hat{\lambda}$ is the number of deaths over total time (death and censor).
+
+### Likelihood Ratio
+
+In formula sheet
+
+TODO: run through the proof
+
+### `Survreg`
+
+From survreg we can use the output of a two factor analysis to easily do a MLE test by taking the parameter and covariance matrix.
+
+For LRT look at the following line near the bottom for the p-value.
+
+Chisq=1.2 on 1 degrees of freedom , p=0.27
+
+
 
 

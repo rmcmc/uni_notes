@@ -36,3 +36,21 @@ $\boldsymbol{y} =
 \boldsymbol{\epsilon}$
 
 $\boldsymbol{X}$ has the shape $n \times p$
+
+
+## Chapter 4 - Hypothesis testing
+
+The most natural and simple hypothesis is whether a given $\beta$ is equal to 0. It has no effect on the model.
+
+However there might be more general null hypothesis. Eg:
+
+- $\beta_1 = \beta_2 = \beta_3 = 0$
+- $\beta_1 = \beta_2$
+
+To cover all bases (for linear hypothesis) however we can say:
+
+$H_0 : \boldsymbol{C\beta} = c$
+
+C is $q \times p$ and c is $q \times 1$ of known constants. C has rank q, so full rank.
+
+So at each row of C and c we are asserting some hypothesis that the linear combination of C is equal to c.

@@ -228,11 +228,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="toc-section-number">4.4.4</span>  Notes</a></li>
   <li><a href="#exam-method" id="toc-exam-method" class="nav-link" data-scroll-target="#exam-method"><span class="toc-section-number">4.4.5</span>  Exam method</a></li>
   </ul></li>
-  <li><a href="#chapter-2.5---parametric" id="toc-chapter-2.5---parametric" class="nav-link" data-scroll-target="#chapter-2.5---parametric"><span class="toc-section-number">4.5</span>  Chapter 2.5 - Parametric</a></li>
+  <li><a href="#chapter-2.5---parametric" id="toc-chapter-2.5---parametric" class="nav-link" data-scroll-target="#chapter-2.5---parametric"><span class="toc-section-number">4.5</span>  Chapter 2.5 - Parametric</a>
+  <ul class="collapse">
+  <li><a href="#using-r---exponetial" id="toc-using-r---exponetial" class="nav-link" data-scroll-target="#using-r---exponetial"><span class="toc-section-number">4.5.1</span>  Using R - Exponetial</a></li>
+  <li><a href="#using-r---weibull" id="toc-using-r---weibull" class="nav-link" data-scroll-target="#using-r---weibull"><span class="toc-section-number">4.5.2</span>  Using R - Weibull</a></li>
+  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow"><span class="toc-section-number">4.5.3</span>  Workflow:</a></li>
+  </ul></li>
   <li><a href="#chapter-3---two-sample" id="toc-chapter-3---two-sample" class="nav-link" data-scroll-target="#chapter-3---two-sample"><span class="toc-section-number">4.6</span>  Chapter 3 - Two Sample</a>
   <ul class="collapse">
   <li><a href="#log-rank-test" id="toc-log-rank-test" class="nav-link" data-scroll-target="#log-rank-test"><span class="toc-section-number">4.6.1</span>  Log Rank Test</a></li>
   <li><a href="#parametric" id="toc-parametric" class="nav-link" data-scroll-target="#parametric"><span class="toc-section-number">4.6.2</span>  Parametric</a></li>
+  <li><a href="#mle-test" id="toc-mle-test" class="nav-link" data-scroll-target="#mle-test"><span class="toc-section-number">4.6.3</span>  MLE Test</a></li>
+  <li><a href="#likelihood-ratio" id="toc-likelihood-ratio" class="nav-link" data-scroll-target="#likelihood-ratio"><span class="toc-section-number">4.6.4</span>  Likelihood Ratio</a></li>
+  <li><a href="#survreg" id="toc-survreg" class="nav-link" data-scroll-target="#survreg"><span class="toc-section-number">4.6.5</span>  <code>Survreg</code></a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="survival.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
@@ -480,6 +488,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>And</p>
 <p><span class="math inline">\(var(\hat{\lambda}) \approx \frac{\hat{\lambda}^2}{\sum^n_{i=1} \delta_i}\)</span></p>
 <p>By asymptopic normality of the MLE the 95% CI is <span class="math inline">\(\hat{\lambda}\pm 1.96\sqrt{var(\hat{\lambda}}\)</span></p>
+<p>For the exponential we calculate the mean by <span class="math inline">\(\frac{1}{var(\hat{\lambda})}\)</span> and the variance of this can be shown to be</p>
+<p><span class="math inline">\(var(\hat{\mu}) = \frac{\hat{\mu}^2}{\sum_{i=1}^n \delta_i}\)</span></p>
+<p>TODO: What is the value in learning equation 56/61 with exp denom. TODO: RAndom censoring, log normal and others (2.5.6)</p>
+<section id="using-r---exponetial" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="using-r---exponetial"><span class="header-section-number">4.5.1</span> Using R - Exponetial</h3>
+<p>The exponetial model can be fitted in r with <code>survreg</code>, where <code>dist='exponential'</code>.</p>
+<p>For the MLE of <span class="math inline">\(\hat{\lambda}\)</span> you take <span class="math inline">\(exp(-\beta_0)\)</span> assuming no covariates eg <code>time ~ 1</code>. The easiest way to get the CI is to apply +/- 1.96 standard error to beta pre exponent. This will give some minor disagreement though to the division by death count method.</p>
+<blockquote class="blockquote">
+<p><span class="math inline">\(\hat{\lambda} = exp(-\hat{\beta_0} \pm 1.96\times se(\hat{\beta_0}))\)</span></p>
+</blockquote>
+</section>
+<section id="using-r---weibull" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="using-r---weibull"><span class="header-section-number">4.5.2</span> Using R - Weibull</h3>
+<p>Under the weibull again <span class="math inline">\(\hat{\lambda} = exp(-\hat{\beta_0} \pm 1.96\times se(\hat{\beta_0}))\)</span> and <span class="math inline">\(\hat{\gamma} = \frac{1}{\text{scale}}\)</span></p>
+<p>The weibull is summarised in our work as <span class="math inline">\(T \sim Weibull(\lambda, \gamma)\)</span></p>
+<p>When <span class="math inline">\(\gamma = 1\)</span> we are left with the exponential distribution.</p>
+</section>
+<section id="workflow" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="workflow"><span class="header-section-number">4.5.3</span> Workflow:</h3>
+<ol type="1">
+<li>fit a kaplan-meier. Is the decay expoenntial? then exp could make sense</li>
+</ol>
+</section>
 </section>
 <section id="chapter-3---two-sample" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="chapter-3---two-sample"><span class="header-section-number">4.6</span> Chapter 3 - Two Sample</h2>
@@ -505,9 +536,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Calculate using below equation</li>
 </ol>
 <p><span class="math display">\[ LR = \frac{(O_1 - E_1)^2}{E_1} + \frac{(O_2 - E_2)^2}{E_2} \sim \chi^2_{1}\]</span></p>
+<p>To perform the logrank in r perform the following <code>survdiff(formula = 'time ~ treatment')</code></p>
 </section>
 <section id="parametric" class="level3" data-number="4.6.2">
 <h3 data-number="4.6.2" class="anchored" data-anchor-id="parametric"><span class="header-section-number">4.6.2</span> Parametric</h3>
+<p>There are two types of parametric methods of interest MLE test and Likelihood ratio</p>
+</section>
+<section id="mle-test" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="mle-test"><span class="header-section-number">4.6.3</span> MLE Test</h3>
+<p>Effectively looks at the paramters as normally distributed (though any test, distribution is applicable). Then performs standard tests upon them. So in the case of lambda, given it is normally distributed as an estimator.</p>
+<p><span class="math inline">\(\frac{\hat{\lambda}_1 - \hat{\lambda}_2}{\sqrt{\frac{\hat{\lambda}_1^2}{\Delta_1}-\frac{\hat{\lambda}_2^2}{\Delta_2}}} \sim N(0,1)\)</span></p>
+<p>Here <span class="math inline">\(\Delta\)</span> is the number of deaths and <span class="math inline">\(\hat{\lambda}\)</span> is the number of deaths over total time (death and censor).</p>
+</section>
+<section id="likelihood-ratio" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="likelihood-ratio"><span class="header-section-number">4.6.4</span> Likelihood Ratio</h3>
+<p>In formula sheet</p>
+<p>TODO: run through the proof</p>
+</section>
+<section id="survreg" class="level3" data-number="4.6.5">
+<h3 data-number="4.6.5" class="anchored" data-anchor-id="survreg"><span class="header-section-number">4.6.5</span> <code>Survreg</code></h3>
+<p>From survreg we can use the output of a two factor analysis to easily do a MLE test by taking the parameter and covariance matrix.</p>
+<p>For LRT look at the following line near the bottom for the p-value.</p>
+<p>Chisq=1.2 on 1 degrees of freedom , p=0.27</p>
 
 
 </section>
