@@ -51,6 +51,119 @@ To cover all bases (for linear hypothesis) however we can say:
 
 $H_0 : \boldsymbol{C\beta} = c$
 
-C is $q \times p$ and c is $q \times 1$ of known constants. C has rank q, so full rank.
+$H_A : \boldsymbol{C\beta} \neq c$ (At least one is not equal.)
 
-So at each row of C and c we are asserting some hypothesis that the linear combination of C is equal to c.
+C is $q \times p$ and c is $q \times 1$ of known constants. C has rank q, so full rank. So at each row of C and c we are asserting some hypothesis that the linear combination of C is equal to c. With this framework it is not possible to specify one-sided tests, though this is rarely of interest.
+
+### Some eamples of C and c
+
+$H_0 : \beta_1 = 1, \beta_2=2$
+
+$C =
+\begin{pmatrix}
+0 & 1 & 0\\
+0 & 0 & 1
+\end{pmatrix} =
+\begin{pmatrix}
+1 \\
+2
+\end{pmatrix}$
+
+\
+
+$H_0 : \beta_1 = \beta_2 = 0$
+ 
+$C =
+\begin{pmatrix}
+0 & 1 & 0\\
+0 & 0 & 1
+\end{pmatrix} =
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix}$
+
+\
+
+$H_0 : \beta_2 = 0$
+ 
+$C =
+\begin{pmatrix}
+0 & 0 & 1
+\end{pmatrix} =
+\begin{pmatrix}
+0 
+\end{pmatrix}$
+
+\
+
+$H_0 : \beta_2 = 3$
+ 
+$C =
+\begin{pmatrix}
+0 & 0 & 1
+\end{pmatrix} =
+\begin{pmatrix}
+3
+\end{pmatrix}$
+
+\
+
+$H_0 : \beta_1 = \beta_2$ Which is equivalent to $H_0 : \beta_1 - \beta_2 = 0$
+ 
+$C =
+\begin{pmatrix}
+0 & 1 & -1
+\end{pmatrix} =
+\begin{pmatrix}
+0
+\end{pmatrix}$
+
+### Test Stat  q > 1
+
+$\frac{(C \hat{\beta} -c )^T(C(X^TX)^{-1}C^T)^{-1}(C \hat{\beta} -c )}{q\hat{\sigma}^2} \sim F_{q, n-p}$
+
+Note : This is a one-sided test so $1-\alpha$ (0.95) not  $1-\alpha / 2$ (0.975, 95% CI). This is due to square terms.
+
+### Test Stat  q = 1
+
+When there is only one test eg. $\beta_1=0$ then the abiove equation can be simplified to a t-test. This becomes:
+
+$\frac{\hat{\beta}_i - c_i}{\hat{\sigma} \sqrt{g_{ii}}} \sim t_{n-p}$
+
+Where $G = (X^TX)^{-1}$ and $g_{ii}$ is the *i*-th diagonal term.
+
+### Some notes
+
+The r `summary` will tell you $\hat{\sigma}$ through the "Residual Standard Error" line
+
+The F-Statistic in `summary` is testing whether all coefficients other than intercept are 0
+
+Pay little attention to tests of the individual coefficients if doing multi coeefficent tests. Significance can easily flip between all and individuals. Even if all are indicating p>0.05 and test says p>0.05.
+
+### Nested models
+
+By nested models we mean comparing one model to another, where one of them contains a subset of the other. It is usually used to determine whether there is value in including the term in the term(s) in the model.
+
+We are trying to trade off increasing regression sum of squares vs excluding the term. So there is value in verifying whether something should be included.
+
+An example is:
+
+$y= \beta_0 + \beta_1x_1$ vs $y= \beta_0 + \beta_1x_1 + \beta_2 x^2$
+
+So does $\beta_2 = 0$?
+
+For nested models we use a similar framework to before but modify the $\beta$ vector. The C matrix becomes a 0 matrix with the indentity matrix appended to the right where the $I_n$ has an n of $p_f - p_r$ where $p_f$ is parameter in the full model and $p_r$ is the number of params in the reduced model.
+
+In $\boldsymbol{\beta}$ we have a stack of vectors $(\boldsymbol{\beta}_1, \boldsymbol{\beta}_2)^T$. Where $(\boldsymbol{\beta}_1$ is a $p_r \times 1$ and $(\boldsymbol{\beta}_2$ is a $(p_f - p_r) \times 1$.
+
+Element order is arbituary provided that we are consistent between all matrices and vectors.
+
+A useful summary is via ANOVA tables where:
+
+Source of Variation | Sum of Squares (SS) | DoF | Mean Square (MS) | Mean Square Ratio (MSR)
+--------------------|---------------------|-----|------------------|-------------------------
+Due to $X_1$ is $\beta_2$ = 0 | $S_1$ | $p_r$ | $S_1 / p_r$ | $F_1$
+Due to $X_2$ only | $S_2$ | $p_f - p_r$ | $S_2 /(p_f - p_r)$ | $F_2$
+Residual | $S_r$ | $n -p_f$ | $\hat{\sigma}^2$ | $F_2$
+Total   | $y^Ty$ | n | |
