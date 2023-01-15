@@ -121,7 +121,7 @@ $C =
 
 ### Test Stat  q > 1
 
-$\frac{(C \hat{\beta} -c )^T(C(X^TX)^{-1}C^T)^{-1}(C \hat{\beta} -c )}{q\hat{\sigma}^2} \sim F_{q, n-p}$
+$$\frac{(C \hat{\beta} -c )^T(C(X^TX)^{-1}C^T)^{-1}(C \hat{\beta} -c )}{q\hat{\sigma}^2} \sim F_{q, n-p}$${#eq-f-test}
 
 Note : This is a one-sided test so $1-\alpha$ (0.95) not  $1-\alpha / 2$ (0.975, 95% CI). This is due to square terms.
 
@@ -167,3 +167,102 @@ Due to $X_1$ is $\beta_2$ = 0 | $S_1$ | $p_r$ | $S_1 / p_r$ | $F_1$
 Due to $X_2$ only | $S_2$ | $p_f - p_r$ | $S_2 /(p_f - p_r)$ | $F_2$
 Residual | $S_r$ | $n -p_f$ | $\hat{\sigma}^2$ | $F_2$
 Total   | $y^Ty$ | n | |
+
+The MSR are calculated by dividing the variance of each model by the product of the Dof and residuals so:
+
+$F_2 = \frac{S_2}{(p_f-p_r)\hat{\sigma}^2}$
+
+$F_1 = \frac{S_1}{p_r\hat{\sigma}^2}$
+
+We typically work through these tests in sequence, firstly test 2 then test 1. 
+
+The initial test on $F_2$ is just the test in @eq-f-test. Where the null is $\beta_2 = 0$ and the null dist is $F_{p_f-p_r, n-p_f}$ (remember it's one sided) and we test if $F_2 >F_{p_f-p_r, n-p_f}$. $F_2$ can also be calculated from residual sum of squares of models (RSS,, which can be obtained from ANOVA summary in R).
+
+$$F_2 = \frac{(RRS_r - RSS_f) / (p_f - p_r)}{(RSS_f)/(n-p_f)}$$ {#eq-exam-f}
+
+After $\beta_2$ we test the hypothesis that $\beta_1=0$ given we know $\beta_1$ is 0, or $\boldsymbol{\beta}=\textbf{0}$ (this is a little handwavy as the test doesn't poove the null, but it is accepted convention).
+
+We test $F_1 > F_{p_r, n-p_f}$
+
+### Minimal model
+
+A special test based on the previous section. If we set $c=0$ and $C=I$ we would test that every single coefficient is equal to zero. This basically tests that y is 0 and constant irrespetive of the variables. What we really want to test howeveris that y has a floating mean, but is constant. 
+
+Therefore we test that the regressors only are zero by saying $\beta_1 = \beta_0$ and that the $\beta_2$ is just all the regressors, making a p-1 length. The $\beta_0$ model is called the minimal or null model, with a mean of $\beta_0$ and variance of $\sigma^2$. As we don't really care if $beta_0$ is 0 or not we exclude it from the ANOVA tables.
+
+TODO: read this https://stats.stackexchange.com/questions/256726/linear-regression-what-does-the-f-statistic-r-squared-and-residual-standard-err
+
+So in this model $p_r=1$ and $p_f = p-1$
+
+It can be show (see notes p29) that:
+
+Source of Variation | Sum of Squares (SS) | DoF | Mean Square (MS) | Mean Square Ratio (MSR)
+--------------------|---------------------|-----|------------------|-------------------------
+Due to regressors | $S_2 = \hat{\beta}^TX^TX\hat{\beta} - n \bar{y}^2$ | $p-1$ | $S_2 / (p-1)$ | $F$
+Residual | $S_r = y^Ty -\hat{\beta}^TX^TX\hat{\beta}$ | $n -p$ | $\hat{\sigma}^2$ | 
+Total   | $S_{yy} =y^Ty - n\bar{y}^2$ | n-1 | |
+
+So $F = \frac{S_2}{(p-1)\hat{\sigma}^2}$ where null is $F_{p-1, n-p}$
+
+TODO: what are they talking about top of p30
+
+### ANOVA - Application in R
+
+> This is highly likley to be examined
+
+With r you have two choices for ANOVA one where you enter each model seperately where one model is the baseline and the other is more complex so :
+
+- $y = \beta_0 + \beta_1x_1$ (mdl_1)
+- $y = \beta_0 + \beta_1x_1 + \beta_2x_1^2$ (mdl_2)
+
+so `anova(mdl_1, mdl_2)` or you simply run `anova(mdl_2)`.
+
+In the first option it automatically detects the extra terms and assigns those to $\beta_2$ and then $H_0: \beta_2 = 0$ is assessed. Values from the summary of this can readily be placed into @eq-exam-f.
+
+TODO : Down from the blue arrow
+
+## Chapter 5
+
+Remember:
+
+$\epsilon_i = y_i - \textbf{x}_i^T\boldsymbol{\beta}$
+
+We assume that $\epsilon_i$ is:
+
+- 0 mean, there is no systematic error from $\textbf{X}\boldsymbol{\beta}$
+- Independent
+- Common variance - homoscedasticity
+- Normaly distributed
+
+We check these through residuals (the estimate of the error based on fitted model). If the model were to be correct they would be normally distributed, however they are not independent or with common variance. Unequal variances can be corrected for by standardised residuals:
+
+$s_i \frac{e_i}{\sqrt{\hat{\text{Var}}(e_i)}} \sim t_{n-p}$ where $\hat{\text{Var}}(e_i)$ is the estimate of variance
+
+>  observed residuals are not independent and do not have equal variances
+
+### q-q plot
+
+Plots quantiles of observed vs expected and you should get a straight line, you may plot:
+
+- Standard Normal against observed data
+- Normal with mean and variance of observed against observed data
+- Standardised residual 
+
+You should see a straight line of plots if the fit is appropriate. If:
+
+- The plot is bowed there is skew
+- Down left/Up right = heavier tails
+
+Histograms should be avoided if the dataset is small.
+
+### Homoscedasticity
+
+Plot a scatter graph of residual against the fitted value (y predicted). This should be a uniform band. Typically issues arise where the results fan outwards to the larger values
+
+### Independence
+
+Typically we plot the residual in observed order, through an "index plot". The order is based on SME knowledge (time, distance,etc). We are looking for trends, closely linked order points, etc.
+
+### Formal testing
+
+We can formally test whether the residuals contain outliers by standardising the residuals and looking for points 
