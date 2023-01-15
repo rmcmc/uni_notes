@@ -151,6 +151,15 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#test-stat-q-1-1" id="toc-test-stat-q-1-1" class="nav-link" data-scroll-target="#test-stat-q-1-1"><span class="toc-section-number">5.2.3</span>  Test Stat q = 1</a></li>
   <li><a href="#some-notes" id="toc-some-notes" class="nav-link" data-scroll-target="#some-notes"><span class="toc-section-number">5.2.4</span>  Some notes</a></li>
   <li><a href="#nested-models" id="toc-nested-models" class="nav-link" data-scroll-target="#nested-models"><span class="toc-section-number">5.2.5</span>  Nested models</a></li>
+  <li><a href="#minimal-model" id="toc-minimal-model" class="nav-link" data-scroll-target="#minimal-model"><span class="toc-section-number">5.2.6</span>  Minimal model</a></li>
+  <li><a href="#anova---application-in-r" id="toc-anova---application-in-r" class="nav-link" data-scroll-target="#anova---application-in-r"><span class="toc-section-number">5.2.7</span>  ANOVA - Application in R</a></li>
+  </ul></li>
+  <li><a href="#chapter-5" id="toc-chapter-5" class="nav-link" data-scroll-target="#chapter-5"><span class="toc-section-number">5.3</span>  Chapter 5</a>
+  <ul class="collapse">
+  <li><a href="#q-q-plot" id="toc-q-q-plot" class="nav-link" data-scroll-target="#q-q-plot"><span class="toc-section-number">5.3.1</span>  q-q plot</a></li>
+  <li><a href="#homoscedasticity" id="toc-homoscedasticity" class="nav-link" data-scroll-target="#homoscedasticity"><span class="toc-section-number">5.3.2</span>  Homoscedasticity</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="toc-section-number">5.3.3</span>  Independence</a></li>
+  <li><a href="#formal-testing" id="toc-formal-testing" class="nav-link" data-scroll-target="#formal-testing"><span class="toc-section-number">5.3.4</span>  Formal testing</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="linear_models.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
@@ -229,7 +238,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="test-stat-q-1" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="test-stat-q-1"><span class="header-section-number">5.2.2</span> Test Stat q &gt; 1</h3>
-<p><span class="math inline">\(\frac{(C \hat{\beta} -c )^T(C(X^TX)^{-1}C^T)^{-1}(C \hat{\beta} -c )}{q\hat{\sigma}^2} \sim F_{q, n-p}\)</span></p>
+<p><span id="eq-f-test"><span class="math display">\[\frac{(C \hat{\beta} -c )^T(C(X^TX)^{-1}C^T)^{-1}(C \hat{\beta} -c )}{q\hat{\sigma}^2} \sim F_{q, n-p} \tag{5.1}\]</span></span></p>
 <p>Note : This is a one-sided test so <span class="math inline">\(1-\alpha\)</span> (0.95) not <span class="math inline">\(1-\alpha / 2\)</span> (0.975, 95% CI). This is due to square terms.</p>
 </section>
 <section id="test-stat-q-1-1" class="level3" data-number="5.2.3">
@@ -303,6 +312,123 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p>The MSR are calculated by dividing the variance of each model by the product of the Dof and residuals so:</p>
+<p><span class="math inline">\(F_2 = \frac{S_2}{(p_f-p_r)\hat{\sigma}^2}\)</span></p>
+<p><span class="math inline">\(F_1 = \frac{S_1}{p_r\hat{\sigma}^2}\)</span></p>
+<p>We typically work through these tests in sequence, firstly test 2 then test 1.</p>
+<p>The initial test on <span class="math inline">\(F_2\)</span> is just the test in <a href="#eq-f-test">Equation&nbsp;<span>5.1</span></a>. Where the null is <span class="math inline">\(\beta_2 = 0\)</span> and the null dist is <span class="math inline">\(F_{p_f-p_r, n-p_f}\)</span> (remember it’s one sided) and we test if <span class="math inline">\(F_2 &gt;F_{p_f-p_r, n-p_f}\)</span>. <span class="math inline">\(F_2\)</span> can also be calculated from residual sum of squares of models (RSS,, which can be obtained from ANOVA summary in R).</p>
+<p><span id="eq-exam-f"><span class="math display">\[F_2 = \frac{(RRS_r - RSS_f) / (p_f - p_r)}{(RSS_f)/(n-p_f)} \tag{5.2}\]</span></span></p>
+<p>After <span class="math inline">\(\beta_2\)</span> we test the hypothesis that <span class="math inline">\(\beta_1=0\)</span> given we know <span class="math inline">\(\beta_1\)</span> is 0, or <span class="math inline">\(\boldsymbol{\beta}=\textbf{0}\)</span> (this is a little handwavy as the test doesn’t poove the null, but it is accepted convention).</p>
+<p>We test <span class="math inline">\(F_1 &gt; F_{p_r, n-p_f}\)</span></p>
+</section>
+<section id="minimal-model" class="level3" data-number="5.2.6">
+<h3 data-number="5.2.6" class="anchored" data-anchor-id="minimal-model"><span class="header-section-number">5.2.6</span> Minimal model</h3>
+<p>A special test based on the previous section. If we set <span class="math inline">\(c=0\)</span> and <span class="math inline">\(C=I\)</span> we would test that every single coefficient is equal to zero. This basically tests that y is 0 and constant irrespetive of the variables. What we really want to test howeveris that y has a floating mean, but is constant.</p>
+<p>Therefore we test that the regressors only are zero by saying <span class="math inline">\(\beta_1 = \beta_0\)</span> and that the <span class="math inline">\(\beta_2\)</span> is just all the regressors, making a p-1 length. The <span class="math inline">\(\beta_0\)</span> model is called the minimal or null model, with a mean of <span class="math inline">\(\beta_0\)</span> and variance of <span class="math inline">\(\sigma^2\)</span>. As we don’t really care if <span class="math inline">\(beta_0\)</span> is 0 or not we exclude it from the ANOVA tables.</p>
+<p>TODO: read this https://stats.stackexchange.com/questions/256726/linear-regression-what-does-the-f-statistic-r-squared-and-residual-standard-err</p>
+<p>So in this model <span class="math inline">\(p_r=1\)</span> and <span class="math inline">\(p_f = p-1\)</span></p>
+<p>It can be show (see notes p29) that:</p>
+<table class="table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 23%">
+<col style="width: 5%">
+<col style="width: 20%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source of Variation</th>
+<th>Sum of Squares (SS)</th>
+<th>DoF</th>
+<th>Mean Square (MS)</th>
+<th>Mean Square Ratio (MSR)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Due to regressors</td>
+<td><span class="math inline">\(S_2 = \hat{\beta}^TX^TX\hat{\beta} - n \bar{y}^2\)</span></td>
+<td><span class="math inline">\(p-1\)</span></td>
+<td><span class="math inline">\(S_2 / (p-1)\)</span></td>
+<td><span class="math inline">\(F\)</span></td>
+</tr>
+<tr class="even">
+<td>Residual</td>
+<td><span class="math inline">\(S_r = y^Ty -\hat{\beta}^TX^TX\hat{\beta}\)</span></td>
+<td><span class="math inline">\(n -p\)</span></td>
+<td><span class="math inline">\(\hat{\sigma}^2\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td><span class="math inline">\(S_{yy} =y^Ty - n\bar{y}^2\)</span></td>
+<td>n-1</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>So <span class="math inline">\(F = \frac{S_2}{(p-1)\hat{\sigma}^2}\)</span> where null is <span class="math inline">\(F_{p-1, n-p}\)</span></p>
+<p>TODO: what are they talking about top of p30</p>
+</section>
+<section id="anova---application-in-r" class="level3" data-number="5.2.7">
+<h3 data-number="5.2.7" class="anchored" data-anchor-id="anova---application-in-r"><span class="header-section-number">5.2.7</span> ANOVA - Application in R</h3>
+<blockquote class="blockquote">
+<p>This is highly likley to be examined</p>
+</blockquote>
+<p>With r you have two choices for ANOVA one where you enter each model seperately where one model is the baseline and the other is more complex so :</p>
+<ul>
+<li><span class="math inline">\(y = \beta_0 + \beta_1x_1\)</span> (mdl_1)</li>
+<li><span class="math inline">\(y = \beta_0 + \beta_1x_1 + \beta_2x_1^2\)</span> (mdl_2)</li>
+</ul>
+<p>so <code>anova(mdl_1, mdl_2)</code> or you simply run <code>anova(mdl_2)</code>.</p>
+<p>In the first option it automatically detects the extra terms and assigns those to <span class="math inline">\(\beta_2\)</span> and then <span class="math inline">\(H_0: \beta_2 = 0\)</span> is assessed. Values from the summary of this can readily be placed into <a href="#eq-exam-f">Equation&nbsp;<span>5.2</span></a>.</p>
+<p>TODO : Down from the blue arrow</p>
+</section>
+</section>
+<section id="chapter-5" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="chapter-5"><span class="header-section-number">5.3</span> Chapter 5</h2>
+<p>Remember:</p>
+<p><span class="math inline">\(\epsilon_i = y_i - \textbf{x}_i^T\boldsymbol{\beta}\)</span></p>
+<p>We assume that <span class="math inline">\(\epsilon_i\)</span> is:</p>
+<ul>
+<li>0 mean, there is no systematic error from <span class="math inline">\(\textbf{X}\boldsymbol{\beta}\)</span></li>
+<li>Independent</li>
+<li>Common variance - homoscedasticity</li>
+<li>Normaly distributed</li>
+</ul>
+<p>We check these through residuals (the estimate of the error based on fitted model). If the model were to be correct they would be normally distributed, however they are not independent or with common variance. Unequal variances can be corrected for by standardised residuals:</p>
+<p><span class="math inline">\(s_i \frac{e_i}{\sqrt{\hat{\text{Var}}(e_i)}} \sim t_{n-p}\)</span> where <span class="math inline">\(\hat{\text{Var}}(e_i)\)</span> is the estimate of variance</p>
+<blockquote class="blockquote">
+<p>observed residuals are not independent and do not have equal variances</p>
+</blockquote>
+<section id="q-q-plot" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="q-q-plot"><span class="header-section-number">5.3.1</span> q-q plot</h3>
+<p>Plots quantiles of observed vs expected and you should get a straight line, you may plot:</p>
+<ul>
+<li>Standard Normal against observed data</li>
+<li>Normal with mean and variance of observed against observed data</li>
+<li>Standardised residual</li>
+</ul>
+<p>You should see a straight line of plots if the fit is appropriate. If:</p>
+<ul>
+<li>The plot is bowed there is skew</li>
+<li>Down left/Up right = heavier tails</li>
+</ul>
+<p>Histograms should be avoided if the dataset is small.</p>
+</section>
+<section id="homoscedasticity" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="homoscedasticity"><span class="header-section-number">5.3.2</span> Homoscedasticity</h3>
+<p>Plot a scatter graph of residual against the fitted value (y predicted). This should be a uniform band. Typically issues arise where the results fan outwards to the larger values</p>
+</section>
+<section id="independence" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="independence"><span class="header-section-number">5.3.3</span> Independence</h3>
+<p>Typically we plot the residual in observed order, through an “index plot”. The order is based on SME knowledge (time, distance,etc). We are looking for trends, closely linked order points, etc.</p>
+</section>
+<section id="formal-testing" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="formal-testing"><span class="header-section-number">5.3.4</span> Formal testing</h3>
+<p>We can formally test whether the residuals contain outliers by standardising the residuals and looking for points</p>
 
 
 </section>
