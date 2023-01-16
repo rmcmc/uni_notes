@@ -161,6 +161,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="toc-section-number">5.3.3</span>  Independence</a></li>
   <li><a href="#formal-testing" id="toc-formal-testing" class="nav-link" data-scroll-target="#formal-testing"><span class="toc-section-number">5.3.4</span>  Formal testing</a></li>
   </ul></li>
+  <li><a href="#chapter-6---interactions-and-factors" id="toc-chapter-6---interactions-and-factors" class="nav-link" data-scroll-target="#chapter-6---interactions-and-factors"><span class="toc-section-number">5.4</span>  Chapter 6 - Interactions and Factors</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="linear_models.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -428,10 +429,25 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="formal-testing" class="level3" data-number="5.3.4">
 <h3 data-number="5.3.4" class="anchored" data-anchor-id="formal-testing"><span class="header-section-number">5.3.4</span> Formal testing</h3>
-<p>We can formally test whether the residuals contain outliers by standardising the residuals and looking for points</p>
-
-
+<p>We can formally test whether the residuals contain outliers by standardising the residuals and looking for points. If the standardised residuals (<span class="math inline">\(s_i\)</span>) are t distributed we can assess how “likely” they are by assessing the quantiles.</p>
+<p>However if we were to do this for every point we are multiple testing and so a corrrection to the cut off should be applied.Formally:</p>
+<p><span class="math inline">\(|s_i| &gt; t_{n - p, 1-\alpha/2}\)</span></p>
+<p>Instead of the bonferonni test we could use the Šidák correction which is:</p>
+<blockquote class="blockquote">
+<p><span class="math inline">\(\alpha^* = 1 - (1-\alpha)^{1/n}\)</span>, where <span class="math inline">\(\alpha^*\)</span> is the adjusted stat.</p>
+</blockquote>
 </section>
+</section>
+<section id="chapter-6---interactions-and-factors" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="chapter-6---interactions-and-factors"><span class="header-section-number">5.4</span> Chapter 6 - Interactions and Factors</h2>
+<p>We include factors through the use of dummy or indicator variables. Where the are two levels this will simply be a 0/1. For more than one catergory, one-hot encoding will be used.</p>
+<p>With dummy variables you have to be very careful not to over parameterise the model. For instance for a binary factor you could either:</p>
+<ul>
+<li>Remove <span class="math inline">\(\beta_0\)</span> and have <span class="math inline">\(\alpha_1\)</span> and <span class="math inline">\(\alpha_2\)</span> in place. Indicated by two seperate columns of 0/1 in the design matrix.</li>
+<li>Set a global <span class="math inline">\(\mu\)</span></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->

@@ -265,4 +265,21 @@ Typically we plot the residual in observed order, through an "index plot". The o
 
 ### Formal testing
 
-We can formally test whether the residuals contain outliers by standardising the residuals and looking for points 
+We can formally test whether the residuals contain outliers by standardising the residuals and looking for points. If the standardised residuals ($s_i$) are t distributed we can assess how "likely" they are by assessing the quantiles.
+
+However if we were to do this for every point we are multiple testing and so a corrrection to the cut off should be applied.Formally:
+
+$|s_i| > t_{n - p, 1-\alpha/2}$
+
+Instead of the bonferonni test we could use the &Scaron;id&aacute;k correction which is:
+
+> $\alpha^* = 1 - (1-\alpha)^{1/n}$, where $\alpha^*$ is the adjusted stat.
+
+## Chapter 6 - Interactions and Factors
+
+We include factors through the use of dummy or indicator variables. Where the are two levels this will simply be a 0/1. For more than one catergory, one-hot encoding will be used.
+
+With dummy variables you have to be very careful not to over parameterise the model. For instance for a binary factor you could either:
+
+- Remove $\beta_0$ and have $\alpha_1$ and $\alpha_2$ in place. Indicated by two seperate columns of 0/1 in the design matrix.
+- Set a global $\mu$
