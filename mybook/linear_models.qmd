@@ -37,6 +37,60 @@ $\boldsymbol{y} =
 
 $\boldsymbol{X}$ has the shape $n \times p$
 
+$\boldsymbol{\beta}$ has the shape $p \times 1$
+
+In linear modelling we assume that the $\epsilon$:
+
+- Is a MV Norm
+- 0 Mean
+- Independent
+- Common variance $\sigma^2$ (homoscedasticity)
+
+So :
+
+$\epsilon \sim N_n(0, \sigma^2 I_n)$
+
+And if $y = X\beta + \epsilon$ then we can say by linear transformation that
+
+$y \sim N_n(X\beta, \sigma^2 I_n)$
+
+
+In this course:
+
+- Explanatory - the base $x$ variable, from the data
+- Regressor - The constant, the $\beta x $ and any function or transform of $x$ with a coefficient. 
+
+So $y = \beta_0 + \beta_1 x \beta_2 x^2$ has a single explantory variable, but 3 regressors.
+
+## Chaprter 2 - Fit, estimate and residuals
+
+Once fitted the the difference between the observed actual and fitted values ($x_i^T\hat{\beta}$) is the residual. The vector of residuals therefore can be calced as:
+
+$e = y - X\hat{\beta}$
+
+The **sum of squared of the residuals** or **residual su of squares** ($S_r$) is very important
+
+$S_r = S(\hat{\boldsymbol{\beta}}) = \sum_{i=1}^n e_i^2 =\textbf{e}^T\textbf{e} = (y - X\hat{\beta})^T(y - X\hat{\beta})$
+
+> In linalg rememeber that $x^Tx$ of a columnar vector is equivalent to $\sum x^2_i$
+
+This concept is very useful in linear modelling because through the MVNorm we can show that:
+
+$L(\beta, \sigma^2 ; y) = f(y|\beta. \sigma^2) \propto \sigma^{-n}\exp(- \frac{1}{2\sigma^2}(y - X\hat{\beta})^T(y - X\hat{\beta}))$
+
+A key part of this derivation is that $|\sigma^2I_n| = (\sigma^2)^n$. The log likelihood can be shown to be 
+
+$\ell(\beta, \sigma^2;y) = -nlog(\sigma) - \frac{1}{2\sigma^2}(y - X\hat{\beta})^T(y - X\hat{\beta}) + c$
+
+To maximise likelihood with respect to $\beta$ therefore we should be looking to minimise $S_r$. Minimising this is the **least squares** method, which both mathematically and intuitively makes sense. There is an important consequence!
+
+> Assuming X has rank p, the least squares estimator of $\beta$ is $\hat{\beta} = (X^TX)^{-1}X^Ty$
+
+When finding the MLE of $\sigma^2$ we find $\frac{S_r}{n}$, however this is a biased estimator and instead we use $\frac{S_r}{n-p}$
+
+### Estimator mean and variance
+
+Given $y \sim N_n(X\beta, \sigma^2I_n)$
 
 ## Chapter 4 - Hypothesis testing
 
@@ -279,7 +333,36 @@ Instead of the bonferonni test we could use the &Scaron;id&aacute;k correction w
 
 We include factors through the use of dummy or indicator variables. Where the are two levels this will simply be a 0/1. For more than one catergory, one-hot encoding will be used.
 
-With dummy variables you have to be very careful not to over parameterise the model. For instance for a binary factor you could either:
+With dummy variables you have to be very careful not to over parameterise the model.
 
-- Remove $\beta_0$ and have $\alpha_1$ and $\alpha_2$ in place. Indicated by two seperate columns of 0/1 in the design matrix.
-- Set a global $\mu$
+You cannot have a model constant and a constant for each factor this is overparameterisation and leads to multicolinearity. A  matrix is not full rank when there are linear combinations. Therefore $X^TX$ is no longer invertable (singular). Therefore we cannot calculate $\hat{\beta}$ through $(X^TX)^{-1}X^T y$.
+
+The solution is to move to the following representation:
+
+$y_{ij} = \mu + \alpha_i + \epsilon_{ij}$
+
+This can be implement one of two ways
+
+#### Level One Zero Constraint
+
+Also known as **corner points constraints**. Essentially the first catergorcial variable is used for $\mu$ and the first $\alpha_1$ is set to zero removing it from the model and the design matrix.
+
+All other $\alpha_i$ i=(2,3,...k) are therefore deviations from the mean ($\mu$) and hence how the mean of y changes as we move between factors.
+
+`options(contrast=c(factor= ..., ordered =...))` will implement this in R
+
+#### Sum to Zero
+
+An alternative where all of the $\alpha$ values are designed to sum to zero. In a one factor model the $\mu$ is therefore the overall mean, while $\alpha$ is the factor group means deviation from the this. 
+
+This method does remove a parameter, it is achievd by accounting for the sum of all alphas from 1 to k-1 and setting k equal to the negative sum of these so they cancel. X therefore loses it's $\alpha_k$ column, but also modifies all other $alpha_i$ columns where the **row** is i=k
+
+TODO: This is a bit lost on me, see p46/47
+
+### Two way factors
+
+In the two way factor you have rows and columns. In the corner point constraint the mean is set by the top left mean. Then an \alpha$ deviation is reported for 2,3,...k rows and a $\beta$ for 2,3,...k columns.
+
+### Interactions
+
+Interactions are non additive effects of one variable on anaother, this is most commonly achieved through multiplication. These terms can be tested for significance using `summary` or nested comparisions conducted with `anova`. Care must be taken with factors as it is easy to get high number of combinations, inflate $R^2$ through overfitting or get muktiplicity problems with signiificance. 
