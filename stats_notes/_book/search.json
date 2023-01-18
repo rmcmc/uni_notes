@@ -1,0 +1,373 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "docs",
+    "section": "",
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books."
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This book is my personal notes for stats, data and programming.\nI primarilly use it for notes around my statistics MSc.\nThis book has been created with Quarto through VSCode. I highly recommend it."
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever."
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "survival.html",
+    "href": "survival.html",
+    "title": "3  Survival",
+    "section": "",
+    "text": "The following section is notes for survival analysis"
+  },
+  {
+    "objectID": "survival.html#chapter-1---intro",
+    "href": "survival.html#chapter-1---intro",
+    "title": "4  Survival",
+    "section": "4.1 Chapter 1 - Intro",
+    "text": "4.1 Chapter 1 - Intro\nWe are interested in two types of cencoring\n\nright : The failure occurs after a set time, died after trial\nleft : The failure occurs before the observations begin, died before trial starts\n\nThe fundamental probaility theory required is as follows\n\n4.1.1 Distribution Function\nLet \\(T\\) be the failure time, where \\(T>0\\). Then as expected the distribution function is:\n\\(F(t) = P(T\\leq t)\\)\nAnd therefore the probability density is:\n\\(f(t) = F'(t)\\)\nAnd so\n\\(F(t) = \\int_0^tf(u)du\\)\n\n\n4.1.2 Survivor Function\nGenerally we are interested in whether someone will survive longer than a certain time. So:\n\\(S(t) = P(T\\geq t) = 1 - F(t) = \\int^{\\infty}_t f(u) du\\)\nAs it is linked to the distribution function we can therefore say\n\\(f(t) = -S'(t)\\)\n\n\n4.1.3 Hazard Function\nThe risk of death at time \\(t\\) given survival to time \\(t\\). Or the instantaenous risk of death at time \\(t\\)\n\\(h(t) = \\frac{f(t)}{S(t)}\\)\n\n\n4.1.4 Integrated Hazard Function\n\\(H(t) = \\int^{t}_0 h(u) du = -log(S(t))\\)\nSo\n\\(S(t) = e^{\\left(-H(t)\\right)}\\)\nand\n\\(f(t) = h(t)e^{\\left(-H(t)\\right)}\\)\n\n\n4.1.5 Limits worth knowing\n\\(f(t) = lim_{h \\rightarrow 0 } \\frac{P(t < T < t+h)}{h}\\)\nand\n\\(h(t) = lim_{h \\rightarrow 0 } \\frac{P(t \\leq T < t+h | T \\geq t)}{h}\\)"
+  },
+  {
+    "objectID": "survival.html#we-are-primarily-interested-in",
+    "href": "survival.html#we-are-primarily-interested-in",
+    "title": "3  Survival",
+    "section": "3.2 We are primarily interested in:",
+    "text": "3.2 We are primarily interested in:"
+  },
+  {
+    "objectID": "survival.html#chapter-2---distributions",
+    "href": "survival.html#chapter-2---distributions",
+    "title": "4  Survival",
+    "section": "4.2 Chapter 2 - Distributions",
+    "text": "4.2 Chapter 2 - Distributions\n\n4.2.1 Exponential\nThe only distribution with a constant hazard function.\n\\(T_i \\sim Exp(\\lambda, \\gamma)\\)\n\n\n\nProperty\nequation\n\n\n\n\n\\(f(t)\\)\n\\(\\lambda e^{-\\lambda t}\\)\n\n\n\\(F(t)\\)\n\\(1 - e^{-\\lambda t}\\)\n\n\n\\(S(t)\\)\n\\(e^{-\\lambda t}\\)\n\n\n\\(h(t)\\)\n\\(\\lambda\\)\n\n\n\n\n\n4.2.2 Weibull\nThe weibull can vary by implementation survreg uses the following implementation\n\\(T_i \\sim Weibull(\\lambda, \\gamma)\\)\nProperties should be given, TO BE VERIFIED\nIn this course:\n\n\\(\\lambda\\) is the shape\n\\(\\gamma\\) is the rate\n\nIt is extremely flexible, but can become unstable near \\(\\gamma = 1\\). From \\(\\gamma\\) we know the following:\n\n\\(\\gamma = 1\\) - Constant Hazard, becomes the exponential\n\\(\\gamma > 1\\) - Hazard INCREASES with time\n\\(\\gamma < 1\\) - Hazard DECREASES with time\n\nTODO - Add plot to get a feel for various hazrds, etc\n\nfrom scipy import stats\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nxs = np.arange(0,100,0.1)\ns_t = stats.expon(0,10).sf(xs)\nf_t = stats.expon(0,10).pdf(xs)\nplt.plot(xs,s_t)"
+  },
+  {
+    "objectID": "survival.html#chapter-2---life-tables",
+    "href": "survival.html#chapter-2---life-tables",
+    "title": "4  Survival",
+    "section": "4.3 Chapter 2 - Life Tables",
+    "text": "4.3 Chapter 2 - Life Tables\nSee notes - Two example type to be practiced exhaustively (No loss and loss to follow up)\nLifetables tabulate death rates over a period of time. They are useful non-parametric summaries and help to inform which parametric models might be sensible.\nIn the loss to follow up we assume in this course that:\n\n\\(p_x\\) and \\(q_x\\) are constant over a time period, this is reasonable if short\nWe assume those who withdraw have the same probability of dieing as those who don’t\nWe assume withdrawls are evenly spaced through the year\n\nTODO: Finalise life tables with method."
+  },
+  {
+    "objectID": "survival.html#chapter-2---kaplan-meier",
+    "href": "survival.html#chapter-2---kaplan-meier",
+    "title": "4  Survival",
+    "section": "4.4 Chapter 2 - Kaplan-Meier",
+    "text": "4.4 Chapter 2 - Kaplan-Meier"
+  },
+  {
+    "objectID": "survival.html#chapter-3---two-sample",
+    "href": "survival.html#chapter-3---two-sample",
+    "title": "4  Survival",
+    "section": "4.6 Chapter 3 - Two Sample",
+    "text": "4.6 Chapter 3 - Two Sample\nKaplan-Meier is just a visual aid, we need to look at tests\n\n4.6.1 Log Rank Test\nNon-parametric.\n\\[ H_0 : S_1(t) = S_2(t)\\]\n\\[ H_A : S_1(t) \\neq S_2(t)\\]\n\\(H_A\\) is for some \\(t\\)\nSteps:\n\nCreate a table\ncreate an \\(i\\) column for 1,2,..n\ncreate a \\(t_i\\) column and list all the times of deaths only\nCreate an \\(r_{1,i}\\) and \\(r_{2,i}\\) for at risk (At risk for a time includes those who died at that time and all future censorees)\nSum \\(r_{1,i}\\) and \\(r_{2,i}\\) to get \\(r_i\\)\nCreate an \\(d_{1,i}\\) and \\(d_{2,i}\\) for death counts at the times\nSum the deaths to get \\(d_i\\)\nSum down death column to get observed \\(O_1\\) and \\(O_2\\)\nCalc \\(e_{1,i} = (\\frac{r_{1,i}}{r_i})d_i\\) and \\(e_{2,i}\\)\nSum the \\(e_{1,i}\\) and \\(e_{2,i}\\) to get \\(E_1\\) and \\(E_2\\)\nCalculate using below equation\n\n\\[ LR = \\frac{(O_1 - E_1)^2}{E_1} + \\frac{(O_2 - E_2)^2}{E_2} \\sim \\chi^2_{1}\\]\nTo perform the logrank in r perform the following survdiff(formula = 'time ~ treatment')\n\n\n4.6.2 Parametric\nThere are two types of parametric methods of interest MLE test and Likelihood ratio\n\n\n4.6.3 MLE Test\nEffectively looks at the paramters as normally distributed (though any test, distribution is applicable). Then performs standard tests upon them. So in the case of lambda, given it is normally distributed as an estimator.\n\\(\\frac{\\hat{\\lambda}_1 - \\hat{\\lambda}_2}{\\sqrt{\\frac{\\hat{\\lambda}_1^2}{\\Delta_1}-\\frac{\\hat{\\lambda}_2^2}{\\Delta_2}}} \\sim N(0,1)\\)\nHere \\(\\Delta\\) is the number of deaths and \\(\\hat{\\lambda}\\) is the number of deaths over total time (death and censor).\n\n\n4.6.4 Likelihood Ratio\nIn formula sheet\nTODO: run through the proof\n\n\n4.6.5 Survreg\nFrom survreg we can use the output of a two factor analysis to easily do a MLE test by taking the parameter and covariance matrix.\nFor LRT look at the following line near the bottom for the p-value.\nChisq=1.2 on 1 degrees of freedom , p=0.27"
+  },
+  {
+    "objectID": "Clinical Trials.html",
+    "href": "Clinical Trials.html",
+    "title": "3  Chapter 1 - Intro",
+    "section": "",
+    "text": "4 Chapter 2 - Trial Design\nProtocol contains:\nProtocol deviations are to be expected, but must be recorded. There are two responses to deviation.\nCan always report both!\n“A null hypothesis which will be adopted unless there is significant evidence from the data that the alternate hypothesis is more viable.”\nThe test statistic has a sampling distribution, under the assumption \\(H_0\\) is true.\nCalculate the proability that the test statistics is as or more extreme than that observed. This is done with the sampling distribution.\nThe course has the following convention for the significance probability (p-value)\nIn this course a conclusion should be as follows:\nCare should be taken with p-value: - Even with substantial evidence, alternative may not actually be true - An effect can be statistically significant, but be too small to matter IRL - A large p-value does not mean alterbative is wrong. Could have two little data, poor design or by chance\nTests have assumptions!\nEssential ethically:\nSix steps:\nUseful notes:\nSome lessons from assignment:\nKey takeaways:\nIncreases risk of false positives. Medical trials are very expensive and ethically can only look at so many people, so tempting to fish.\nIn one test the p-value controls false positve risk. However in multiple tests, the problem becomes at least one.\nA 95% chance of not making an error, then two tests not making an error is \\(0.95^2 = 0.9025\\), so about 1 in 10 and so on. For 10 this becomes 40%. The general formula is, for k tests:\n\\(1-(1-\\alpha)^k\\)\nBonferonni correction is extremely conservative correctiuon based on rearranging it. The correction is:\n\\(\\frac{\\alpha}{k}\\)\nTo perfomr regression we estimate the Natural logarithm of the odds of success or Logit. Which is"
+  },
+  {
+    "objectID": "Clinical Trials.html#two-sample-t-test",
+    "href": "Clinical Trials.html#two-sample-t-test",
+    "title": "3  Chapter 1 - Intro",
+    "section": "7.1 Two-Sample T-Test",
+    "text": "7.1 Two-Sample T-Test\nOne sample required if:\n\nComparing matched groups (difference from 0)\nComparing to a baseline, fixed value\n\n\nIdentify continuous\nDeclare independence and that population variance not known\nDeclare a two sample t-test\nIdentify subscripts with “Let X be”\nWrite that \\(H_0 : \\mu_X = \\mu_Y\\) and \\(H_A : \\mu_X \\neq \\mu_Y\\)\nCalculate N, \\(\\bar{X}\\) and \\(S^2_X\\)\nCalculate \\(\\nu = min(N_X, N_Y)\\)\nCalulate test statistic \\(T = \\frac{\\bar{X} - \\bar{Y}}{\\sqrt{\\frac{S_X^2}{N_X} + \\frac{S_Y^2}{N_Y}}}\\)\n\\(T \\sim t_{\\nu}\\)\nLook up p value in tables (either neg or pos), DOUBLE IT, it’s two sided \\(P( |t_{\\nu}| > T)\\)\nCalulate the mean delta and find 95% (0.025-0.975) CI\n\nAs N gets big, t tends to normal, therefore 1.96 (approx. 2) becomes CI multiplier\nAssume normally distributed and independent samples"
+  },
+  {
+    "objectID": "Clinical Trials.html#chi-square-test",
+    "href": "Clinical Trials.html#chi-square-test",
+    "title": "3  Chapter 1 - Intro",
+    "section": "7.2 Chi-Square Test",
+    "text": "7.2 Chi-Square Test\nUses:\n\nComparing two dicscrete groups\nDeciding whether two factors are independent\nTest a theory, eg. something can be modelled as a set ratio\n\n\nIdentify count based and that \\(\\chi_2\\) appropriate\nCalculate all row and column totals. Calculate overall total\nCalulate each \\(e_{ij} = \\frac{\\text{row total}\\times \\text{col total}}{\\text{Overall Total}}\\)\nCalulate \\(\\frac{(o_{ij}-e_{ij})^2}{e_{ij}}\\)\nSum them to get the test stat \\(X^2\\)\nState that \\(X^2 \\sim \\chi^2_{\\nu}\\)\n\\(\\nu = (\\text{n row - 1})\\times (\\text{n col - 1})\\)\nThis is a one sided test due to squaring!\nConvert the coloumns from counts to percents of column total for reporting\n\nTODO: Not worked beyond 5.4"
+  },
+  {
+    "objectID": "Clinical Trials.html#further-notes",
+    "href": "Clinical Trials.html#further-notes",
+    "title": "3  Chapter 1 - Intro",
+    "section": "7.3 Further Notes",
+    "text": "7.3 Further Notes\n\n7.3.1 Multiple Testing\nJust comparing two groups relies heavily on well balanced randomisation.\nUsing multiple regression we can include and therefore account for covariates (prognostic factors), this is called an ANCOVA (Analysis of Covariance)\n\n\n7.3.2 One vs Two sided tests\nAlways, unless very strong prior knowledge, use a two sided test. One sided are more powerful.\nEg. If you think something will decrease and go one sided, but it actually increased you would miss it, potentailly missing a harmful effect.\n\n\n7.3.3 Pooled or seperate variance\nAlways seperate on the course:\n\nIf you use seperate and they are the same you will still get an unbiased estimateof common variance\nThis case would result in more DoF from welch approx, however this is slightly more conservative anyway\nHowever using pooled when not can get you very different DoF, whether pessimistic/optimistic is not possible to know without calcs\n\nWe use pooled on power tests otherwise it become impractical to assess.\n\n\n7.3.4 Testing for equality of variance\nDon’t:\n\nLow powered tests\nNon-sig does not mean equal, only weak evidence\nIf doing one test followed by another you are multiple testing ? TODO - p44 confusing answer I think hinting at multiple testing\n\nTODO 5.6"
+  },
+  {
+    "objectID": "Clinical Trials.html#bradford-hill",
+    "href": "Clinical Trials.html#bradford-hill",
+    "title": "3  Chapter 1 - Intro",
+    "section": "3.1 Bradford-Hill",
+    "text": "3.1 Bradford-Hill\nIf all met does not mean causality, just sensible tests.\n\nTemporality - Effect follows cause\nConsistency - Does it happen in multiple groups (gender, countries, etc)\nCoherence - Do controlled and observational studies agree\nStrength of Association - Greater effect observed if given treatment\nBiological Gradient - More agent, more effect\nSpecificity - does agent specifically affect what it is applied to Eg. cream on hand, fixes hand\nPlausibility - Can it be explained mechanistically\nFreedom from bias/confounders\nAnalgous results elsewhere - similir agents have similar results"
+  },
+  {
+    "objectID": "Clinical Trials.html#ethics",
+    "href": "Clinical Trials.html#ethics",
+    "title": "3  Chapter 1 - Intro",
+    "section": "3.2 Ethics",
+    "text": "3.2 Ethics\n\n3.2.1 Medical\nTrial design is key\n\nOnly trial if you genuinely don’t know whether one is better\nPoorly planned/exexuted (eg under powered) is very unethical\nPatients have informed consent\nPlacebos are ethical. The ethics of the population vs individual\nEthics commitee buys in\n\n\n\n3.2.2 Publication\nAlot of money at stake\n\nAvoid publication bias, only publishing good results\nJournal contributors must: declare full responsibilty held over trial, had access to data, made decision to publish."
+  },
+  {
+    "objectID": "Clinical Trials.html#parrallel",
+    "href": "Clinical Trials.html#parrallel",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.1 Parrallel",
+    "text": "4.1 Parrallel\nk treatments, split into k groups. May aim for equal sized groups, though not mandatory.\nRequires large numbers to be sure of treatemtn effects. Robust to withdrawls"
+  },
+  {
+    "objectID": "Clinical Trials.html#in-series",
+    "href": "Clinical Trials.html#in-series",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.2 In Series",
+    "text": "4.2 In Series\nAll patients, recieve all k treatments in same order. Allowing for in patient comparison.\nBenefits:\n\nPatient can express preferences\nPossiblity for simultaneous treatment\n\nIssues: - Patients may naturally imporve over time, making later treatments look better. Progressive disease act oppositely. - Carry over effects may exist, short term effects only - Withdrawls can be problematic - Some orders are impossible"
+  },
+  {
+    "objectID": "Clinical Trials.html#carry-over",
+    "href": "Clinical Trials.html#carry-over",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.3 Carry Over",
+    "text": "4.3 Carry Over\nImproves upon in series to account for treatment, period, carryover.\nAll aptients get same treatements, but groups recieve in different order.\nIn the event of dropouts period one could be used as a parrallel study, though very low powered.\nWashout may be placed between treatments (no treatment window) to minimise carryover risk."
+  },
+  {
+    "objectID": "Clinical Trials.html#factorial-design",
+    "href": "Clinical Trials.html#factorial-design",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.4 Factorial Design",
+    "text": "4.4 Factorial Design\nInvestigate effect of two or more treatments (factors), by giving combinations.\nEg 2x2. Each parient takes two drugs, where each drug has a placebo counterpart. Could take any combination of both drugs, one drug/one placebo, all placebo.\nMay be more efficent design. May also be prone to interactions, though this is of interest.\nMean response plots are useful for visualising effects:\n\nTwo parrallel lines, no interaction\nOne gradient increases more, quantitative interaction\nopposite gradianets, qualitative interation\n\nTODO : PRACTICE No interaction, qualitative, quantitative"
+  },
+  {
+    "objectID": "Clinical Trials.html#sequential-design",
+    "href": "Clinical Trials.html#sequential-design",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.5 Sequential Design",
+    "text": "4.5 Sequential Design\nSimple form, aptients enter as pairs, and randomly allocated A or B.\nAssess which is better and move onto next pair. Cumulatively aggregate the prefference.\nYou will either cross a diverging boundary and stop early or reach end point and declare no difference.\nIt’s an ethical approach, detecting large differences quickly.\nHowever:\n\nNeed quick response times (before next pair)\nDropouts cause issues\nRequires constant attention\nBoundary calculation is complex"
+  },
+  {
+    "objectID": "Clinical Trials.html#cross-over",
+    "href": "Clinical Trials.html#cross-over",
+    "title": "3  Chapter 1 - Intro",
+    "section": "4.3 Cross Over",
+    "text": "4.3 Cross Over\nImproves upon in series to account for treatment, period, carryover.\nAll aptients get same treatements, but groups recieve in different order.\nIn the event of dropouts period one could be used as a parrallel study, though very low powered.\nWashout may be placed between treatments (no treatment window) to minimise carryover risk."
+  },
+  {
+    "objectID": "Clinical Trials.html#chapter-9---combining-trials",
+    "href": "Clinical Trials.html#chapter-9---combining-trials",
+    "title": "3  Chapter 1 - Intro",
+    "section": "9.2 Chapter 9 - Combining trials",
+    "text": "9.2 Chapter 9 - Combining trials\nTODO"
+  },
+  {
+    "objectID": "Clinical Trials.html#chapter-10---comparing-measurement-methods",
+    "href": "Clinical Trials.html#chapter-10---comparing-measurement-methods",
+    "title": "3  Chapter 1 - Intro",
+    "section": "9.3 Chapter 10 - Comparing measurement methods",
+    "text": "9.3 Chapter 10 - Comparing measurement methods\nWe may want to change measurment equipment due to cost, speed, patient comfort, etc.\nTests are not always appropriate as highly correlated and not independent.\nMore interested in Bias (continuous) and agreement (discrete).\nNeither provide a statistical test, it is based on judgement.\n\n9.3.1 Bland Altman\n\nCalculate for each two measurements the difference and the mean\nCalulate the mean difference and the std\nReport a bias by mean difference with a CI (\\(\\bar{X} \\pm t_{0.975, \\nu} \\frac{\\sigma}{\\sqrt{N}}\\))\nCreate difference bands mean +/- 2sigma\nPlot scattter of x axis = avg, y axis = difference\nAdd 95% CI from 4 to the y axis as horizontal lines.\n\nYou are really interested in whether there is a difference from left to right.\n\n\n9.3.2 Kappa\nAgreement between\n\\(\\kappa =\\frac{A_{\\text{obs} - A_{\\text{exp}}}}{1 - A_{\\text{exp}}}\\)\n\n\n\nkappa\nstatement\n\n\n\n\n\\(\\kappa >0.75\\)\nExcellent Agreement\n\n\n\\(0.4<\\kappa <0.75\\)\nFair to good agreement\n\n\n\\(\\kappa <0.4\\)\npoor to moderate\n\n\n\nCalculate by:\n\nDo row and column totals, as well as overall total\n\\(A_{obs} = \\frac{\\text{sum of diagonal}}{\\text{Overall Total}}\\)\nCalc diagonal expected \\(\\frac{\\text{row total}\\times \\text{col total}}{\\text{Overall Total}}\\)\n\\(A_{exp}\\) is the sum of diagonal expected divided by overall total\n\nOnly care about leading diagonal as these are agreements\nIn some cases groups may have order, or there may be more than two assessors. Either way more advanced versions required."
+  },
+  {
+    "objectID": "Clinical Trials.html#kappa-statement",
+    "href": "Clinical Trials.html#kappa-statement",
+    "title": "3  Chapter 1 - Intro",
+    "section": "8.3 kappa | statement",
+    "text": "8.3 kappa | statement\n\\(\\kappa >0.75\\) | Excellent Agreement \\(0.4<\\kappa <0.75\\) | Fair to good agreement \\(\\kappa <0.4\\) | poor to moderate"
+  },
+  {
+    "objectID": "Clinical Trials.html#observational-studies",
+    "href": "Clinical Trials.html#observational-studies",
+    "title": "3  Chapter 1 - Intro",
+    "section": "10.1 Observational studies",
+    "text": "10.1 Observational studies\nThese are referred to as epidemiological studies\nRetrospective studies look at a control group who do not exhibit diesease and group who do. Comparing factors between groups.\nProspective studies follow up on a cohort of people who have had some exposure. Eg those with premature birth. They are then compared to the general population for some outcome. Eg. Very poor school grades.\nFor prospective, typically very large samples are used due to rare incidence typically of the disease. \\(\\chi^2\\) tests therefore are very powerful and flag very minor changes, without giving magnitude.\nTypically therefore work with Odds Ratios or Relative Risks and their respective CIs.\n\n10.1.1 Prospective - Relative Risk\nCreate following table\nWhere positive means, tests positive, not an good positive\n\n\n\nExposure\nPositive outcome\nNegative outcome\nTotal\n\n\n\n\nexposed\na\nb\na + b\n\n\nnot exposed\nc\nd\nc + d\n\n\n\nThen calc:\n\\(RR = \\frac{a(c+d)}{c(a+b)}\\)\nIf there was no difference RR would equal 1. So test whether CI contains 1.\nWorking in logs for ease:\nFirst, log the RR. Then calculate the Standard error of the log RR\n\\(\\text{S.E}[log(RR)] = \\sqrt{  \\frac{1}{a} -  \\frac{1}{a+b}+  \\frac{1}{c}-  \\frac{1}{c+d} }\\)\nCalc CI, using appropriate Z multiplier:\n\\(log(RR) \\pm 1.96 \\times \\text{S.E}[log(RR)\\).\nTake exponetial of everything to return to normal scale.\nIf contains 1 no evindence at 5% level\nRR <1 - risk is decreased by exposure RR > 1 - risk increased by exposure\n\n\n10.1.2 Retrospective - Odds Ratio\nOdds are ratio of\n\\(\\frac{P(\\text{Event occuring})}{P(\\text{Event not occuring})}\\)\nFirst construct table:\n\n\n\n.\nCasses\nControls\n\n\n\n\nExposed\na\nb\n\n\nNot Exposed\nc\nd\n\n\nTotal\na + c\nb + d\n\n\n\nOdds Ratio (OR) is as follows:\n\\(OR = \\frac{ad}{bc}\\)\nAgian, log SE\n\\(\\text{S.E}[log(OR)] = \\sqrt{  \\frac{1}{a} +  \\frac{1}{b}+  \\frac{1}{c}+  \\frac{1}{d} }\\)\nRepeat as per relative risk.\nIf above 1, raised risk.\nTODO 11.3 makes no sense? (it does but revisit)"
+  },
+  {
+    "objectID": "Clinical Trials.html#exposure-posnegtotal",
+    "href": "Clinical Trials.html#exposure-posnegtotal",
+    "title": "3  Chapter 1 - Intro",
+    "section": "9.2 Exposure |Pos|Neg|Total",
+    "text": "9.2 Exposure |Pos|Neg|Total\nexposed | a | b | a + b not exposed | c | d | c + d —————————-"
+  },
+  {
+    "objectID": "Clinical Trials.html#derivation",
+    "href": "Clinical Trials.html#derivation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "11.1 Derivation",
+    "text": "11.1 Derivation\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)})\\)\nTherefore to regress (omitting error term)\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)}) = \\beta_0 + \\beta_1x_{i1} + ... + \\beta_px_{ip}\\)\nSimplifying (in this course they take intercept out front instead of 1s in the design matrix)\n\\(log(\\frac{P(Y_i = 1)}{P(Y_i = 0)}) = \\beta_0 + \\beta'\\mathbf{x}_i\\)\nLogging both sides leads to\n\\(\\frac{P(Y_i = 1)}{P(Y_i = 0)} = \\exp(\\beta_0 + \\beta'\\mathbf{x}_i)\\)\nand also\n\\(\\frac{P(Y_i = 1)}{P(Y_i = 0)} = \\exp(\\beta_0 + \\beta'\\mathbf{x}_i)\\)\nAnd so\n\\(P(Y_i = 1)= \\theta_i = \\frac{\\exp(\\beta_0 + \\beta'\\mathbf{x}_i)}{1+\\exp(\\beta_0 + \\beta'\\mathbf{x}_i)}\\)"
+  },
+  {
+    "objectID": "Clinical Trials.html#treatment",
+    "href": "Clinical Trials.html#treatment",
+    "title": "3  Chapter 1 - Intro",
+    "section": "11.2 Treatment",
+    "text": "11.2 Treatment\nStandard practice is \\(\\beta_1\\) is treatement, where x is 0 = placebo or 1 = treatment. So treatment “turns on” \\(beta_1\\)\nPositive \\(\\beta_1\\) the odds of success are greater with treatment, negative means odds of success are greater in placebo."
+  },
+  {
+    "objectID": "Clinical Trials.html#odds-ratio",
+    "href": "Clinical Trials.html#odds-ratio",
+    "title": "3  Chapter 1 - Intro",
+    "section": "11.3 Odds ratio",
+    "text": "11.3 Odds ratio\nSometimes Odds ratio is reffered to as relative risk as they are equivalent at small probabilities.\nOdds ratio of treatement can be calculated as\n\\(OR = \\exp(\\beta_1)\\)\nThis is derived from\n\\(\\frac{P(Y=1|x_1 = 1)}{P(Y=0|x_1 = 1)}/ \\frac{P(Y=1|x_1 = 0)}{P(Y=0|x_1 = 0)} = OR\\)\n\\(OR = \\exp(\\beta_1)\\) CAn also be used for other binary covariates, or two specicified continuous locations."
+  },
+  {
+    "objectID": "Clinical Trials.html#partial-z-test",
+    "href": "Clinical Trials.html#partial-z-test",
+    "title": "3  Chapter 1 - Intro",
+    "section": "11.4 Partial Z Test",
+    "text": "11.4 Partial Z Test\n\\(H_0 : \\beta_j = 0\\)\nWhere:\n\\(\\frac{\\hat{\\beta_j}}{  \\sqrt{  \\hat{\\text{var}}(\\hat{\\beta_j)}  } } \\sim Z\\)\nThis is the SE \\(\\sqrt{\\hat{\\text{var}}(\\hat{\\beta_j)}}\\)\nIt is useful to know the following as SE may not be given\n$SE = \n## In exam\n\nGiven R output\nCalulcate Z, SE, p-value for all of interest if not already given\nState the direction of the coeeficent and the impact therefore on probability.\ncalulate the odds ratio by \\(\\exp(\\beta)\\)\nReport % increase/decrease in odds.\nUse SE to caluclate 95% CI for %$ and exponent to get CI for the OR, report as percentage increase/decrease"
+  },
+  {
+    "objectID": "Clinical Trials.html#chapter-8--",
+    "href": "Clinical Trials.html#chapter-8--",
+    "title": "3  Chapter 1 - Intro",
+    "section": "9.1 Chapter 8 -",
+    "text": "9.1 Chapter 8 -\nNOT ON THE FORMULA SHEET!!!!!"
+  },
+  {
+    "objectID": "Clinical Trials.html#historic",
+    "href": "Clinical Trials.html#historic",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.1 Historic",
+    "text": "6.1 Historic\nTODO p24"
+  },
+  {
+    "objectID": "Clinical Trials.html#simple-randomisation",
+    "href": "Clinical Trials.html#simple-randomisation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.2 Simple Randomisation",
+    "text": "6.2 Simple Randomisation\nGenerate or look up sequence of numbers. Bin the numbers into equally sized groups.\nIf there is surplus, eg 3 groups, 10 Rand No. Then ignore the designated surplus number and move to next.\nEg.\n0 1 6 7 3 2 6 8 9 5 3 2 2\nA : 1-3 B : 4-6 C : 7-9 0 : ignore and try again\nNegative :\n\nIn small trial balance can be poor\n\nPositive :\n\nCompletely unpredictable\nIn long run will create equal groups"
+  },
+  {
+    "objectID": "Clinical Trials.html#blocking",
+    "href": "Clinical Trials.html#blocking",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.3 Blocking",
+    "text": "6.3 Blocking\nBlocking is where we create clusters of treatment assignments, to ensure balanced groups.\nEg. AB, BA 0-4 = AB 5-9 = BA\nJust move along the random numbers in sequence, don’t do every second, etc\nBlock size can be increased to make it harder to crack Eg\nAABB, ABBA, ABAB, BBAA, BABA, etc\nBlocking may be crackable with small block sizes and thus may risk double blindness.\nBlocking can also be used for imbalance setting.\nBlock size should be as large as possible to minimise risk of cracking. But not so large that the last block would be highly imbalanced if split as it reached the end."
+  },
+  {
+    "objectID": "Clinical Trials.html#stratified-randomisation",
+    "href": "Clinical Trials.html#stratified-randomisation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.4 Stratified Randomisation",
+    "text": "6.4 Stratified Randomisation\nTODO : Watch the video on this and verify below notes (I’m 99% sure they are good)\nTreatment (control included) groups should be as equal as possible in terms of patient characterirstics (Age, gender, etc). Imblances could confound treatments with characteristics. Solve with stratified randomisation.\nSay we have M/F, Over, under 50\n\n\n\nCat.\nSchema\n\n\n\n\nM, <50\nA B B A B B A A\n\n\nF, <50\nB A B A B A A B\n\n\nM, >50\nA B A B B A A B\n\n\nF, >50\nA B A B A B B A\n\n\n\nInstead of now applying patient count numbers, we move through the list of patients (which should itself be random), sequentially crossing off as we go."
+  },
+  {
+    "objectID": "Clinical Trials.html#minimisation",
+    "href": "Clinical Trials.html#minimisation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.5 Minimisation",
+    "text": "6.5 Minimisation"
+  },
+  {
+    "objectID": "Clinical Trials.html#minimisationadaptive-randomisation",
+    "href": "Clinical Trials.html#minimisationadaptive-randomisation",
+    "title": "3  Chapter 1 - Intro",
+    "section": "6.5 Minimisation/Adaptive randomisation",
+    "text": "6.5 Minimisation/Adaptive randomisation\nWhere there are lots of factors strification can become impractical.\nMinimisation is dynamic assignment of patients to different treatments to achieve.\nSteps:\n\nCreate a table where first column is characteristics, second col is factor, all other columns are treatment tallys for the characteristics\nSum down the columns and look for lowest score\nAdd the patient to that group and update the tally\nRepeat\nIf score are equal, randomise.\n\nThis is not truely random and could lead to a level of prediction if the assignent history is known. To add randomisation you might add a probability of assignment to the smaller so if it is smaller there is some p between 0.5 and 1 whether it is assigned"
+  },
+  {
+    "objectID": "Clinical Trials.html#chapter-8---crossover",
+    "href": "Clinical Trials.html#chapter-8---crossover",
+    "title": "3  Chapter 1 - Intro",
+    "section": "9.1 Chapter 8 - Crossover",
+    "text": "9.1 Chapter 8 - Crossover\nNOT ON THE FORMULA SHEET!!!!!\nCrossover trials offer more efficiency over parrallel due to within patient comparisons.\nTwo groups recieve two treatments but at different periods.\nPossible obsevred effects include:\n\nTreatment effects, what we are trying to find, a difference in treatments\nPeriod effect, different responses between periods could be due to seasonal effects or all patients improving over time\nCarryover (also know as treatement x period interaction)\n\nTODO - 8.2\n\n\n\nGroups\nPeriod 1\nPeriod 2\n\n\n\n\nGroup 1\nA , \\(Y_{11k}\\)\nB , \\(Y_{12k}\\)\n\n\nGroup 2\nB , \\(Y_{21k}\\)\nA , \\(Y_{22k}\\)\n\n\n\nWe model the following:\n\n\\(\\mu\\) - overall mean\n\\(\\tau_A , \\tau_B\\) - Treatment effects\n\\(\\pi_1, \\pi_2\\) - Period effects\n\\(\\lambda_1, \\lambda_2\\) - carryover effects\n\\(\\alpha_k\\) random patient effect \\(\\sim N(0, \\phi^2)\\) between patients\n\\(epsilon_{ijk}\\) independent random error\n\n\\(\\alpha\\) and \\(\\epsilon\\) disappear by taking expectations\nFrom this we can conclude that:\n\n\n\nGroups\nPeriod 1\nPeriod 2\n\n\n\n\nGroup 1\n\\(\\mu + \\tau_A + \\pi_1\\)\n\\(\\mu + \\tau_B + \\pi_2 + \\lambda_A\\)\n\n\nGroup 2\n\\(\\mu + \\tau_B + \\pi_1\\)\n\\(\\mu + \\tau_A + \\pi_2 + \\lambda_B\\)\n\n\n\n\n9.1.1 Workflow\nThere is more detail in the notes\n\n9.1.1.1 Assess Carryover\nIdeally carryover effects would be none or equal, so under\n\\(H_0 : \\lambda_A = \\lambda_B\\)\nSo two sample t-test\n\\(T = (Y_{i1k} +Y_{i2k})/2\\), the average across each patient\n\\(\\frac{\\bar{T_1} - \\bar{T_2}} {\\sqrt{  \\frac{S^2_{T_1}}{n_1} +  \\frac{S^2_{T_2}}{n_2} }} \\sim t_r\\)\nWhere\n\\(r = min(n_1, n_2)\\)\nSome info:\n\nWe don’t test that \\(H_0 : \\lambda_A = \\lambda_B= 0\\) as inseperable from period effects\nIt is low powered due to between patient comparison\nIf detected, results are contaminated, do not test for period and treatment, fallback to a parrallel study in period 1. Power however will be too low.\nIt is fine to use the sum of the two values for each patient over the average, the t test will be the same, just don’t have to divide by two.\n\n\n\n9.1.1.2 Assess Treatment\nAssumes no carryover\n\\(H_0 : \\tau_A = \\tau_B\\)\nThen \\(D_{ik} = Y_{i1k} - Y_{i2k}\\) calculated and as before\n\\(\\frac{\\bar{D_1} - \\bar{D_2}} {\\sqrt{  \\frac{S^2_{D_1}}{n_1} +  \\frac{S^2_{D_2}}{n_2} }} \\sim t_r\\)\n\n\n9.1.1.3 Assess Period\nAssumes no carryover\n\\(H_0 : \\pi_1 = \\pi_2\\)\nThen \\(D_{ik} = Y_{i1k} - Y_{i2k}\\) calculated and as before\n\\(\\frac{\\bar{D_1} - (-\\bar{D_2})} {\\sqrt{  \\frac{S^2_{D_1}}{n_1} +  \\frac{S^2_{D_2}}{n_2} }} \\sim t_r\\)\n\n\n9.1.1.4 Sample SIze\nSample size can be calulated as follows\nWhere n is the calculated number required for a parrallel arm and \\(\\rho\\) is the correlation between two measurments on each patient. So clearly less patient.\n\\(N = n(1-\\rho)\\)\nTODO 8.6 onwards"
+  },
+  {
+    "objectID": "linear_models.html",
+    "href": "linear_models.html",
+    "title": "5  Linear Models",
+    "section": "",
+    "text": "weugfwj"
+  },
+  {
+    "objectID": "linear_models.html#intro",
+    "href": "linear_models.html#intro",
+    "title": "5  Linear Models",
+    "section": "5.1 Intro",
+    "text": "5.1 Intro\nCategorical variables are called factors, they may be binary or have levels\ny may be reffered to as dependnent or response variable(s)\nx may be called independent , explanatory, predictor variables.\nWe use \\(n\\) to denote observations\nWe use \\(r\\) for the number of explanatory variables.\nA model might look like\n\\(y_i = \\beta_0 + \\beta_1x_{i1} + ... \\beta_{ir} + \\epsilon_i\\)\nThe \\(\\beta_0 + \\beta_1x_{i1} + ... \\beta_{ir}\\) is reffered to as the linear predictor. Epsilon is the random error.\nWhen r=2 we fit a plane! Then hyper-planes in higher dimensions.\nRemember a linear model is linear in the parameters (betas), it is allowed to include logs, quadratics.\nIt is easier to work in matrix notation. Parameter vector:\n\\(\\boldsymbol{\\beta} = (\\beta_0, \\beta_1, ...)^T\\)\nThe \\(\\boldsymbol{x} = (x_1, x_2...)^T\\) is combined with a vector of ones to create the design matrix \\(\\boldsymbol{X}\\).\nThis combined creates\n\\(\\boldsymbol{y} = \\boldsymbol{X} \\boldsymbol{\\beta}+ \\boldsymbol{\\epsilon}\\)\n\\(\\boldsymbol{X}\\) has the shape \\(n \\times p\\)\n\\(\\boldsymbol{\\beta}\\) has the shape \\(p \\times 1\\)\nIn linear modelling we assume that the \\(\\epsilon\\):\n\nIs a MV Norm\n0 Mean\nIndependent\nCommon variance \\(\\sigma^2\\) (homoscedasticity)\n\nSo :\n\\(\\epsilon \\sim N_n(0, \\sigma^2 I_n)\\)\nAnd if \\(y = X\\beta + \\epsilon\\) then we can say by linear transformation that\n\\(y \\sim N_n(X\\beta, \\sigma^2 I_n)\\)\nIn this course:\n\nExplanatory - the base \\(x\\) variable, from the data\nRegressor - The constant, the $x $ and any function or transform of \\(x\\) with a coefficient.\n\nSo \\(y = \\beta_0 + \\beta_1 x \\beta_2 x^2\\) has a single explantory variable, but 3 regressors."
+  },
+  {
+    "objectID": "survival_regression.html",
+    "href": "survival_regression.html",
+    "title": "6  Survival",
+    "section": "",
+    "text": "The first thing we are interested in is setting a baseline for the explanatory variables \\(\\textbf{x}\\). Where \\(\\textbf{x}\\) becomes the zero vector \\(\\textbf{0}\\). Eg. \\(\\textbf{x} = (0,0,0...,0)\\).\nIt is very common for age to be standardised around some age of interest. Eg 50, so all ages would be given as 5, -10, etc which equates to 55 and 40.\nThe two common methods are :\n\nAccelarated Failure Time (AFT)\nProportional Hazards (PH)"
+  },
+  {
+    "objectID": "survival_regression.html#aft",
+    "href": "survival_regression.html#aft",
+    "title": "6  Survival",
+    "section": "6.1 AFT",
+    "text": "6.1 AFT\n\n6.1.1 Two Group Example\nIn the simplests case we model survival times \\(T\\) as a random variable. But with two groups we want to model them both as seperate RVs. Where the baseline RV is \\(T_0\\) and the treatment (or other covariate) is given by \\(T_1\\). As we now have times we can therefore model survivor functions \\(S\\). However in AFTs we don’t want \\(S_0\\) and \\(S_1\\) we want a single survivor function that is scaled.\nWe therefore look to the following:\n\\(\\text{Group 0 :   } S(t ; x_i=0) = P(T_0>t) = S_0(t))\\) \\(\\text{Group 1 :   } S(t ; x_i=1) = P(T_1>t) = P(\\frac{T_0}{\\psi}> t) = P(T_0>\\psi t) = S_0(\\psi t))\\)\nSo \\(\\psi\\) “accelrates time” and hence AFT and so the RVs are related by \\(T_1 = \\frac{T_0}{\\psi}\\) and so \\(S_1(t) = S_0(\\psi t)\\).\nThinking back to graphing, any multiplier of a function value is a stretch in x, whose magnitude is the reciprical. So a \\(\\psi >1\\) will shrink survival time by \\(\\frac{1}{\\psi}\\) and a \\(\\psi <1\\) will extend survival time.\nSo \\(\\psi >1\\) accelrates time for the patient (so they are more likely to die faster). Less than one Deaccelerates!\n\nScale factor is \\(\\frac{1}{\\psi}\\) , less than 1 means better survival times for the patient\n\nSo \\(\\psi\\) is a function of \\(\\textbf{x}\\), all of our covariates, which determine the “acceleration”\n\n\n6.1.2 Generalising to two groups\nInstead of now having a \\(\\psi\\) to turn on and off we now require \\(\\psi(\\textbf{x})\\) so that we can create a scaling factor for each individual. We therefore assume that (Where \\(S_0\\) is \\(S(t)\\) at the baseline consitions where \\(\\textbf{x} = \\textbf{0}\\)):\n\\(S(t;\\textbf{x}) = S_0(t\\psi(\\textbf{x}))\\)\nFrom this it can be shown that the following are true:\n\\(f(t;\\textbf{x}) = f_0(t\\psi(\\textbf{x}))\\psi(\\textbf{x})\\)\n\\(h(t;\\textbf{x}) = h_0(t\\psi(\\textbf{x}))\\psi(\\textbf{x})\\)\nThis can be derived by showing that that \\(t\\) being multiplie by \\(\\psi\\) and has \\(S_0\\) applied to it as a function. We know the relationship between the survival function and the density fuinction. \\(S(t) = 1- F(t)\\) differentiatiing we get negative density function. A function of a function, means that we need to use the chain rul and therefore gets the above. From the desnity we can get the hazard. TODO : Write out derivation. More details can be found at 25mins, 8/12.\nSo again: \\(T = \\frac{T_0}{\\psi(\\textbf{x})}\\)\nWe are yet to define \\(\\psi(\\textbf{x})\\) but tow conditions must be met:\n\n\\(\\psi(\\textbf{x})\\geq 0\\), so cannot have a negative time\n\\(\\psi(\\textbf{0}) = 1\\), so that the basline has no strethcing effects.\n\nFrom this a naturual choice is (it could be any functiion though):\n\\({\\psi(\\textbf{x})} = \\exp(-\\beta'\\textbf{x})\\)\nThis gives us our parameters, but excludes the intercept terms. Recalling \\(T = \\frac{T_0}{\\psi(\\textbf{x})}\\) then\n\\(E[T] = \\exp(\\beta'\\textbf{x})E[T_0]\\)\nIf \\(\\beta_i x_i\\) is positive then the expected survival time increases (good fro patient)\n\n\n6.1.3 Exponetial Case\nUsing the above we can therefore start to create an exponential AFT. We already know that for the exponential distribution:\n\n\n\n\n\n\n\n\nProperty\nequation\nAFT\n\n\n\n\n\\(S(t)_0\\)\n\\(e^{-\\lambda t}\\)\n\\(S(t;\\textbf{x}) = \\exp(-\\lambda t e^{-\\beta'\\textbf{x}})\\)\n\n\n\\(h(t)_0\\)\n\\(\\lambda\\)\n\\(\\lambda e^{-\\beta'\\textbf{x}}\\)\n\n\n\\(f(t)_0\\)\n\\(\\lambda e^{-\\lambda t}\\)\n\\(\\lambda e^{-\\beta'\\textbf{x}} \\exp(-\\lambda t e^{-\\beta'\\textbf{x}})\\)\n\n\n\nSo if \\(\\textbf{x}_i\\) is a p dimensional vector of explanatory variables then we ca n by MLE find p+1 parameters \\((\\lambda, \\beta_1, \\beta_2...\\beta_p)\\).\nMLE is found by usual method, get derivative, set to 0, solve iteratively. \\(\\hat{\\lambda}\\) and \\(\\hat{\\beta}\\) are found any by the asymptopic properties of the MLE we know that:\n\\(\\hat{\\lambda} \\sim N(\\lambda, \\text{Var}(\\hat{\\lambda}))\\)\nWe can obtain \\(\\text{Var}(\\hat{\\lambda}))\\) from the expected/observed stuff covered in chapter 3 (TODO: find this out!)\n\n6.1.3.1 Final model\nIf we are extra explicit with \\(\\lambda_0\\) we can say that \\(T_0 \\sim \\text{exp}(\\lambda_0)\\) so \\(S(t;\\textbf{x}) = \\exp(-\\lambda_0 t e^{-\\beta'\\textbf{x}})\\). Then it is more convinient to say that \\(\\lambda_0 = \\exp(-\\beta_0)\\)\nThen we can lift the \\(\\lambda\\) into the exponent. Thus:\n\\(S(t;\\textbf{x}) = \\exp(- t e^{(-(\\beta_0 + \\beta_1\\textbf{x}_1 + \\beta_2\\textbf{x}_2 ...))})\\)\nThis then looks alot like \\(e^{-t\\lambda}\\) but we now have \\(e^{-t\\lambda(\\textbf{x})}\\) and so we can conclude:\n\\(T \\sim exp(\\lambda(\\textbf{x}))\\)\nSo \\(\\lambda(x) = exp(-(\\beta_0 + \\beta_1\\textbf{x}_1 + \\beta_2\\textbf{x}_2 ...))\\)\nAnd from standard properties we therefor know that \\(E[T] = \\frac{1}{\\lambda(\\textbf{x})}\\) and therefore thre MLE fo the mean is:\n\\(\\frac{1}{\\hat{\\lambda}(x)} = exp(\\beta_0 + \\beta_1\\textbf{x}_1 + \\beta_2\\textbf{x}_2 ...)\\)\n\n\\(\\lambda_0 = \\exp(-\\beta_0)\\) or \\(\\lambda_0 = \\exp(-\\text{Intercept})\\) in survreg\n\n\n\n\n6.1.4 Weibull\nIn R we use the following implementation of the weibull distribution, it’s survivor function is as follows:\n\\(S(t) = \\exp{\\(\\lambda t )^{\\gamma}}\\)\nSO repeating the same steps as for the exponential we can say that the RV \\(T_0\\) is:\n$T_0 (_0, )\nAdd the scalling factor:\n\\(S(t;\\textbf{x}) = exp(-(\\lambda t e^{-\\beta ' \\textbf{x}})^{\\gamma})\\)\nAgian let \\(\\lambda_0 = exp(-\\beta_0)\\)\n\\(S(t;\\textbf{x}) = exp(-( t e^{-(\\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 ...)})^{\\gamma})\\)\nSo \\(\\lambda(\\textbf{x}) = e^{-(\\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 ...)}\\)\nThe rate \\(\\gamma\\) is unaffected by the covariates, so only \\(\\lambda(\\textbf{x})\\) is required.\n\n\n6.1.5 Testing Exp vs Weibull\nThe defualt distribution in survreg is the weibull.\nIt will also report the log(scale) in the summary. This is a test that \\(H_0 \\text{ : log(scale)} = 0\\), basically whether \\(\\gamma = 1\\) as \\(\\gamma = \\frac{1}{scale}\\). If we don’t reject probably better to stick with the exponential as it is the simpler model."
+  },
+  {
+    "objectID": "survival_regression.html#proportional-hazards",
+    "href": "survival_regression.html#proportional-hazards",
+    "title": "6  Survival",
+    "section": "6.2 Proportional Hazards",
+    "text": "6.2 Proportional Hazards\nIn AFTs we were concerned with scaling time by \\(S(t;\\textbf{x}) = S_0(t\\psi(\\textbf{x}))\\), so survivor function depends on \\(\\textbf{x}\\).\nIn proportional hazards, the hazard function depends on through the hazard function so. Agian we consider the baseline \\(h_0\\) where the covariates \\(\\textbf{x}\\) are the zero vector \\(\\textbf{0}\\)\n\\(h(t;\\textbf{x}) = \\psi(\\textbf{x};\\beta) h_0(t)\\)\nSo again it’s just deviation from the baseline. Again therefore we need a sensible function. There is only one constraint here and that is \\(\\psi(\\textbf{x}=0;\\beta)\\) must equal 1. So\n\\(\\psi(\\textbf{x};\\beta) = e^{\\beta'\\textbf{x}}\\)\nNote that in AFT the exponent is negative, whereas it is positive here. We could use negative in AFT to make it consistent with the other parameter estimates, eg lambda as the intercept. A negative here would make it harder to interpret the hazards.\n\n6.2.1 Why is it called proportional hazards\nThe hazard ratio is independent of time. As the baseline hazard cancels we are left with a time invariant ratio.\n\\(\\frac{h(t;x_1)}{h(t;x_2)} = \\frac{h_0(t)e^{\\beta_1 x_1}}{h_0(t)e^{\\beta_2 x_2}} = \\frac{e^{\\beta_1 x_1}}{e^{\\beta_2 x_2}}\\)\nThe first part is reffered to as the hazard ratio.\nThis is a strong assumption, which we must make sure to check.\n\n\n6.2.2 Advantage/Disadvantage\nAdvantages:\n\nWe don’t have to make assumptions on the underlying distribution of the baseline hazard/survival functions. This is mitigates some of the strong assumptions required for AFTs (Weibull vs Exp, etc)\nWe are directly modelling the effect of the covariate on the hazard. To understand teh effects on hazard we just have to look at the signs of the covariates. In AFTs however it is not alwatys obvious and needs further calculation.\n\nDisadvantages: - As we haven’t specified a \\(h_0\\) then given a vector of patient characteristics it it not possible to actually specify the hazard.\nIf you are just interested in which covariates effect hazard/survival then PH is fine. If you want to want to actually compute probabilities of survival/times, expectations, etc then AFTs are required. So for instance in a PH model you would be able to say:\n\nsmoking triples hazard relative to not\ntreaetment halves hazard relative to placebo\n\nHowever you could not say that smoking 10 cigs a day decrease expected survival time by 2 or probability of a cancer paitient surving more than two years on new meds is 0.6.\n\n\n6.2.3 Estimating \\(\\beta\\)\nWe use likeihood methods. However notrmally we would say that\n\\(Likelihood = \\Pi^n_{i=1} f(t_i;\\textbf{x}_i)^{\\delta_i} S(t_i ; \\textbf{x}_i)^{1-\\delta_i}\\)\nThis is also equal to (as \\(f(t) = h(t)S(t)\\))\n\\(Likelihood = \\Pi^n_{i=1} h(t;\\textbf{x})^{\\delta_i} S(t_i ; \\textbf{x}_i)\\)\nWhere \\(t_i\\) is the min(Failure time, time of right censor) and \\(\\delta_i\\) is the indicator function where 1=death, 0 = censor.\nHowever in PH we havent specified \\(h_0(t)\\) so MLE isn’t possible. We therefore hae to use partial likelihood.\n\n6.2.3.1 Partial Likelihood\nIf we know the times of which people died, then we want to understand the probability that they died in that particular observed order order.\n\\(P(\\text{Death}) \\propto h\\)\nTODO : review partial likelihood!\n\n\n\n6.2.4 Intrepreting R output\nThe wald score is the coeff/S.E. This is standard normal. It’s square is the \\(\\chi^2_1\\) which is useful in multi-level factors.\nFor an set of covariates \\(\\textbf{x} = (x_1, x_2, x_3....)'\\) you will get the the following hazard:\n\\(h(t;\\textbf{x} = h_0(t)e^{\\beta_1 x_1 + \\beta_2 x_2 ...}\\).\nWhere you havea two level factopr Eg treatment. This becomes a binary case of x = 0 or 1. Therefore if we calculate the hazard for both case we get (assuming treatment has been set as the first variable and A = 0, B =1)\n$ \\(h(t;\\textbf{x} = h_0(t)e^{\\beta_1(0) + \\beta_2 x_2 ...}\\)\n$ \\(h(t;\\textbf{x} = h_0(t)e^{\\beta_1(1) + \\beta_2 x_2 ...}\\).\nAnd if we calculate the hazard ratio of \\(\\frac{\\text{Treatment B}}{\\text{Treatment A}}\\) then the terms cancel to leave only \\(e^{\\beta_1}\\). And so this is simply the hazard ratio for treatment on these covariates. This in turn means that the coeffieicnt itself is the log of the hazard ratio.\n\n6.2.4.1 Significance\nBy asymptopic variance of the MLE\n\\(\\hat{\\beta} \\sim N(\\beta, s.e.(\\hat{\\beta})^2)\\)\nSo if you have either a two factor or continuous covariate you can compare either\n\nthe \\(\\hat{\\beta}/s.e.(\\hat{\\beta})\\) to a \\(N(0,1)\\)\nor \\((\\hat{\\beta}/s.e.(\\hat{\\beta}))^2\\) to a \\(\\chi_1^2\\)\n\nOr where you have \\(k >2\\) factors you do the following:\n\nCalculate the \\(\\chi_i^2 = (\\hat{\\beta}_i/s.e.(\\hat{\\beta}_i))^2\\) for each of the k-1 variables\n\\(\\sum^{k-1}_{i=1}\\chi_i^2\\) and compare to the \\(\\chi_{k-1}^2\\) dist.\n\n\n\n6.2.4.2 Process - Binary\n\nSignificance\nDirection\nQuantify\n\nSay we are interested in a treatment B and A where. B is 1 and A is 0 in the model. It is \\(\\beta_1\\) in the model.\nThe first look at \\(e^{\\beta_1} = \\frac{h{t;x_1=1}}{t;x_1=0}\\):\n\nIf \\(e^{\\beta_1} <1\\) Then the factor with value 1 (often the treatment B) decreases the hazard relative to teatment A\nIf \\(e^{\\beta_1} >1\\) Then the factor with value 1 (often the treatment B) Increases the hazard relative to teatment A\n\nWe can put a CI on the Hazard ratio by taking the \\(e^{\\hat{\\beta_1} \\pm 1.96(s.e.(\\hat{\\beta_1}))}\\). As it is a monotonic transform it holds.\nThe ratio can be directly reported as a percentage which is often easier for audience to understand. So a CI of hazard ratio 0.25 to 0.75 would be:\n“Relapse Hazard on Treatmnt B is likley to be between 25% ad 75% of realpse hazard on Treatment A.”\n\n\n6.2.4.3 Process - Continuous\nIn the case of the continuous what were are doing is calulating the following hazard ratio (this example used heart volume):\n\\(\\frac{h(t; \\textbf{x}_4 = volume + 1)}{h(t; \\textbf{x}_4 = volume)}\\)\nSo how does hazard increase when a continuous unit increase by one. Which much like the hazard ratio for a bianry case you will get alot of cancellation. Obviously the other covariates just cancel based on the baseline and:\n$ = e^{_4} $\n\n\n6.2.4.4 Process - Multi level factors\nTake k-1 factors and compute the available \\(\\chi^2\\) sum them and compare to the \\(\\chi^2_{k-1}\\). Remeber the baseline is just absorbed into the intercept like any linear model.\nRemember \\(\\chi^2\\) is one sided and therefore compare directly to 0.95 and not 0.975.\n\n\n6.2.4.5 In the exam/IRL\n\nIf you are asked to **Interpret the output uou must do the following:\n\nSignificance : Does p-value drop below threshhold\nDirection : Is hazard increased or decreased relative to the baseline\nQuantify : Give a 95% CI for the hazard ratio.\n\n\nTODO:\n\nGo through and derive log-log\nDo the residual stuff\ntito correction?\nRevisit entire likelihood partial aspect 14:00 - 30:20 last lecture"
+  },
+  {
+    "objectID": "survival_regression.html#disadvantages",
+    "href": "survival_regression.html#disadvantages",
+    "title": "6  Survival",
+    "section": "6.3 Disadvantages:",
+    "text": "6.3 Disadvantages:"
+  },
+  {
+    "objectID": "survival.html#chapter-2.4---kaplan-meier",
+    "href": "survival.html#chapter-2.4---kaplan-meier",
+    "title": "4  Survival",
+    "section": "4.4 Chapter 2.4 - Kaplan-Meier",
+    "text": "4.4 Chapter 2.4 - Kaplan-Meier\nLife tables are just summaries. They result in a loss of alot of information as the bin dates. Kaplan-Meir is more useful if you have access to the raw data.\nThe full name of this chapter is the “Kaplan-Meier Product Limit Estimate of S(t)”\n\nThis can be practised endlessly using survfit\n\n\n4.4.1 No Censoring\nNote - The somewhat obscure inclusion of at risk becomes clear when you include censored values.\nIf there are \\(n\\) observed times to failures (\\(t_i\\)) we can order the times (provided there are k distinct). So\n\\(t_1, t_2, ... t_n\\) becomes \\(t_{(1)} < t_{(2)} < ... < t_{(k)}\\). If \\(d_i\\) is the number of deaths at time \\(t_{(i)}\\) then :\n\\(\\sum_{i=1}^k d_i = n\\)\nIf we knwo this then we can estimate the CDF by:\n\\(\\hat{F}(t) = \\text{Proprtion of lifetimes that are} < t\\)\nSo if we are given a time \\(t\\) to calculate we can use the following equation to approximate:\n\\(\\frac{1}{n} \\sum^{s}_{i=1}d_i\\) where \\(t_s\\leq t \\leq t_{s+1}\\)\nSo as \\(\\hat{S}(t) = 1 - \\hat{F}(t)\\) we can easily calc by\n\\(1 - \\frac{1}{n} \\sum^{s}_{i=1}d_i = \\frac{n - \\sum^{s}_{i=1}d_i }{n}\\)\nA useful trick however is to consider \\(r_j\\) those “at risk” (those who are still alive) just before time \\(t_j\\). Just before \\(t_j\\) we know that \\(r_{j+1} = r_j - d_j\\). In lay terms the number at risk next is the number who were previoulsy at risk less those who just died.\nBy a telescoping series like effect it can be shown that (notice trailing numerator cancel leading denominator)\n\\(\\hat{S}(t) = \\frac{n-d_1}{n} \\times \\frac{n-d_1 - d_2}{n - d_1} \\times \\frac{n-d_1 - d_2- d_3}{n - d_1 - d_2} \\times ... \\times \\frac{n - d_1 - ... - d_s}{n - d_1 - ... - d_{s-1}}\\)\nAt risk \\(r\\) can now be incorperated. as\n\\(\\hat{S}(t) = (1 - \\frac{d_1}{r_1}) \\times (1 - \\frac{d_2}{r_2}) \\times ... \\times (1 - \\frac{d_s}{r_s})\\)\nSimuplifying by notation therefore:\n\\(\\hat{S}(t) = \\prod^s_{j=1}( 1 - \\frac{d_j}{r_j})\\) for \\(t_s\\leq t \\leq t_{s+1}\\)\nIt must hold that \\(s\\geq 1\\) and anything before then is assume to equal 1. If everyone dies then the KP curve will go to zero.\n\n\n4.4.2 With Censoring\nBecause we have included the at risk aspecty, censoring is treated in a very similar way except the at risk aspect is modified.\nTo calculate those at risk just before time \\(t\\) we need to know who was cencosred. We introduce an \\(I_j\\) term which is the number of people censored in the time interval \\(t_{j-1} \\leq t \\leq t_j\\)\n\\(r_1 = n - I_1\\)\nMore generally\n\\(r_j = r_{j-1} - d_{j-1} - I_j\\)\n\n\n4.4.3 Calculating median S(t) with KM\nThe median survival time is the smallest value of time where the survivor function takes a value of 0.5 or less.\nSo for instance in your Kaplan-Meier table you have a something like this\n\n\n\ntime\nS(t)\n\n\n\n\n4\n0.55\n\n\n8\n0.47\n\n\n\nThen the median survival time is 8\n\n\n4.4.4 Notes\n\nKM relies on short intervals for recording death, if not completely continuous. It will not work for things like lifetables\nIf uncencorsed \\(I_j\\) is always 0 so you get the same thing again\nIf the last observation(s) are censcored then the KM curve never reaches 0 but carries on forever. Obviously this isn’t real and so becomes biased if the last observation(s) are censored.\nGreenwoods provides a formula for sampling error \\(var(\\hat{S}(t)) = (\\hat{S}(t))^2 \\sum^s_{j=1} \\frac{d_j}{r_j(r_j - d_j)}\\) for \\(t_s\\leq t \\leq t_{s+1}\\)\nHazard can also be calculated as \\(\\hat{H}(t) = -log\\hat{S}(t)\\). A simplae approiximation for hazard can be shown to be \\(H(t) \\approx \\sum_{j-1}^s\\frac{d_j}{r_j}\\)\n\n\n\n4.4.5 Exam method\n\nThis can be practised endlessly using survfit\n\nTODO: COMPLETE THIS AFTER SIME PRACTICE\n\nCreate a j col from 0 …. to number of unique death timestamp\nList all unique deaths in \\(t_{(j)}\\) column. DO NOT INCLUDE CENSOR TIMES\nLeave 0 row blank with exception of column, set that to 1.\nAt risk column"
+  },
+  {
+    "objectID": "survival.html#chapter-2.5---parametric",
+    "href": "survival.html#chapter-2.5---parametric",
+    "title": "4  Survival",
+    "section": "4.5 Chapter 2.5 - Parametric",
+    "text": "4.5 Chapter 2.5 - Parametric\nTODO : In this I largely gloss over the likelihood stuff. It feels unlikely it will be examined and I will retun if time.\nThis chapter assumes an exponetial distribution \\(T \\sim Exp(\\lambda)\\) is being used.\nWhen doing likelihood for uncensored data you follwo the usual path of finding the Likelihood by multiplying through, get log likelihood if convinient and differentiating with respect to the paramater. So\n\\(L(\\lambda ; t_1, t_2 ... t_n) = \\prod^n_{i=1}f(t_i)\\)\nIn the censored case however this becomes a little more complicated. You cannot just multiply by the desnities as you do not know the density for the censored values.\nIf we observed a death then \\(f(t)\\) contributes to the likelihood. However if we do not observed the death \\(t_i > c_i\\) then we say that we know they survived longer than some time so \\(P(T > c_i) = S(c_i)\\). And this contributes to the likelihood.\nBy combining density and survivor functions and applying the indicator 0=censor, 1=death. The following form of the likelihood can be created:\n$L() = _{i=1}^n f(t_i)^{_i}S(c_i)^{1-_i} = $\n\\(L(\\lambda) = \\prod_{i=1}^n [\\lambda e^{-\\lambda t_i}]^{\\delta_i}[e^{-\\lambda c_i}]^{1-\\delta_i}\\)\nIt can then be shown that:\n\\(\\hat{\\lambda} = \\frac{\\sum^n_{i=1} \\delta_i}{\\sum^n_{i=1}(t_i\\delta_i +(1-\\delta_i)c_i)}\\)\nAnd\n\\(var(\\hat{\\lambda}) \\approx \\frac{\\hat{\\lambda}^2}{\\sum^n_{i=1} \\delta_i}\\)\nBy asymptopic normality of the MLE the 95% CI is \\(\\hat{\\lambda}\\pm 1.96\\sqrt{var(\\hat{\\lambda}}\\)\nFor the exponential we calculate the mean by \\(\\frac{1}{var(\\hat{\\lambda})}\\) and the variance of this can be shown to be\n\\(var(\\hat{\\mu}) = \\frac{\\hat{\\mu}^2}{\\sum_{i=1}^n \\delta_i}\\)\nTODO: What is the value in learning equation 56/61 with exp denom. TODO: RAndom censoring, log normal and others (2.5.6)\n\n4.5.1 Using R - Exponetial\nThe exponetial model can be fitted in r with survreg, where dist='exponential'.\nFor the MLE of \\(\\hat{\\lambda}\\) you take \\(exp(-\\beta_0)\\) assuming no covariates eg time ~ 1. The easiest way to get the CI is to apply +/- 1.96 standard error to beta pre exponent. This will give some minor disagreement though to the division by death count method.\n\n\\(\\hat{\\lambda} = exp(-\\hat{\\beta_0} \\pm 1.96\\times se(\\hat{\\beta_0}))\\)\n\n\n\n4.5.2 Using R - Weibull\nUnder the weibull again \\(\\hat{\\lambda} = exp(-\\hat{\\beta_0} \\pm 1.96\\times se(\\hat{\\beta_0}))\\) and \\(\\hat{\\gamma} = \\frac{1}{\\text{scale}}\\)\nThe weibull is summarised in our work as \\(T \\sim Weibull(\\lambda, \\gamma)\\)\nWhen \\(\\gamma = 1\\) we are left with the exponential distribution.\n\n\n4.5.3 Workflow:\n\nfit a kaplan-meier. Is the decay expoenntial? then exp could make sense"
+  },
+  {
+    "objectID": "linear_models.html#chapter-4---hypothesis-testing",
+    "href": "linear_models.html#chapter-4---hypothesis-testing",
+    "title": "5  Linear Models",
+    "section": "5.3 Chapter 4 - Hypothesis testing",
+    "text": "5.3 Chapter 4 - Hypothesis testing\nThe most natural and simple hypothesis is whether a given \\(\\beta\\) is equal to 0. It has no effect on the model.\nHowever there might be more general null hypothesis. Eg:\n\n\\(\\beta_1 = \\beta_2 = \\beta_3 = 0\\)\n\\(\\beta_1 = \\beta_2\\)\n\nTo cover all bases (for linear hypothesis) however we can say:\n\\(H_0 : \\boldsymbol{C\\beta} = c\\)\n\\(H_A : \\boldsymbol{C\\beta} \\neq c\\) (At least one is not equal.)\nC is \\(q \\times p\\) and c is \\(q \\times 1\\) of known constants. C has rank q, so full rank. So at each row of C and c we are asserting some hypothesis that the linear combination of C is equal to c. With this framework it is not possible to specify one-sided tests, though this is rarely of interest.\n\n5.3.1 Some eamples of C and c\n\\(H_0 : \\beta_1 = 1, \\beta_2=2\\)\n\\(C = \\begin{pmatrix} 0 & 1 & 0\\\\ 0 & 0 & 1 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}\\)\n\n\n\\(H_0 : \\beta_1 = \\beta_2 = 0\\)\n\\(C = \\begin{pmatrix} 0 & 1 & 0\\\\ 0 & 0 & 1 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\end{pmatrix}\\)\n\n\n\\(H_0 : \\beta_2 = 0\\)\n\\(C = \\begin{pmatrix} 0 & 0 & 1 \\end{pmatrix} = \\begin{pmatrix} 0 \\end{pmatrix}\\)\n\n\n\\(H_0 : \\beta_2 = 3\\)\n\\(C = \\begin{pmatrix} 0 & 0 & 1 \\end{pmatrix} = \\begin{pmatrix} 3 \\end{pmatrix}\\)\n\n\n\\(H_0 : \\beta_1 = \\beta_2\\) Which is equivalent to \\(H_0 : \\beta_1 - \\beta_2 = 0\\)\n\\(C = \\begin{pmatrix} 0 & 1 & -1 \\end{pmatrix} = \\begin{pmatrix} 0 \\end{pmatrix}\\)\n\n\n5.3.2 Test Stat q > 1\n\\[\\frac{(C \\hat{\\beta} -c )^T(C(X^TX)^{-1}C^T)^{-1}(C \\hat{\\beta} -c )}{q\\hat{\\sigma}^2} \\sim F_{q, n-p} \\tag{5.1}\\]\nNote : This is a one-sided test so \\(1-\\alpha\\) (0.95) not \\(1-\\alpha / 2\\) (0.975, 95% CI). This is due to square terms.\n\n\n5.3.3 Test Stat q = 1\nWhen there is only one test eg. \\(\\beta_1=0\\) then the abiove equation can be simplified to a t-test. This becomes:\n\\(\\frac{\\hat{\\beta}_i - c_i}{\\hat{\\sigma} \\sqrt{g_{ii}}} \\sim t_{n-p}\\)\nWhere \\(G = (X^TX)^{-1}\\) and \\(g_{ii}\\) is the i-th diagonal term.\n\n\n5.3.4 Some notes\nThe r summary will tell you \\(\\hat{\\sigma}\\) through the “Residual Standard Error” line\nThe F-Statistic in summary is testing whether all coefficients other than intercept are 0\nPay little attention to tests of the individual coefficients if doing multi coeefficent tests. Significance can easily flip between all and individuals. Even if all are indicating p>0.05 and test says p>0.05.\n\n\n5.3.5 Nested models\nBy nested models we mean comparing one model to another, where one of them contains a subset of the other. It is usually used to determine whether there is value in including the term in the term(s) in the model.\nWe are trying to trade off increasing regression sum of squares vs excluding the term. So there is value in verifying whether something should be included.\nAn example is:\n\\(y= \\beta_0 + \\beta_1x_1\\) vs \\(y= \\beta_0 + \\beta_1x_1 + \\beta_2 x^2\\)\nSo does \\(\\beta_2 = 0\\)?\nFor nested models we use a similar framework to before but modify the \\(\\beta\\) vector. The C matrix becomes a 0 matrix with the indentity matrix appended to the right where the \\(I_n\\) has an n of \\(p_f - p_r\\) where \\(p_f\\) is parameter in the full model and \\(p_r\\) is the number of params in the reduced model.\nIn \\(\\boldsymbol{\\beta}\\) we have a stack of vectors \\((\\boldsymbol{\\beta}_1, \\boldsymbol{\\beta}_2)^T\\). Where \\((\\boldsymbol{\\beta}_1\\) is a \\(p_r \\times 1\\) and \\((\\boldsymbol{\\beta}_2\\) is a \\((p_f - p_r) \\times 1\\).\nElement order is arbituary provided that we are consistent between all matrices and vectors.\nA useful summary is via ANOVA tables where:\n\n\n\n\n\n\n\n\n\n\nSource of Variation\nSum of Squares (SS)\nDoF\nMean Square (MS)\nMean Square Ratio (MSR)\n\n\n\n\nDue to \\(X_1\\) is \\(\\beta_2\\) = 0\n\\(S_1\\)\n\\(p_r\\)\n\\(S_1 / p_r\\)\n\\(F_1\\)\n\n\nDue to \\(X_2\\) only\n\\(S_2\\)\n\\(p_f - p_r\\)\n\\(S_2 /(p_f - p_r)\\)\n\\(F_2\\)\n\n\nResidual\n\\(S_r\\)\n\\(n -p_f\\)\n\\(\\hat{\\sigma}^2\\)\n\\(F_2\\)\n\n\nTotal\n\\(y^Ty\\)\nn\n\n\n\n\n\nThe MSR are calculated by dividing the variance of each model by the product of the Dof and residuals so:\n\\(F_2 = \\frac{S_2}{(p_f-p_r)\\hat{\\sigma}^2}\\)\n\\(F_1 = \\frac{S_1}{p_r\\hat{\\sigma}^2}\\)\nWe typically work through these tests in sequence, firstly test 2 then test 1.\nThe initial test on \\(F_2\\) is just the test in Equation 5.1. Where the null is \\(\\beta_2 = 0\\) and the null dist is \\(F_{p_f-p_r, n-p_f}\\) (remember it’s one sided) and we test if \\(F_2 >F_{p_f-p_r, n-p_f}\\). \\(F_2\\) can also be calculated from residual sum of squares of models (RSS,, which can be obtained from ANOVA summary in R).\n\\[F_2 = \\frac{(RRS_r - RSS_f) / (p_f - p_r)}{(RSS_f)/(n-p_f)} \\tag{5.2}\\]\nAfter \\(\\beta_2\\) we test the hypothesis that \\(\\beta_1=0\\) given we know \\(\\beta_1\\) is 0, or \\(\\boldsymbol{\\beta}=\\textbf{0}\\) (this is a little handwavy as the test doesn’t poove the null, but it is accepted convention).\nWe test \\(F_1 > F_{p_r, n-p_f}\\)\n\n\n5.3.6 Minimal model\nA special test based on the previous section. If we set \\(c=0\\) and \\(C=I\\) we would test that every single coefficient is equal to zero. This basically tests that y is 0 and constant irrespetive of the variables. What we really want to test howeveris that y has a floating mean, but is constant.\nTherefore we test that the regressors only are zero by saying \\(\\beta_1 = \\beta_0\\) and that the \\(\\beta_2\\) is just all the regressors, making a p-1 length. The \\(\\beta_0\\) model is called the minimal or null model, with a mean of \\(\\beta_0\\) and variance of \\(\\sigma^2\\). As we don’t really care if \\(beta_0\\) is 0 or not we exclude it from the ANOVA tables.\nTODO: read this https://stats.stackexchange.com/questions/256726/linear-regression-what-does-the-f-statistic-r-squared-and-residual-standard-err\nSo in this model \\(p_r=1\\) and \\(p_f = p-1\\)\nIt can be show (see notes p29) that:\n\n\n\n\n\n\n\n\n\n\nSource of Variation\nSum of Squares (SS)\nDoF\nMean Square (MS)\nMean Square Ratio (MSR)\n\n\n\n\nDue to regressors\n\\(S_2 = \\hat{\\beta}^TX^TX\\hat{\\beta} - n \\bar{y}^2\\)\n\\(p-1\\)\n\\(S_2 / (p-1)\\)\n\\(F\\)\n\n\nResidual\n\\(S_r = y^Ty -\\hat{\\beta}^TX^TX\\hat{\\beta}\\)\n\\(n -p\\)\n\\(\\hat{\\sigma}^2\\)\n\n\n\nTotal\n\\(S_{yy} =y^Ty - n\\bar{y}^2\\)\nn-1\n\n\n\n\n\nSo \\(F = \\frac{S_2}{(p-1)\\hat{\\sigma}^2}\\) where null is \\(F_{p-1, n-p}\\)\nTODO: what are they talking about top of p30\n\n\n5.3.7 ANOVA - Application in R\n\nThis is highly likley to be examined\n\nWith r you have two choices for ANOVA one where you enter each model seperately where one model is the baseline and the other is more complex so :\n\n\\(y = \\beta_0 + \\beta_1x_1\\) (mdl_1)\n\\(y = \\beta_0 + \\beta_1x_1 + \\beta_2x_1^2\\) (mdl_2)\n\nso anova(mdl_1, mdl_2) or you simply run anova(mdl_2).\nIn the first option it automatically detects the extra terms and assigns those to \\(\\beta_2\\) and then \\(H_0: \\beta_2 = 0\\) is assessed. Values from the summary of this can readily be placed into Equation 5.2.\nTODO : Down from the blue arrow"
+  },
+  {
+    "objectID": "linear_models.html#chapter-5",
+    "href": "linear_models.html#chapter-5",
+    "title": "5  Linear Models",
+    "section": "5.4 Chapter 5",
+    "text": "5.4 Chapter 5\nRemember:\n\\(\\epsilon_i = y_i - \\textbf{x}_i^T\\boldsymbol{\\beta}\\)\nWe assume that \\(\\epsilon_i\\) is:\n\n0 mean, there is no systematic error from \\(\\textbf{X}\\boldsymbol{\\beta}\\)\nIndependent\nCommon variance - homoscedasticity\nNormaly distributed\n\nWe check these through residuals (the estimate of the error based on fitted model). If the model were to be correct they would be normally distributed, however they are not independent or with common variance. Unequal variances can be corrected for by standardised residuals:\n\\(s_i \\frac{e_i}{\\sqrt{\\hat{\\text{Var}}(e_i)}} \\sim t_{n-p}\\) where \\(\\hat{\\text{Var}}(e_i)\\) is the estimate of variance\n\nobserved residuals are not independent and do not have equal variances\n\n\n5.4.1 q-q plot\nPlots quantiles of observed vs expected and you should get a straight line, you may plot:\n\nStandard Normal against observed data\nNormal with mean and variance of observed against observed data\nStandardised residual\n\nYou should see a straight line of plots if the fit is appropriate. If:\n\nThe plot is bowed there is skew\nDown left/Up right = heavier tails\n\nHistograms should be avoided if the dataset is small.\n\n\n5.4.2 Homoscedasticity\nPlot a scatter graph of residual against the fitted value (y predicted). This should be a uniform band. Typically issues arise where the results fan outwards to the larger values\n\n\n5.4.3 Independence\nTypically we plot the residual in observed order, through an “index plot”. The order is based on SME knowledge (time, distance,etc). We are looking for trends, closely linked order points, etc.\n\n\n5.4.4 Formal testing\nWe can formally test whether the residuals contain outliers by standardising the residuals and looking for points. If the standardised residuals (\\(s_i\\)) are t distributed we can assess how “likely” they are by assessing the quantiles.\nHowever if we were to do this for every point we are multiple testing and so a corrrection to the cut off should be applied.Formally:\n\\(|s_i| > t_{n - p, 1-\\alpha/2}\\)\nInstead of the bonferonni test we could use the Šidák correction which is:\n\n\\(\\alpha^* = 1 - (1-\\alpha)^{1/n}\\), where \\(\\alpha^*\\) is the adjusted stat."
+  },
+  {
+    "objectID": "linear_models.html#chapter-6--",
+    "href": "linear_models.html#chapter-6--",
+    "title": "5  Linear Models",
+    "section": "5.4 Chapter 6 -",
+    "text": "5.4 Chapter 6 -"
+  },
+  {
+    "objectID": "linear_models.html#chapter-6---interactions-and-factors",
+    "href": "linear_models.html#chapter-6---interactions-and-factors",
+    "title": "5  Linear Models",
+    "section": "5.5 Chapter 6 - Interactions and Factors",
+    "text": "5.5 Chapter 6 - Interactions and Factors\nWe include factors through the use of dummy or indicator variables. Where the are two levels this will simply be a 0/1. For more than one catergory, one-hot encoding will be used.\nWith dummy variables you have to be very careful not to over parameterise the model.\nYou cannot have a model constant and a constant for each factor this is overparameterisation and leads to multicolinearity. A matrix is not full rank when there are linear combinations. Therefore \\(X^TX\\) is no longer invertable (singular). Therefore we cannot calculate \\(\\hat{\\beta}\\) through \\((X^TX)^{-1}X^T y\\).\nThe solution is to move to the following representation:\n\\(y_{ij} = \\mu + \\alpha_i + \\epsilon_{ij}\\)\nThis can be implement one of two ways\n\n5.5.0.1 Level One Zero Constraint\nAlso known as corner points constraints. Essentially the first catergorcial variable is used for \\(\\mu\\) and the first \\(\\alpha_1\\) is set to zero removing it from the model and the design matrix.\nAll other \\(\\alpha_i\\) i=(2,3,…k) are therefore deviations from the mean (\\(\\mu\\)) and hence how the mean of y changes as we move between factors.\noptions(contrast=c(factor= ..., ordered =...)) will implement this in R\n\n\n5.5.0.2 Sum to Zero\nAn alternative where all of the \\(\\alpha\\) values are designed to sum to zero. In a one factor model the \\(\\mu\\) is therefore the overall mean, while \\(\\alpha\\) is the factor group means deviation from the this.\nThis method does remove a parameter, it is achievd by accounting for the sum of all alphas from 1 to k-1 and setting k equal to the negative sum of these so they cancel. X therefore loses it’s \\(\\alpha_k\\) column, but also modifies all other \\(alpha_i\\) columns where the row is i=k\nTODO: This is a bit lost on me, see p46/47\n\n\n5.5.1 Two way factors\nIn the two way factor you have rows and columns. In the corner point constraint the mean is set by the top left mean. Then an $ deviation is reported for 2,3,…k rows and a \\(\\beta\\) for 2,3,…k columns.\n\n\n5.5.2 Interactions\nInteractions are non additive effects of one variable on anaother, this is most commonly achieved through multiplication. These terms can be tested for significance using summary or nested comparisions conducted with anova. Care must be taken with factors as it is easy to get high number of combinations, inflate \\(R^2\\) through overfitting or get muktiplicity problems with signiificance."
+  },
+  {
+    "objectID": "linear_models.html#chaprter-2---fit-estimate-and-residuals",
+    "href": "linear_models.html#chaprter-2---fit-estimate-and-residuals",
+    "title": "5  Linear Models",
+    "section": "5.2 Chaprter 2 - Fit, estimate and residuals",
+    "text": "5.2 Chaprter 2 - Fit, estimate and residuals\nOnce fitted the the difference between the observed actual and fitted values (\\(x_i^T\\hat{\\beta}\\)) is the residual. The vector of residuals therefore can be calced as:\n\\(e = y - X\\hat{\\beta}\\)\nThe sum of squared of the residuals or residual su of squares (\\(S_r\\)) is very important\n\\(S_r = S(\\hat{\\boldsymbol{\\beta}}) = \\sum_{i=1}^n e_i^2 =\\textbf{e}^T\\textbf{e} = (y - X\\hat{\\beta})^T(y - X\\hat{\\beta})\\)\n\nIn linalg rememeber that \\(x^Tx\\) of a columnar vector is equivalent to \\(\\sum x^2_i\\)\n\nThis concept is very useful in linear modelling because through the MVNorm we can show that:\n\\(L(\\beta, \\sigma^2 ; y) = f(y|\\beta. \\sigma^2) \\propto \\sigma^{-n}\\exp(- \\frac{1}{2\\sigma^2}(y - X\\hat{\\beta})^T(y - X\\hat{\\beta}))\\)\nA key part of this derivation is that \\(|\\sigma^2I_n| = (\\sigma^2)^n\\). The log likelihood can be shown to be\n\\(\\ell(\\beta, \\sigma^2;y) = -nlog(\\sigma) - \\frac{1}{2\\sigma^2}(y - X\\hat{\\beta})^T(y - X\\hat{\\beta}) + c\\)\nTo maximise likelihood with respect to \\(\\beta\\) therefore we should be looking to minimise \\(S_r\\). Minimising this is the least squares method, which both mathematically and intuitively makes sense. There is an important consequence!\n\nAssuming X has rank p, the least squares estimator of \\(\\beta\\) is \\(\\hat{\\beta} = (X^TX)^{-1}X^Ty\\)\n\nWhen finding the MLE of \\(\\sigma^2\\) we find \\(\\frac{S_r}{n}\\), however this is a biased estimator and instead we use \\(\\frac{S_r}{n-p}\\)\n\n5.2.1 Estimator mean and variance\nGiven \\(y \\sim N_n(X\\beta, \\sigma^2I_n)\\)"
+  }
+]
