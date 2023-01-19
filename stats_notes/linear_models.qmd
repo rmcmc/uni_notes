@@ -92,6 +92,55 @@ When finding the MLE of $\sigma^2$ we find $\frac{S_r}{n}$, however this is a bi
 
 Given $y \sim N_n(X\beta, \sigma^2I_n)$
 
+Uisng this we can show that $\hat{\beta}$ is an unbiased estimator
+
+$E(\hat{\beta}) = E((X^TX)^{-1}X^Ty)$ where $E(y) =  X\beta$ so
+
+$E((X^TX)^{-1}X^TX\beta)$ , the $X^TX$ terms cancel by inverse leaving $\beta$
+
+Furthermore $Var(\hat{\beta})$ can be calculated:
+
+$Var(\hat{\beta}) = Var((X^TX)^{-1}X^Ty)$ where $Var(y) =  \sigma^2I_n$
+
+Recall that given a non-stochastic matrix $A$, and stochastic y, then $Var(Ay) = A Var(y) A^T$. From matrix laws too $(AB)^T = B^TA^T$ and $(A^{-1})^T = (A^T)^{-1}$
+
+$Var(\hat{\beta}) = Var((X^TX)^{-1}X^Ty) =  (X^TX)^{-1}X^T Var(y)((X^TX)^{-1}X^T)^T$
+
+$= (X^TX)^{-1}X^T Var(y) X((X^TX)^{-1})^T = (X^TX)^{-1}X^T Var(y) X((X^TX)^T)^{-1})$
+
+$= (X^TX)^{-1}X^T Var(y) X(X^TX)^{-1}$
+
+$= (X^TX)^{-1}X^T \sigma^2 I_n X(X^TX)^{-1}$
+
+$= \sigma^2  (X^TX)^{-1}X^TX(X^TX)^{-1} = \sigma^2 (X^TX)^{-1}$
+
+
+> $\hat{\beta} = N_p(\beta, \sigma^2 (X^TX)^{-1})$
+
+TODO:2.5, 2.6
+
+## Model Fit : Coefficient of determination $R^2$
+
+$S_r$ can be thought of as a measure of fit. However it will vary depending magnitudes of the variables, so cannot be compared directly between different problems. To enable better comparison we standardise with $S_{yy}$ (Total sum of squares), $R^2$ may also be called the coefficient of determination.
+
+$R^2 = \frac{S_{yy} - S_r}{S_{yy}}$ where $S_{yy} = (y-\bar{y})^T(y-\bar{y}) = y^Ty - n\bar{y}^2$
+
+In simpler terms:
+
+- $R^2$ is the proportion of the total sum of squares that the model explains
+- Whilst $S_r$ is the explained part of $S_{yy}$
+
+$S_{yy}$ may also be written as $SS_{Total}$
+
+Relying on $R^2$ alone for model comparison is not sensible as it will always increase when parameters are added. The use of adjusted $R^2$ is preffereable as it takes into account the number of parameters.
+
+$R^2(adj) = 1 - \frac{S_r/(n-p)}{S_{yy}/(n-1)}$
+
+
+## Confidence and Prediction Intervals
+
+
+
 ## Chapter 4 - Hypothesis testing
 
 The most natural and simple hypothesis is whether a given $\beta$ is equal to 0. It has no effect on the model.
