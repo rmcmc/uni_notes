@@ -147,6 +147,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#chaprter-2---fit-estimate-and-residuals" id="toc-chaprter-2---fit-estimate-and-residuals" class="nav-link" data-scroll-target="#chaprter-2---fit-estimate-and-residuals"><span class="toc-section-number">5.2</span>  Chaprter 2 - Fit, estimate and residuals</a>
   <ul class="collapse">
   <li><a href="#estimator-mean-and-variance" id="toc-estimator-mean-and-variance" class="nav-link" data-scroll-target="#estimator-mean-and-variance"><span class="toc-section-number">5.2.1</span>  Estimator mean and variance</a></li>
+  <li><a href="#error-variance-estimate" id="toc-error-variance-estimate" class="nav-link" data-scroll-target="#error-variance-estimate"><span class="toc-section-number">5.2.2</span>  Error variance estimate</a></li>
+  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="toc-section-number">5.2.3</span>  covariance</a></li>
   </ul></li>
   <li><a href="#model-fit-coefficient-of-determination-r2" id="toc-model-fit-coefficient-of-determination-r2" class="nav-link" data-scroll-target="#model-fit-coefficient-of-determination-r2"><span class="toc-section-number">5.3</span>  Model Fit : Coefficient of determination <span class="math inline">\(R^2\)</span></a></li>
   <li><a href="#confidence-and-prediction-intervals" id="toc-confidence-and-prediction-intervals" class="nav-link" data-scroll-target="#confidence-and-prediction-intervals"><span class="toc-section-number">5.4</span>  Confidence and Prediction Intervals</a></li>
@@ -267,7 +269,29 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p><span class="math inline">\(\hat{\beta} = N_p(\beta, \sigma^2 (X^TX)^{-1})\)</span></p>
 </blockquote>
-<p>TODO:2.5, 2.6</p>
+</section>
+<section id="error-variance-estimate" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="error-variance-estimate"><span class="header-section-number">5.2.2</span> Error variance estimate</h3>
+<p><span class="math inline">\(e = y-X\beta = y - X(X^TX)^{-1}X^Ty\)</span>, the <span class="math inline">\(y\)</span> can be factorised out to give</p>
+<p><span class="math inline">\(e = My\)</span>, where <span class="math inline">\(M = I_n - X(X^TX)^{-1}X^T\)</span></p>
+<p>If <span class="math inline">\(E(e) = E(My) = ME(y) = MX\beta\)</span></p>
+<p><span class="math inline">\(MX = (I_n - X(X^TX)^{-1}X^T)X = X - X(X^TX)^{-1}X^TX = 0\)</span></p>
+<p>So <span class="math inline">\(MX = 0\)</span> therefore <span class="math inline">\(E(e) = 0\)</span> . M is also <strong>idempotent</strong>, which means <span class="math inline">\(M^2 = M\)</span>. idempotent matrices (except <span class="math inline">\(I_N\)</span>) are always singular.</p>
+<p>Another important result of M is that:</p>
+<p><span class="math inline">\(Var(e) = Var(My) = MVar(y)M^T = M\sigma^2I_nM =\sigma^2M^2 = \sigma^2M\)</span></p>
+<p>So <span class="math inline">\(M\)</span> is related to the variance-covariance matrix of the residuals.</p>
+<blockquote class="blockquote">
+<p>The variance of an individual residual is <span class="math inline">\(\sigma^2\)</span> times the corresponding diagonal of <span class="math inline">\(M\)</span></p>
+</blockquote>
+<p>It can be shown (using trace and rank rules) that:</p>
+<p><span class="math inline">\(\hat{\sigma}^2 = \frac{1}{n-p}\sum^n_{i=1}e_i^2 = \frac{1}{n-p}S_r\)</span></p>
+<p>The square root of this is the <strong>residual standard error</strong>, this is given in the r output.</p>
+<p>It can also be shown by probability theory that a MVNorm with covariance matrix <span class="math inline">\(M\)</span>, that <span class="math inline">\(\frac{S_r}{\sigma^2} \sim \chi^2_{n-p}\)</span></p>
+</section>
+<section id="covariance" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="covariance"><span class="header-section-number">5.2.3</span> covariance</h3>
+<p>Rememeber that:</p>
+<p><span class="math inline">\(corr(\beta_0, \beta_1) = \frac{Cov(\hat{\beta_0},\hat{\beta_1})}{se(\hat{\beta_0}) \times se(\hat{\beta_1)}}\)</span></p>
 </section>
 </section>
 <section id="model-fit-coefficient-of-determination-r2" class="level2" data-number="5.3">

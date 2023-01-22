@@ -117,7 +117,40 @@ $= \sigma^2  (X^TX)^{-1}X^TX(X^TX)^{-1} = \sigma^2 (X^TX)^{-1}$
 
 > $\hat{\beta} = N_p(\beta, \sigma^2 (X^TX)^{-1})$
 
-TODO:2.5, 2.6
+### Error variance estimate
+
+
+$e = y-X\beta = y - X(X^TX)^{-1}X^Ty$, the $y$ can be factorised out to give
+
+$e = My$, where $M = I_n - X(X^TX)^{-1}X^T$
+
+If $E(e) = E(My) = ME(y) = MX\beta$
+
+$MX = (I_n - X(X^TX)^{-1}X^T)X = X - X(X^TX)^{-1}X^TX = 0$
+
+So $MX = 0$ therefore $E(e) = 0$ . M is also **idempotent**, which means $M^2 = M$. idempotent matrices (except $I_N$) are always singular.
+
+Another important result of M is that:
+
+$Var(e) = Var(My) = MVar(y)M^T = M\sigma^2I_nM =\sigma^2M^2 = \sigma^2M$
+
+So $M$ is related to the variance-covariance matrix of the residuals. 
+
+>The variance of an individual residual is $\sigma^2$ times the corresponding diagonal of $M$
+
+It can be shown (using trace and rank rules) that:
+
+$\hat{\sigma}^2 = \frac{1}{n-p}\sum^n_{i=1}e_i^2 = \frac{1}{n-p}S_r$
+
+The square root of this is the **residual standard error**, this is given in the r output.
+
+It can also be shown by probability theory that a MVNorm with covariance matrix $M$, that $\frac{S_r}{\sigma^2} \sim \chi^2_{n-p}$
+
+### \hat{\beta} covariance
+
+Rememeber that:
+
+$corr(\beta_0, \beta_1) = \frac{Cov(\hat{\beta_0},\hat{\beta_1})}{se(\hat{\beta_0}) \times se(\hat{\beta_1)}}$
 
 ## Model Fit : Coefficient of determination $R^2$
 

@@ -1,5 +1,9 @@
 # Survival
 
+> **USE `ln` on your calculator!!!!!!!!!!!!!!!!**
+
+> $\chi^2_{1, 0.95} = 3.84$
+
 With survival analysis we aim to model lifetimes or populations. Survival analysis is unique as it aims to include censoring.
 
 https://www.youtube.com/watch?v=7_XK7mGMm1E&list=PLoROMvodv4rOzrYsAxzQyHb8n_RWNuS1e&index=79
@@ -216,10 +220,20 @@ Then the median survival time is 8
 
 TODO: COMPLETE THIS AFTER SIME PRACTICE 
 
-1) Create a j col from 0 .... to number of unique death timestamp
-2) List all unique deaths in $t_{(j)}$ column. DO NOT INCLUDE CENSOR TIMES
+1) Create a j col from 0 .... to number of unique death timestamp, 0 is a unique time too.
+2) List all unique deaths in $t_{(j)}$ column. DO NOT INCLUDE CENSOR TIMES. 0 is a valid time.
 3) Leave 0 row blank with exception of \hat{S(t)} column, set that to 1.
-4) At risk column 
+4) Make censor column ($I_j$) denotes all censored values in the preceding window.
+5) create deaths column $d_j$
+6) Create an at risk column. This is the most complicated, $r_j = r_{j-1} - d_{j-1} - I_j$
+7) Calultate $1 - \frac{d_j}{r_j}$
+8) $\hat{S}(t)$ is the product of 7
+9) Create a $t$ column much like a CDF where $0 \leq t < d_1$ (intervals are critical to marks/understanding)
+10) first $t_j$ to be less than 0.5 is the median!
+
+> remember $r_1 = n - I_1$
+
+> If in doubt think hard about $\leq t <$ for placing deaths, logic. In the notes we put it last, I think it should almost go first.
 
 ## Chapter 2.5 - Parametric 
 
@@ -303,7 +317,7 @@ Steps:
 2) create an $i$ column for 1,2,..n
 3) create a $t_i$ column and list all the times of deaths only
 4) Create an $r_{1,i}$ and $r_{2,i}$ for at risk (At risk for a time includes those who died at that time and all future censorees)
-5) Sum  $r_{1,i}$ and $r_{2,i}$ to get $r_i$
+5) Sum  $r_{1,i}$ and $r_{2,i}$ to get $r_i$ (row wise)
 6) Create an $d_{1,i}$ and $d_{2,i}$ for death counts at the times
 7) Sum the deaths to get $d_i$
 8) Sum down death column to get observed $O_1$ and $O_2$

@@ -265,6 +265,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<blockquote class="blockquote">
+<p><strong>USE <code>ln</code> on your calculator!!!!!!!!!!!!!!!!</strong></p>
+</blockquote>
+<blockquote class="blockquote">
+<p><span class="math inline">\(\chi^2_{1, 0.95} = 3.84\)</span></p>
+</blockquote>
 <p>With survival analysis we aim to model lifetimes or populations. Survival analysis is unique as it aims to include censoring.</p>
 <p>https://www.youtube.com/watch?v=7_XK7mGMm1E&amp;list=PLoROMvodv4rOzrYsAxzQyHb8n_RWNuS1e&amp;index=79</p>
 <section id="chapter-1---intro" class="level2" data-number="4.1">
@@ -465,11 +471,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>TODO: COMPLETE THIS AFTER SIME PRACTICE</p>
 <ol type="1">
-<li>Create a j col from 0 …. to number of unique death timestamp</li>
-<li>List all unique deaths in <span class="math inline">\(t_{(j)}\)</span> column. DO NOT INCLUDE CENSOR TIMES</li>
+<li>Create a j col from 0 …. to number of unique death timestamp, 0 is a unique time too.</li>
+<li>List all unique deaths in <span class="math inline">\(t_{(j)}\)</span> column. DO NOT INCLUDE CENSOR TIMES. 0 is a valid time.</li>
 <li>Leave 0 row blank with exception of column, set that to 1.</li>
-<li>At risk column</li>
+<li>Make censor column (<span class="math inline">\(I_j\)</span>) denotes all censored values in the preceding window.</li>
+<li>create deaths column <span class="math inline">\(d_j\)</span></li>
+<li>Create an at risk column. This is the most complicated, <span class="math inline">\(r_j = r_{j-1} - d_{j-1} - I_j\)</span></li>
+<li>Calultate <span class="math inline">\(1 - \frac{d_j}{r_j}\)</span></li>
+<li><span class="math inline">\(\hat{S}(t)\)</span> is the product of 7</li>
+<li>Create a <span class="math inline">\(t\)</span> column much like a CDF where <span class="math inline">\(0 \leq t &lt; d_1\)</span> (intervals are critical to marks/understanding)</li>
+<li>first <span class="math inline">\(t_j\)</span> to be less than 0.5 is the median!</li>
 </ol>
+<blockquote class="blockquote">
+<p>remember <span class="math inline">\(r_1 = n - I_1\)</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>If in doubt think hard about <span class="math inline">\(\leq t &lt;\)</span> for placing deaths, logic. In the notes we put it last, I think it should almost go first.</p>
+</blockquote>
 </section>
 </section>
 <section id="chapter-2.5---parametric" class="level2" data-number="4.5">
@@ -527,7 +545,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>create an <span class="math inline">\(i\)</span> column for 1,2,..n</li>
 <li>create a <span class="math inline">\(t_i\)</span> column and list all the times of deaths only</li>
 <li>Create an <span class="math inline">\(r_{1,i}\)</span> and <span class="math inline">\(r_{2,i}\)</span> for at risk (At risk for a time includes those who died at that time and all future censorees)</li>
-<li>Sum <span class="math inline">\(r_{1,i}\)</span> and <span class="math inline">\(r_{2,i}\)</span> to get <span class="math inline">\(r_i\)</span></li>
+<li>Sum <span class="math inline">\(r_{1,i}\)</span> and <span class="math inline">\(r_{2,i}\)</span> to get <span class="math inline">\(r_i\)</span> (row wise)</li>
 <li>Create an <span class="math inline">\(d_{1,i}\)</span> and <span class="math inline">\(d_{2,i}\)</span> for death counts at the times</li>
 <li>Sum the deaths to get <span class="math inline">\(d_i\)</span></li>
 <li>Sum down death column to get observed <span class="math inline">\(O_1\)</span> and <span class="math inline">\(O_2\)</span></li>
