@@ -213,7 +213,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, borderline west={3pt}{0pt}{shadecolor}, interior hidden, frame hidden, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, borderline west={3pt}{0pt}{shadecolor}, sharp corners, enhanced, frame hidden, interior hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -239,9 +239,7 @@ To learn more about Quarto books visit
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
 
-This book is my personal notes for stats, data and programming.
-
-I primarilly use it for notes around my statistics MSc.
+This book is my personal notes for my stats course. It is very rough!
 
 This book has been created with Quarto through VSCode. I highly
 recommend it.
@@ -1221,6 +1219,33 @@ trials}\label{chapter-9---combining-trials}}
 
 TODO
 
+\hypertarget{mantel-haenszel-test}{%
+\subsection{Mantel-Haenszel Test}\label{mantel-haenszel-test}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Sum all coloumns and rows in each trial if not all ready done.
+  Calculate overall table to.
+\item
+  For each trial calculate \(E(Y_1) = \frac{n_1 t}{n}\)
+\item
+  For each trial calulate \(Var(Y_1) = \frac{n_1 n_2 t(n-t)}{n^2(n-1)}\)
+\item
+  For each trial compute the MH test stats by
+  \(MH = \frac{(Y_1 - E(Y_1))^2}{Var(Y_1)}\)
+\item
+  Assess against \(\chi^2_{1,0.95}\) assuming 1 dof in table and report
+  a conclusion for each
+\item
+  Sum all \(Y_1\), Sum all \(E(Y_1)\) and sum all \(Var(Y_1)\) where
+  there sum is the RV \(W\) so \(E(W), Var(W)\)
+\item
+  Combined \(MH = \frac{(W - E(W))^2}{Var(W)}\) is the overall test,
+  then compare this against \(\chi^2_{1,0.95}\)
+\end{enumerate}
+
 \hypertarget{chapter-10---comparing-measurement-methods}{%
 \section{Chapter 10 - Comparing measurement
 methods}\label{chapter-10---comparing-measurement-methods}}
@@ -1499,6 +1524,14 @@ It is useful to know the following as SE may not be given
 
 \hypertarget{survival}{%
 \chapter{Survival}\label{survival}}
+
+\begin{quote}
+\textbf{USE \texttt{ln} on your calculator!!!!!!!!!!!!!!!!}
+\end{quote}
+
+\begin{quote}
+\(\chi^2_{1, 0.95} = 3.84\)
+\end{quote}
 
 With survival analysis we aim to model lifetimes or populations.
 Survival analysis is unique as it aims to include censoring.
@@ -1822,15 +1855,40 @@ TODO: COMPLETE THIS AFTER SIME PRACTICE
 \def\labelenumi{\arabic{enumi})}
 \tightlist
 \item
-  Create a j col from 0 \ldots. to number of unique death timestamp
+  Create a j col from 0 \ldots. to number of unique death timestamp, 0
+  is a unique time too.
 \item
   List all unique deaths in \(t_{(j)}\) column. DO NOT INCLUDE CENSOR
-  TIMES
+  TIMES. 0 is a valid time.
 \item
   Leave 0 row blank with exception of \hat{S(t)} column, set that to 1.
 \item
-  At risk column
+  Make censor column (\(I_j\)) denotes all censored values in the
+  preceding window.
+\item
+  create deaths column \(d_j\)
+\item
+  Create an at risk column. This is the most complicated,
+  \(r_j = r_{j-1} - d_{j-1} - I_j\)
+\item
+  Calultate \(1 - \frac{d_j}{r_j}\)
+\item
+  \(\hat{S}(t)\) is the product of 7
+\item
+  Create a \(t\) column much like a CDF where \(0 \leq t < d_1\)
+  (intervals are critical to marks/understanding)
+\item
+  first \(t_j\) to be less than 0.5 is the median!
 \end{enumerate}
+
+\begin{quote}
+remember \(r_1 = n - I_1\)
+\end{quote}
+
+\begin{quote}
+If in doubt think hard about \(\leq t <\) for placing deaths, logic. In
+the notes we put it last, I think it should almost go first.
+\end{quote}
 
 \hypertarget{chapter-2.5---parametric}{%
 \section{Chapter 2.5 - Parametric}\label{chapter-2.5---parametric}}
@@ -1954,7 +2012,7 @@ Steps:
   Create an \(r_{1,i}\) and \(r_{2,i}\) for at risk (At risk for a time
   includes those who died at that time and all future censorees)
 \item
-  Sum \(r_{1,i}\) and \(r_{2,i}\) to get \(r_i\)
+  Sum \(r_{1,i}\) and \(r_{2,i}\) to get \(r_i\) (row wise)
 \item
   Create an \(d_{1,i}\) and \(d_{2,i}\) for death counts at the times
 \item
@@ -2141,6 +2199,117 @@ this is a biased estimator and instead we use \(\frac{S_r}{n-p}\)
 variance}\label{estimator-mean-and-variance}}
 
 Given \(y \sim N_n(X\beta, \sigma^2I_n)\)
+
+Uisng this we can show that \(\hat{\beta}\) is an unbiased estimator
+
+\(E(\hat{\beta}) = E((X^TX)^{-1}X^Ty)\) where \(E(y) = X\beta\) so
+
+\(E((X^TX)^{-1}X^TX\beta)\) , the \(X^TX\) terms cancel by inverse
+leaving \(\beta\)
+
+Furthermore \(Var(\hat{\beta})\) can be calculated:
+
+\(Var(\hat{\beta}) = Var((X^TX)^{-1}X^Ty)\) where
+\(Var(y) = \sigma^2I_n\)
+
+Recall that given a non-stochastic matrix \(A\), and stochastic y, then
+\(Var(Ay) = A Var(y) A^T\). From matrix laws too \((AB)^T = B^TA^T\) and
+\((A^{-1})^T = (A^T)^{-1}\)
+
+\(Var(\hat{\beta}) = Var((X^TX)^{-1}X^Ty) = (X^TX)^{-1}X^T Var(y)((X^TX)^{-1}X^T)^T\)
+
+\(= (X^TX)^{-1}X^T Var(y) X((X^TX)^{-1})^T = (X^TX)^{-1}X^T Var(y) X((X^TX)^T)^{-1})\)
+
+\(= (X^TX)^{-1}X^T Var(y) X(X^TX)^{-1}\)
+
+\(= (X^TX)^{-1}X^T \sigma^2 I_n X(X^TX)^{-1}\)
+
+\(= \sigma^2 (X^TX)^{-1}X^TX(X^TX)^{-1} = \sigma^2 (X^TX)^{-1}\)
+
+\begin{quote}
+\(\hat{\beta} = N_p(\beta, \sigma^2 (X^TX)^{-1})\)
+\end{quote}
+
+\hypertarget{error-variance-estimate}{%
+\subsection{Error variance estimate}\label{error-variance-estimate}}
+
+\(e = y-X\beta = y - X(X^TX)^{-1}X^Ty\), the \(y\) can be factorised out
+to give
+
+\(e = My\), where \(M = I_n - X(X^TX)^{-1}X^T\)
+
+If \(E(e) = E(My) = ME(y) = MX\beta\)
+
+\(MX = (I_n - X(X^TX)^{-1}X^T)X = X - X(X^TX)^{-1}X^TX = 0\)
+
+So \(MX = 0\) therefore \(E(e) = 0\) . M is also \textbf{idempotent},
+which means \(M^2 = M\). idempotent matrices (except \(I_N\)) are always
+singular.
+
+Another important result of M is that:
+
+\(Var(e) = Var(My) = MVar(y)M^T = M\sigma^2I_nM =\sigma^2M^2 = \sigma^2M\)
+
+So \(M\) is related to the variance-covariance matrix of the residuals.
+
+\begin{quote}
+The variance of an individual residual is \(\sigma^2\) times the
+corresponding diagonal of \(M\)
+\end{quote}
+
+It can be shown (using trace and rank rules) that:
+
+\(\hat{\sigma}^2 = \frac{1}{n-p}\sum^n_{i=1}e_i^2 = \frac{1}{n-p}S_r\)
+
+The square root of this is the \textbf{residual standard error}, this is
+given in the r output.
+
+It can also be shown by probability theory that a MVNorm with covariance
+matrix \(M\), that \(\frac{S_r}{\sigma^2} \sim \chi^2_{n-p}\)
+
+\hypertarget{covariance}{%
+\subsection{\texorpdfstring{\hat{\beta}
+covariance}{ covariance}}\label{covariance}}
+
+Rememeber that:
+
+\(corr(\beta_0, \beta_1) = \frac{Cov(\hat{\beta_0},\hat{\beta_1})}{se(\hat{\beta_0}) \times se(\hat{\beta_1)}}\)
+
+\hypertarget{model-fit-coefficient-of-determination-r2}{%
+\section{\texorpdfstring{Model Fit : Coefficient of determination
+\(R^2\)}{Model Fit : Coefficient of determination R\^{}2}}\label{model-fit-coefficient-of-determination-r2}}
+
+\(S_r\) can be thought of as a measure of fit. However it will vary
+depending magnitudes of the variables, so cannot be compared directly
+between different problems. To enable better comparison we standardise
+with \(S_{yy}\) (Total sum of squares), \(R^2\) may also be called the
+coefficient of determination.
+
+\(R^2 = \frac{S_{yy} - S_r}{S_{yy}}\) where
+\(S_{yy} = (y-\bar{y})^T(y-\bar{y}) = y^Ty - n\bar{y}^2\)
+
+In simpler terms:
+
+\begin{itemize}
+\tightlist
+\item
+  \(R^2\) is the proportion of the total sum of squares that the model
+  explains
+\item
+  Whilst \(S_r\) is the explained part of \(S_{yy}\)
+\end{itemize}
+
+\(S_{yy}\) may also be written as \(SS_{Total}\)
+
+Relying on \(R^2\) alone for model comparison is not sensible as it will
+always increase when parameters are added. The use of adjusted \(R^2\)
+is preffereable as it takes into account the number of parameters.
+
+\(R^2(adj) = 1 - \frac{S_r/(n-p)}{S_{yy}/(n-1)}\)
+
+\hypertarget{confidence-and-prediction-intervals}{%
+\section{Confidence and Prediction
+Intervals}\label{confidence-and-prediction-intervals}}
 
 \hypertarget{chapter-4---hypothesis-testing}{%
 \section{Chapter 4 - Hypothesis

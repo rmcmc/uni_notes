@@ -423,7 +423,7 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="math inline">\(F_2 = \frac{S_2}{(p_f-p_r)\hat{\sigma}^2}\)</span></p>
 <p><span class="math inline">\(F_1 = \frac{S_1}{p_r\hat{\sigma}^2}\)</span></p>
 <p>We typically work through these tests in sequence, firstly test 2 then test 1.</p>
-<p>The initial test on <span class="math inline">\(F_2\)</span> is just the test in <a href="#eq-f-test">Equation&nbsp;<span>5.1</span></a>. Where the null is <span class="math inline">\(\beta_2 = 0\)</span> and the null dist is <span class="math inline">\(F_{p_f-p_r, n-p_f}\)</span> (remember it’s one sided) and we test if <span class="math inline">\(F_2 &gt;F_{p_f-p_r, n-p_f}\)</span>. <span class="math inline">\(F_2\)</span> can also be calculated from residual sum of squares of models (RSS,, which can be obtained from ANOVA summary in R).</p>
+<p>The initial test on <span class="math inline">\(F_2\)</span> is just the test in <a href="#eq-f-test">Equation&nbsp;<span class="quarto-unresolved-ref">eq-f-test</span></a>. Where the null is <span class="math inline">\(\beta_2 = 0\)</span> and the null dist is <span class="math inline">\(F_{p_f-p_r, n-p_f}\)</span> (remember it’s one sided) and we test if <span class="math inline">\(F_2 &gt;F_{p_f-p_r, n-p_f}\)</span>. <span class="math inline">\(F_2\)</span> can also be calculated from residual sum of squares of models (RSS,, which can be obtained from ANOVA summary in R).</p>
 <p><span id="eq-exam-f"><span class="math display">\[F_2 = \frac{(RRS_r - RSS_f) / (p_f - p_r)}{(RSS_f)/(n-p_f)} \tag{5.2}\]</span></span></p>
 <p>After <span class="math inline">\(\beta_2\)</span> we test the hypothesis that <span class="math inline">\(\beta_1=0\)</span> given we know <span class="math inline">\(\beta_1\)</span> is 0, or <span class="math inline">\(\boldsymbol{\beta}=\textbf{0}\)</span> (this is a little handwavy as the test doesn’t poove the null, but it is accepted convention).</p>
 <p>We test <span class="math inline">\(F_1 &gt; F_{p_r, n-p_f}\)</span></p>
@@ -490,7 +490,7 @@ ul.task-list li input[type="checkbox"] {
 <li><span class="math inline">\(y = \beta_0 + \beta_1x_1 + \beta_2x_1^2\)</span> (mdl_2)</li>
 </ul>
 <p>so <code>anova(mdl_1, mdl_2)</code> or you simply run <code>anova(mdl_2)</code>.</p>
-<p>In the first option it automatically detects the extra terms and assigns those to <span class="math inline">\(\beta_2\)</span> and then <span class="math inline">\(H_0: \beta_2 = 0\)</span> is assessed. Values from the summary of this can readily be placed into <a href="#eq-exam-f">Equation&nbsp;<span>5.2</span></a>.</p>
+<p>In the first option it automatically detects the extra terms and assigns those to <span class="math inline">\(\beta_2\)</span> and then <span class="math inline">\(H_0: \beta_2 = 0\)</span> is assessed. Values from the summary of this can readily be placed into <a href="#eq-exam-f">Equation&nbsp;<span class="quarto-unresolved-ref">eq-exam-f</span></a>.</p>
 <p>TODO : Down from the blue arrow</p>
 </section>
 </section>
