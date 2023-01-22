@@ -228,7 +228,7 @@
     "href": "Clinical Trials.html#chapter-9---combining-trials",
     "title": "3  Chapter 1 - Intro",
     "section": "9.2 Chapter 9 - Combining trials",
-    "text": "9.2 Chapter 9 - Combining trials\nTODO"
+    "text": "9.2 Chapter 9 - Combining trials\nTODO\n\n9.2.1 Mantel-Haenszel Test\n\nSum all coloumns and rows in each trial if not all ready done. Calculate overall table to.\nFor each trial calculate \\(E(Y_1) = \\frac{n_1 t}{n}\\)\nFor each trial calulate \\(Var(Y_1) = \\frac{n_1 n_2 t(n-t)}{n^2(n-1)}\\)\nFor each trial compute the MH test stats by \\(MH = \\frac{(Y_1 - E(Y_1))^2}{Var(Y_1)}\\)\nAssess against \\(\\chi^2_{1,0.95}\\) assuming 1 dof in table and report a conclusion for each\nSum all \\(Y_1\\), Sum all \\(E(Y_1)\\) and sum all \\(Var(Y_1)\\) where there sum is the RV \\(W\\) so \\(E(W), Var(W)\\)\nCombined \\(MH = \\frac{(W - E(W))^2}{Var(W)}\\) is the overall test, then compare this against \\(\\chi^2_{1,0.95}\\)"
   },
   {
     "objectID": "Clinical Trials.html#chapter-10---comparing-measurement-methods",

@@ -579,6 +579,16 @@ TODO 8.6 onwards
 
 TODO
 
+### Mantel-Haenszel Test
+
+1) Sum all coloumns and rows in each trial if not all ready done. Calculate overall table to.
+2) For each trial calculate $E(Y_1) = \frac{n_1 t}{n}$
+3) For each trial calulate $Var(Y_1) = \frac{n_1 n_2 t(n-t)}{n^2(n-1)}$
+4) For each trial compute the MH test stats by $MH = \frac{(Y_1 - E(Y_1))^2}{Var(Y_1)}$
+5) Assess against $\chi^2_{1,0.95}$ assuming 1 dof in table and report a conclusion for each
+6) Sum all $Y_1$, Sum all $E(Y_1)$ and sum all $Var(Y_1)$ where there sum is the RV $W$ so $E(W), Var(W)$
+7) Combined $MH = \frac{(W - E(W))^2}{Var(W)}$ is the overall test, then compare this against $\chi^2_{1,0.95}$
+
 ## Chapter 10 - Comparing measurement methods
 
 We may want to change measurment equipment due to cost, speed, patient comfort, etc.
