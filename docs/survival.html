@@ -419,13 +419,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>At risk <span class="math inline">\(r\)</span> can now be incorperated. as</p>
 <p><span class="math inline">\(\hat{S}(t) = (1 - \frac{d_1}{r_1}) \times (1 - \frac{d_2}{r_2}) \times ... \times (1 - \frac{d_s}{r_s})\)</span></p>
 <p>Simuplifying by notation therefore:</p>
-<p><span class="math inline">\(\hat{S}(t) = \prod^s_{j=1}( 1 - \frac{d_j}{r_j})\)</span> for <span class="math inline">\(t_s\leq t \leq t_{s+1}\)</span></p>
+<p><span class="math inline">\(\hat{S}(t) = \prod^s_{j=1}( 1 - \frac{d_j}{r_j})\)</span> for <span class="math inline">\(t_s\leq t &lt; t_{s+1}\)</span></p>
 <p>It must hold that <span class="math inline">\(s\geq 1\)</span> and anything before then is assume to equal 1. If everyone dies then the KP curve will go to zero.</p>
 </section>
 <section id="with-censoring" class="level3" data-number="4.4.2">
 <h3 data-number="4.4.2" class="anchored" data-anchor-id="with-censoring"><span class="header-section-number">4.4.2</span> With Censoring</h3>
 <p>Because we have included the at risk aspecty, censoring is treated in a very similar way except the at risk aspect is modified.</p>
-<p>To calculate those at risk just before time <span class="math inline">\(t\)</span> we need to know who was cencosred. We introduce an <span class="math inline">\(I_j\)</span> term which is the number of people censored in the time interval <span class="math inline">\(t_{j-1} \leq t \leq t_j\)</span></p>
+<p>To calculate those at risk just before time <span class="math inline">\(t\)</span> we need to know who was cencosred. We introduce an <span class="math inline">\(I_j\)</span> term which is the number of people censored in the time interval <span class="math inline">\(t_{j-1} \leq t &lt; t_j\)</span></p>
 <p><span class="math inline">\(r_1 = n - I_1\)</span></p>
 <p>More generally</p>
 <p><span class="math inline">\(r_j = r_{j-1} - d_{j-1} - I_j\)</span></p>
@@ -474,8 +474,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Create a j col from 0 …. to number of unique death timestamp, 0 is a unique time too.</li>
 <li>List all unique deaths in <span class="math inline">\(t_{(j)}\)</span> column. DO NOT INCLUDE CENSOR TIMES. 0 is a valid time.</li>
 <li>Leave 0 row blank with exception of column, set that to 1.</li>
-<li>Make censor column (<span class="math inline">\(I_j\)</span>) denotes all censored values in the preceding window.</li>
-<li>create deaths column <span class="math inline">\(d_j\)</span></li>
+<li>Make censor column (<span class="math inline">\(I_j\)</span>) denotes all censored values in the preceding window <span class="math inline">\(t_{j-1} \leq t &lt; t_j\)</span></li>
+<li>create deaths column <span class="math inline">\(d_j\)</span> at time <span class="math inline">\(t_j\)</span></li>
 <li>Create an at risk column. This is the most complicated, <span class="math inline">\(r_j = r_{j-1} - d_{j-1} - I_j\)</span></li>
 <li>Calultate <span class="math inline">\(1 - \frac{d_j}{r_j}\)</span></li>
 <li><span class="math inline">\(\hat{S}(t)\)</span> is the product of 7</li>
@@ -487,6 +487,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <blockquote class="blockquote">
 <p>If in doubt think hard about <span class="math inline">\(\leq t &lt;\)</span> for placing deaths, logic. In the notes we put it last, I think it should almost go first.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Treat groups seperately, creating different tables for each</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Make sure you put 0.5 line on KM plot to indicate median</p>
 </blockquote>
 </section>
 </section>
@@ -576,6 +582,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>From survreg we can use the output of a two factor analysis to easily do a MLE test by taking the parameter and covariance matrix.</p>
 <p>For LRT look at the following line near the bottom for the p-value.</p>
 <p>Chisq=1.2 on 1 degrees of freedom , p=0.27</p>
+<p>TODO: missing formula for median exponential</p>
 
 
 </section>

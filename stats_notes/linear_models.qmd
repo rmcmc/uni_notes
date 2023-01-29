@@ -448,3 +448,5 @@ In the two way factor you have rows and columns. In the corner point constraint 
 ### Interactions
 
 Interactions are non additive effects of one variable on anaother, this is most commonly achieved through multiplication. These terms can be tested for significance using `summary` or nested comparisions conducted with `anova`. Care must be taken with factors as it is easy to get high number of combinations, inflate $R^2$ through overfitting or get muktiplicity problems with signiificance. 
+
+> When you can an interaction in `R` you are not just creating a mutliplying term, but also including that interaction terms as standalone variables themselves

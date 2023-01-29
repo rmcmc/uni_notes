@@ -177,7 +177,7 @@ $\hat{S}(t) = (1 - \frac{d_1}{r_1}) \times (1 - \frac{d_2}{r_2}) \times ... \tim
 
 Simuplifying by notation therefore:
 
-$\hat{S}(t) = \prod^s_{j=1}( 1 - \frac{d_j}{r_j})$ for $t_s\leq t \leq t_{s+1}$
+$\hat{S}(t) = \prod^s_{j=1}( 1 - \frac{d_j}{r_j})$ for $t_s\leq t < t_{s+1}$
 
 It must hold that $s\geq 1$ and anything before then is assume to equal 1. If everyone dies then the KP curve will go to zero.
 
@@ -185,7 +185,7 @@ It must hold that $s\geq 1$ and anything before then is assume to equal 1. If ev
 
 Because we have included the at risk aspecty, censoring is treated in a very similar way except the at risk aspect is modified.
 
-To calculate those at risk just before time $t$ we need to know who was cencosred. We introduce an $I_j$ term which is the number of people censored in the time interval $t_{j-1} \leq t \leq t_j$
+To calculate those at risk just before time $t$ we need to know who was cencosred. We introduce an $I_j$ term which is the number of people censored in the time interval $t_{j-1} \leq t < t_j$
 
 $r_1 = n - I_1$
 
@@ -223,8 +223,8 @@ TODO: COMPLETE THIS AFTER SIME PRACTICE
 1) Create a j col from 0 .... to number of unique death timestamp, 0 is a unique time too.
 2) List all unique deaths in $t_{(j)}$ column. DO NOT INCLUDE CENSOR TIMES. 0 is a valid time.
 3) Leave 0 row blank with exception of \hat{S(t)} column, set that to 1.
-4) Make censor column ($I_j$) denotes all censored values in the preceding window.
-5) create deaths column $d_j$
+4) Make censor column ($I_j$) denotes all censored values in the preceding window $t_{j-1} \leq t < t_j$
+5) create deaths column $d_j$ at time $t_j$
 6) Create an at risk column. This is the most complicated, $r_j = r_{j-1} - d_{j-1} - I_j$
 7) Calultate $1 - \frac{d_j}{r_j}$
 8) $\hat{S}(t)$ is the product of 7
@@ -234,6 +234,10 @@ TODO: COMPLETE THIS AFTER SIME PRACTICE
 > remember $r_1 = n - I_1$
 
 > If in doubt think hard about $\leq t <$ for placing deaths, logic. In the notes we put it last, I think it should almost go first.
+
+> Treat groups seperately, creating different tables for each
+
+> Make sure you put 0.5 line on KM plot to indicate median
 
 ## Chapter 2.5 - Parametric 
 
@@ -355,6 +359,6 @@ For LRT look at the following line near the bottom for the p-value.
 
 Chisq=1.2 on 1 degrees of freedom , p=0.27
 
-
+TODO: missing formula for median exponential
 
 
