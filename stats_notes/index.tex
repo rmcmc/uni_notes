@@ -213,7 +213,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, borderline west={3pt}{0pt}{shadecolor}, sharp corners, enhanced, frame hidden, interior hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, borderline west={3pt}{0pt}{shadecolor}, breakable, frame hidden, enhanced, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -253,8 +253,8 @@ In summary, this book has no content whatsoever.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{chapter-1---intro}{%
-\chapter{Chapter 1 - Intro}\label{chapter-1---intro}}
+\hypertarget{clinical-trials}{%
+\chapter{Clinical Trials}\label{clinical-trials}}
 
 Don't forget units when reporting point or CI!
 
@@ -269,6 +269,9 @@ probability of FN.
 Confidence interval of the mean
 
 \(\bar{X} \pm t_{0.975, \nu} \frac{\sigma}{\sqrt{N}}\)
+
+\hypertarget{chapter-1---intro}{%
+\section{Chapter 1 - Intro}\label{chapter-1---intro}}
 
 A clinical trial:
 
@@ -311,7 +314,7 @@ Blindness:
 \end{itemize}
 
 \hypertarget{bradford-hill}{%
-\section{Bradford-Hill}\label{bradford-hill}}
+\subsection{Bradford-Hill}\label{bradford-hill}}
 
 If all met does not mean causality, just sensible tests.
 
@@ -340,10 +343,10 @@ If all met does not mean causality, just sensible tests.
 \end{itemize}
 
 \hypertarget{ethics}{%
-\section{Ethics}\label{ethics}}
+\subsection{Ethics}\label{ethics}}
 
 \hypertarget{medical}{%
-\subsection{Medical}\label{medical}}
+\subsubsection{Medical}\label{medical}}
 
 Trial design is key
 
@@ -362,7 +365,7 @@ Trial design is key
 \end{itemize}
 
 \hypertarget{publication}{%
-\subsection{Publication}\label{publication}}
+\subsubsection{Publication}\label{publication}}
 
 Alot of money at stake
 
@@ -375,13 +378,11 @@ Alot of money at stake
   had access to data, made decision to publish.
 \end{itemize}
 
-\bookmarksetup{startatroot}
-
 \hypertarget{chapter-2---trial-design}{%
-\chapter{Chapter 2 - Trial Design}\label{chapter-2---trial-design}}
+\section{Chapter 2 - Trial Design}\label{chapter-2---trial-design}}
 
 \hypertarget{parrallel}{%
-\section{Parrallel}\label{parrallel}}
+\subsection{Parrallel}\label{parrallel}}
 
 k treatments, split into k groups. May aim for equal sized groups,
 though not mandatory.
@@ -390,7 +391,7 @@ Requires large numbers to be sure of treatemtn effects. Robust to
 withdrawls
 
 \hypertarget{in-series}{%
-\section{In Series}\label{in-series}}
+\subsection{In Series}\label{in-series}}
 
 All patients, recieve all k treatments in same order. Allowing for in
 patient comparison.
@@ -411,7 +412,7 @@ effects may exist, short term effects only - Withdrawls can be
 problematic - Some orders are impossible
 
 \hypertarget{cross-over}{%
-\section{Cross Over}\label{cross-over}}
+\subsection{Cross Over}\label{cross-over}}
 
 Improves upon in series to account for treatment, period, carryover.
 
@@ -425,7 +426,7 @@ Washout may be placed between treatments (no treatment window) to
 minimise carryover risk.
 
 \hypertarget{factorial-design}{%
-\section{Factorial Design}\label{factorial-design}}
+\subsection{Factorial Design}\label{factorial-design}}
 
 Investigate effect of two or more treatments (factors), by giving
 combinations.
@@ -452,7 +453,7 @@ Mean response plots are useful for visualising effects:
 TODO : PRACTICE No interaction, qualitative, quantitative
 
 \hypertarget{sequential-design}{%
-\section{Sequential Design}\label{sequential-design}}
+\subsection{Sequential Design}\label{sequential-design}}
 
 Simple form, aptients enter as pairs, and randomly allocated A or B.
 
@@ -478,10 +479,8 @@ However:
   Boundary calculation is complex
 \end{itemize}
 
-\bookmarksetup{startatroot}
-
 \hypertarget{chapter-3---protocol}{%
-\chapter{Chapter 3 - Protocol}\label{chapter-3---protocol}}
+\section{Chapter 3 - Protocol}\label{chapter-3---protocol}}
 
 Protocol contains:
 
@@ -517,18 +516,16 @@ two responses to deviation.
 
 Can always report both!
 
-\bookmarksetup{startatroot}
-
 \hypertarget{chapter-4---randomisation}{%
-\chapter{Chapter 4 - Randomisation}\label{chapter-4---randomisation}}
+\section{Chapter 4 - Randomisation}\label{chapter-4---randomisation}}
 
 \hypertarget{historic}{%
-\section{Historic}\label{historic}}
+\subsection{Historic}\label{historic}}
 
 TODO p24
 
 \hypertarget{simple-randomisation}{%
-\section{Simple Randomisation}\label{simple-randomisation}}
+\subsection{Simple Randomisation}\label{simple-randomisation}}
 
 Generate or look up sequence of numbers. Bin the numbers into equally
 sized groups.
@@ -561,7 +558,7 @@ Positive :
 \end{itemize}
 
 \hypertarget{blocking}{%
-\section{Blocking}\label{blocking}}
+\subsection{Blocking}\label{blocking}}
 
 Blocking is where we create clusters of treatment assignments, to ensure
 balanced groups.
@@ -585,7 +582,7 @@ But not so large that the last block would be highly imbalanced if split
 as it reached the end.
 
 \hypertarget{stratified-randomisation}{%
-\section{Stratified Randomisation}\label{stratified-randomisation}}
+\subsection{Stratified Randomisation}\label{stratified-randomisation}}
 
 TODO : Watch the video on this and verify below notes (I'm 99\% sure
 they are good)
@@ -614,7 +611,7 @@ of patients (which should itself be random), sequentially crossing off
 as we go.
 
 \hypertarget{minimisationadaptive-randomisation}{%
-\section{Minimisation/Adaptive
+\subsection{Minimisation/Adaptive
 randomisation}\label{minimisationadaptive-randomisation}}
 
 Where there are lots of factors strification can become impractical.
@@ -645,10 +642,8 @@ assignent history is known. To add randomisation you might add a
 probability of assignment to the smaller so if it is smaller there is
 some p between 0.5 and 1 whether it is assigned
 
-\bookmarksetup{startatroot}
-
 \hypertarget{chapter-5---hypothesis-testing}{%
-\chapter{Chapter 5 - Hypothesis
+\section{Chapter 5 - Hypothesis
 Testing}\label{chapter-5---hypothesis-testing}}
 
 ``A null hypothesis which will be adopted unless there is significant
@@ -702,7 +697,7 @@ chance
 Tests have assumptions!
 
 \hypertarget{two-sample-t-test}{%
-\section{Two-Sample T-Test}\label{two-sample-t-test}}
+\subsection{Two-Sample T-Test}\label{two-sample-t-test}}
 
 One sample required if:
 
@@ -748,7 +743,7 @@ multiplier
 Assume normally distributed and independent samples
 
 \hypertarget{chi-square-test}{%
-\section{Chi-Square Test}\label{chi-square-test}}
+\subsection{Chi-Square Test}\label{chi-square-test}}
 
 Uses:
 
@@ -790,10 +785,10 @@ Uses:
 TODO: Not worked beyond 5.4
 
 \hypertarget{further-notes}{%
-\section{Further Notes}\label{further-notes}}
+\subsection{Further Notes}\label{further-notes}}
 
 \hypertarget{multiple-testing}{%
-\subsection{Multiple Testing}\label{multiple-testing}}
+\subsubsection{Multiple Testing}\label{multiple-testing}}
 
 Just comparing two groups relies heavily on well balanced randomisation.
 
@@ -802,7 +797,7 @@ covariates (prognostic factors), this is called an ANCOVA (Analysis of
 Covariance)
 
 \hypertarget{one-vs-two-sided-tests}{%
-\subsection{One vs Two sided tests}\label{one-vs-two-sided-tests}}
+\subsubsection{One vs Two sided tests}\label{one-vs-two-sided-tests}}
 
 Always, unless very strong \textbf{prior} knowledge, use a two sided
 test. One sided are more powerful.
@@ -812,7 +807,7 @@ actually increased you would miss it, potentailly missing a harmful
 effect.
 
 \hypertarget{pooled-or-seperate-variance}{%
-\subsection{Pooled or seperate
+\subsubsection{Pooled or seperate
 variance}\label{pooled-or-seperate-variance}}
 
 Always seperate on the course:
@@ -833,7 +828,7 @@ Always seperate on the course:
 We use pooled on power tests otherwise it become impractical to assess.
 
 \hypertarget{testing-for-equality-of-variance}{%
-\subsection{Testing for equality of
+\subsubsection{Testing for equality of
 variance}\label{testing-for-equality-of-variance}}
 
 Don't:
@@ -851,10 +846,8 @@ Don't:
 
 TODO 5.6
 
-\bookmarksetup{startatroot}
-
 \hypertarget{chapter-6---power}{%
-\chapter{Chapter 6 - Power}\label{chapter-6---power}}
+\section{Chapter 6 - Power}\label{chapter-6---power}}
 
 Essential ethically:
 
@@ -915,10 +908,8 @@ Some lessons from assignment:
   Don't automatically account for dropouts, only if asked
 \end{itemize}
 
-\bookmarksetup{startatroot}
-
 \hypertarget{chapter-7---multiplicity}{%
-\chapter{Chapter 7 - Multiplicity}\label{chapter-7---multiplicity}}
+\section{Chapter 7 - Multiplicity}\label{chapter-7---multiplicity}}
 
 Key takeaways:
 
@@ -956,7 +947,7 @@ rearranging it. The correction is:
 \(\frac{\alpha}{k}\)
 
 \hypertarget{multiple-end-points}{%
-\subsection{Multiple End Points}\label{multiple-end-points}}
+\subsubsection{Multiple End Points}\label{multiple-end-points}}
 
 Apply a therapy and assess multiple outcomes. Eg Give new heart meds,
 measure pulse, bp standing, bp sitting, etc
@@ -976,7 +967,7 @@ measure pulse, bp standing, bp sitting, etc
 \end{itemize}
 
 \hypertarget{sub-group-analysis}{%
-\subsection{Sub Group Analysis}\label{sub-group-analysis}}
+\subsubsection{Sub Group Analysis}\label{sub-group-analysis}}
 
 Sub groups are patient characteristics. Eg. Age brackets, gender, etc.
 
@@ -1004,7 +995,7 @@ As well as splitting, we must be very careful doing post hoc
 combinations. PROTOCOL!
 
 \hypertarget{interim-analysis}{%
-\subsection{Interim Analysis}\label{interim-analysis}}
+\subsubsection{Interim Analysis}\label{interim-analysis}}
 
 Analysing as data streams in from trials.
 
@@ -1029,7 +1020,7 @@ as not independent, other more complicated methods are used.
 DECLARE INTERIM CHECK IN PROTOCOL
 
 \hypertarget{multiple-regression}{%
-\subsection{Multiple Regression}\label{multiple-regression}}
+\subsubsection{Multiple Regression}\label{multiple-regression}}
 
 In multiple regression we typically don't worry about multiplicity, we
 have purposely chosen to include them.
@@ -1049,7 +1040,7 @@ Solution:
 \end{itemize}
 
 \hypertarget{repeated-measures}{%
-\subsection{Repeated Measures}\label{repeated-measures}}
+\subsubsection{Repeated Measures}\label{repeated-measures}}
 
 Measuring an outcome, on the same person, over time. Eg blood
 concentration at 1,4,8,16 hours.
@@ -1211,16 +1202,55 @@ clearly less patient.
 
 \(N = n(1-\rho)\)
 
-TODO 8.6 onwards
+\hypertarget{notes}{%
+\subsection{Notes}\label{notes}}
+
+\begin{itemize}
+\tightlist
+\item
+  Carryover and period cannot be seperately identified. Therefore we can
+  only test \(\lambda_A = \lambda_B\) and not
+  \(\lambda_A = \lambda_B = 0\)
+\end{itemize}
 
 \hypertarget{chapter-9---combining-trials}{%
 \section{Chapter 9 - Combining
 trials}\label{chapter-9---combining-trials}}
 
-TODO
+By combining smaller historic trials we may make the test suitably
+powerful to detect a difference. This is called meta analysis.
+
+\textbf{We must not collapse data into a single table as this risk
+simpsons paradox!}
+
+With simpsons paradox we should avoid looking at the margins of higher
+dimensional arrays. From wiki:
+
+\begin{quote}
+Simpson's paradox is a phenomenon in probability and statistics in which
+a trend appears in several groups of data but disappears or reverses
+when the groups are combined.
+\end{quote}
 
 \hypertarget{mantel-haenszel-test}{%
 \subsection{Mantel-Haenszel Test}\label{mantel-haenszel-test}}
+
+To avoid simpsons paradox we can combine trials with a Mantel-Haenszel
+Test. This assess evidence within trials which is compared and then
+combined.
+
+N trials, \(j = 1,2,3 ... N\)
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule()
+Dose & Success & Failure & Total \\
+\midrule()
+\endhead
+Treatment & \(Y_{1j}\) & \(n_{1j} - Y_{1j}\) & \(n_{1j}\) \\
+Placebo & \(Y_{2j}\) & \(n_{2j} - Y_{2j}\) & \(n_{2j}\) \\
+Total & \(t_j\) & \(n_{j} - t_{j}\) & \(n_{j}\) \\
+\bottomrule()
+\end{longtable}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -1245,6 +1275,28 @@ TODO
   Combined \(MH = \frac{(W - E(W))^2}{Var(W)}\) is the overall test,
   then compare this against \(\chi^2_{1,0.95}\)
 \end{enumerate}
+
+Notes:
+
+\begin{itemize}
+\tightlist
+\item
+  The test works irrespective of which of the 4 table body cells you use
+\item
+  May also be called a randomisation test
+\item
+  Most appropriate when treatment differences are consistent across
+  trials
+\item
+  MH is simpler than logistic reg. It may be useful when there is just
+  two factors (eg treat vs control) and only the significance (not
+  magnitude) is of interest.
+\item
+  Log reg hwowver is generally much more appropriate if other
+  covariates. It can also handle and test difference between tables
+  (trial effects) whereas MH is not very capable for this (simpsons
+  paradox)
+\end{itemize}
 
 \hypertarget{chapter-10---comparing-measurement-methods}{%
 \section{Chapter 10 - Comparing measurement
@@ -1323,13 +1375,11 @@ Only care about leading diagonal as these are agreements
 In some cases groups may have order, or there may be more than two
 assessors. Either way more advanced versions required.
 
-\bookmarksetup{startatroot}
-
 \hypertarget{chapter-11---not-logistic}{%
-\chapter{Chapter 11 - Not Logistic}\label{chapter-11---not-logistic}}
+\section{Chapter 11 - Not Logistic}\label{chapter-11---not-logistic}}
 
 \hypertarget{observational-studies}{%
-\section{Observational studies}\label{observational-studies}}
+\subsection{Observational studies}\label{observational-studies}}
 
 These are referred to as epidemiological studies
 
@@ -1424,16 +1474,14 @@ If above 1, raised risk.
 
 TODO 11.3 makes no sense? (it does but revisit)
 
-\bookmarksetup{startatroot}
-
 \hypertarget{chapter-11---logistic}{%
-\chapter{Chapter 11 - Logistic}\label{chapter-11---logistic}}
+\section{Chapter 11 - Logistic}\label{chapter-11---logistic}}
 
 To perfomr regression we estimate the \emph{Natural logarithm of the
 odds of success} or Logit. Which is
 
 \hypertarget{derivation}{%
-\section{Derivation}\label{derivation}}
+\subsection{Derivation}\label{derivation}}
 
 \(log(\frac{P(Y_i = 1)}{P(Y_i = 0)})\)
 
@@ -1459,7 +1507,7 @@ And so
 \(P(Y_i = 1)= \theta_i = \frac{\exp(\beta_0 + \beta'\mathbf{x}_i)}{1+\exp(\beta_0 + \beta'\mathbf{x}_i)}\)
 
 \hypertarget{treatment}{%
-\section{Treatment}\label{treatment}}
+\subsection{Treatment}\label{treatment}}
 
 Standard practice is \(\beta_1\) is treatement, where x is 0 = placebo
 or 1 = treatment. So treatment ``turns on'' \(beta_1\)
@@ -1468,7 +1516,7 @@ Positive \(\beta_1\) the odds of success are greater with treatment,
 negative means odds of success are greater in placebo.
 
 \hypertarget{odds-ratio}{%
-\section{Odds ratio}\label{odds-ratio}}
+\subsection{Odds ratio}\label{odds-ratio}}
 
 Sometimes Odds ratio is reffered to as relative risk as they are
 equivalent at small probabilities.
@@ -1485,7 +1533,7 @@ This is derived from
 two specicified continuous locations.
 
 \hypertarget{partial-z-test}{%
-\section{Partial Z Test}\label{partial-z-test}}
+\subsection{Partial Z Test}\label{partial-z-test}}
 
 \(H_0 : \beta_j = 0\)
 
@@ -1499,7 +1547,7 @@ It is useful to know the following as SE may not be given
 
 \$SE = \frac{\beta_j}{Z_j}
 
-\#\#~In exam
+\#\#\#~In exam
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -1775,7 +1823,7 @@ At risk \(r\) can now be incorperated. as
 Simuplifying by notation therefore:
 
 \(\hat{S}(t) = \prod^s_{j=1}( 1 - \frac{d_j}{r_j})\) for
-\(t_s\leq t \leq t_{s+1}\)
+\(t_s\leq t < t_{s+1}\)
 
 It must hold that \(s\geq 1\) and anything before then is assume to
 equal 1. If everyone dies then the KP curve will go to zero.
@@ -1788,7 +1836,7 @@ very similar way except the at risk aspect is modified.
 
 To calculate those at risk just before time \(t\) we need to know who
 was cencosred. We introduce an \(I_j\) term which is the number of
-people censored in the time interval \(t_{j-1} \leq t \leq t_j\)
+people censored in the time interval \(t_{j-1} \leq t < t_j\)
 
 \(r_1 = n - I_1\)
 
@@ -1818,8 +1866,8 @@ time & S(t) \\
 
 Then the median survival time is 8
 
-\hypertarget{notes}{%
-\subsection{Notes}\label{notes}}
+\hypertarget{notes-1}{%
+\subsection{Notes}\label{notes-1}}
 
 \begin{itemize}
 \tightlist
@@ -1864,9 +1912,9 @@ TODO: COMPLETE THIS AFTER SIME PRACTICE
   Leave 0 row blank with exception of \hat{S(t)} column, set that to 1.
 \item
   Make censor column (\(I_j\)) denotes all censored values in the
-  preceding window.
+  preceding window \(t_{j-1} \leq t < t_j\)
 \item
-  create deaths column \(d_j\)
+  create deaths column \(d_j\) at time \(t_j\)
 \item
   Create an at risk column. This is the most complicated,
   \(r_j = r_{j-1} - d_{j-1} - I_j\)
@@ -1888,6 +1936,14 @@ remember \(r_1 = n - I_1\)
 \begin{quote}
 If in doubt think hard about \(\leq t <\) for placing deaths, logic. In
 the notes we put it last, I think it should almost go first.
+\end{quote}
+
+\begin{quote}
+Treat groups seperately, creating different tables for each
+\end{quote}
+
+\begin{quote}
+Make sure you put 0.5 line on KM plot to indicate median
 \end{quote}
 
 \hypertarget{chapter-2.5---parametric}{%
@@ -2068,10 +2124,17 @@ For LRT look at the following line near the bottom for the p-value.
 
 Chisq=1.2 on 1 degrees of freedom , p=0.27
 
+TODO: missing formula for median exponential
+
 \bookmarksetup{startatroot}
 
 \hypertarget{linear-models}{%
 \chapter{Linear Models}\label{linear-models}}
+
+\begin{quote}
+The variance of residual (\(e\), \(\sigma^2M\)) is not the same as the
+variance of error (\(\epsilon\), \(\sigma^2I_n\))
+\end{quote}
 
 \hypertarget{intro}{%
 \section{Intro}\label{intro}}
@@ -2746,6 +2809,12 @@ tested for significance using \texttt{summary} or nested comparisions
 conducted with \texttt{anova}. Care must be taken with factors as it is
 easy to get high number of combinations, inflate \(R^2\) through
 overfitting or get muktiplicity problems with signiificance.
+
+\begin{quote}
+When you can an interaction in \texttt{R} you are not just creating a
+mutliplying term, but also including that interaction terms as
+standalone variables themselves
+\end{quote}
 
 \bookmarksetup{startatroot}
 

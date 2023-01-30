@@ -176,6 +176,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#chapter-8---crossover" id="toc-chapter-8---crossover" class="nav-link" data-scroll-target="#chapter-8---crossover"><span class="toc-section-number">3.8</span>  Chapter 8 - Crossover</a>
   <ul class="collapse">
   <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow"><span class="toc-section-number">3.8.1</span>  Workflow</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="toc-section-number">3.8.2</span>  Notes</a></li>
   </ul></li>
   <li><a href="#chapter-9---combining-trials" id="toc-chapter-9---combining-trials" class="nav-link" data-scroll-target="#chapter-9---combining-trials"><span class="toc-section-number">3.9</span>  Chapter 9 - Combining trials</a>
   <ul class="collapse">
@@ -770,15 +771,57 @@ ul.task-list li input[type="checkbox"] {
 <p>Sample size can be calulated as follows</p>
 <p>Where n is the calculated number required for a parrallel arm and <span class="math inline">\(\rho\)</span> is the correlation between two measurments on each patient. So clearly less patient.</p>
 <p><span class="math inline">\(N = n(1-\rho)\)</span></p>
-<p>TODO 8.6 onwards</p>
 </section>
+</section>
+<section id="notes" class="level3" data-number="3.8.2">
+<h3 data-number="3.8.2" class="anchored" data-anchor-id="notes"><span class="header-section-number">3.8.2</span> Notes</h3>
+<ul>
+<li>Carryover and period cannot be seperately identified. Therefore we can only test <span class="math inline">\(\lambda_A = \lambda_B\)</span> and not <span class="math inline">\(\lambda_A = \lambda_B = 0\)</span></li>
+</ul>
 </section>
 </section>
 <section id="chapter-9---combining-trials" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="chapter-9---combining-trials"><span class="header-section-number">3.9</span> Chapter 9 - Combining trials</h2>
-<p>TODO</p>
+<p>By combining smaller historic trials we may make the test suitably powerful to detect a difference. This is called meta analysis.</p>
+<p><strong>We must not collapse data into a single table as this risk simpsons paradox!</strong></p>
+<p>With simpsons paradox we should avoid looking at the margins of higher dimensional arrays. From wiki:</p>
+<blockquote class="blockquote">
+<p>Simpson’s paradox is a phenomenon in probability and statistics in which a trend appears in several groups of data but disappears or reverses when the groups are combined.</p>
+</blockquote>
 <section id="mantel-haenszel-test" class="level3" data-number="3.9.1">
 <h3 data-number="3.9.1" class="anchored" data-anchor-id="mantel-haenszel-test"><span class="header-section-number">3.9.1</span> Mantel-Haenszel Test</h3>
+<p>To avoid simpsons paradox we can combine trials with a Mantel-Haenszel Test. This assess evidence within trials which is compared and then combined.</p>
+<p>N trials, <span class="math inline">\(j = 1,2,3 ... N\)</span></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Dose</th>
+<th>Success</th>
+<th>Failure</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Treatment</td>
+<td><span class="math inline">\(Y_{1j}\)</span></td>
+<td><span class="math inline">\(n_{1j} - Y_{1j}\)</span></td>
+<td><span class="math inline">\(n_{1j}\)</span></td>
+</tr>
+<tr class="even">
+<td>Placebo</td>
+<td><span class="math inline">\(Y_{2j}\)</span></td>
+<td><span class="math inline">\(n_{2j} - Y_{2j}\)</span></td>
+<td><span class="math inline">\(n_{2j}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td><span class="math inline">\(t_j\)</span></td>
+<td><span class="math inline">\(n_{j} - t_{j}\)</span></td>
+<td><span class="math inline">\(n_{j}\)</span></td>
+</tr>
+</tbody>
+</table>
 <ol type="1">
 <li>Sum all coloumns and rows in each trial if not all ready done. Calculate overall table to.</li>
 <li>For each trial calculate <span class="math inline">\(E(Y_1) = \frac{n_1 t}{n}\)</span></li>
@@ -788,6 +831,14 @@ ul.task-list li input[type="checkbox"] {
 <li>Sum all <span class="math inline">\(Y_1\)</span>, Sum all <span class="math inline">\(E(Y_1)\)</span> and sum all <span class="math inline">\(Var(Y_1)\)</span> where there sum is the RV <span class="math inline">\(W\)</span> so <span class="math inline">\(E(W), Var(W)\)</span></li>
 <li>Combined <span class="math inline">\(MH = \frac{(W - E(W))^2}{Var(W)}\)</span> is the overall test, then compare this against <span class="math inline">\(\chi^2_{1,0.95}\)</span></li>
 </ol>
+<p>Notes:</p>
+<ul>
+<li>The test works irrespective of which of the 4 table body cells you use</li>
+<li>May also be called a randomisation test</li>
+<li>Most appropriate when treatment differences are consistent across trials</li>
+<li>MH is simpler than logistic reg. It may be useful when there is just two factors (eg treat vs control) and only the significance (not magnitude) is of interest.</li>
+<li>Log reg hwowver is generally much more appropriate if other covariates. It can also handle and test difference between tables (trial effects) whereas MH is not very capable for this (simpsons paradox)</li>
+</ul>
 </section>
 </section>
 <section id="chapter-10---comparing-measurement-methods" class="level2" data-number="3.10">

@@ -575,13 +575,31 @@ Where n is the calculated number required for a parrallel arm and $\rho$ is the 
 
 $N = n(1-\rho)$
 
-TODO 8.6 onwards
+### Notes
+
+- Carryover and period cannot be seperately identified. Therefore we can only test $\lambda_A = \lambda_B$ and not $\lambda_A = \lambda_B = 0$
 
 ## Chapter 9 - Combining trials
 
-TODO
+By combining smaller historic trials we may make the test suitably powerful to detect a difference. This is called meta analysis.
+
+**We must not collapse data into a single table as this risk simpsons paradox!**
+
+With simpsons paradox we should avoid looking at the margins of higher dimensional arrays. From wiki:
+
+> Simpson's paradox is a phenomenon in probability and statistics in which a trend appears in several groups of data but disappears or reverses when the groups are combined. 
 
 ### Mantel-Haenszel Test
+
+To avoid simpsons paradox we can combine trials with a Mantel-Haenszel Test. This assess evidence within trials which is compared and then combined.
+
+N trials, $j = 1,2,3 ... N$
+
+Dose | Success | Failure | Total
+-----|---------|---------|------
+Treatment | $Y_{1j}$ | $n_{1j} - Y_{1j}$ | $n_{1j}$
+Placebo | $Y_{2j}$ | $n_{2j} - Y_{2j}$ | $n_{2j}$
+Total | $t_j$ | $n_{j} - t_{j}$ | $n_{j}$
 
 1) Sum all coloumns and rows in each trial if not all ready done. Calculate overall table to.
 2) For each trial calculate $E(Y_1) = \frac{n_1 t}{n}$
@@ -590,6 +608,15 @@ TODO
 5) Assess against $\chi^2_{1,0.95}$ assuming 1 dof in table and report a conclusion for each
 6) Sum all $Y_1$, Sum all $E(Y_1)$ and sum all $Var(Y_1)$ where there sum is the RV $W$ so $E(W), Var(W)$
 7) Combined $MH = \frac{(W - E(W))^2}{Var(W)}$ is the overall test, then compare this against $\chi^2_{1,0.95}$
+
+Notes:
+
+- The test works irrespective of which of the 4 table body cells you use
+- May also be called a randomisation test
+- Most appropriate when treatment differences are consistent across trials
+- MH is simpler than logistic reg. It may be useful when there is just two factors (eg treat vs control) and only the significance (not magnitude) is of interest.
+- Log reg hwowver is generally much more appropriate if other covariates. It can also handle and test difference between tables (trial effects) whereas MH is not very capable for this (simpsons paradox)
+
 
 ## Chapter 10 - Comparing measurement methods
 
