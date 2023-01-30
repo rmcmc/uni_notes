@@ -1,3 +1,5 @@
+# Clinical Trials
+
 Don't forget units when reporting point or CI!
 
 Don't report effect size if not significant!
@@ -10,7 +12,7 @@ Confidence interval of the mean
 
 $\bar{X} \pm t_{0.975, \nu} \frac{\sigma}{\sqrt{N}}$
 
-# Chapter 1 - Intro
+## Chapter 1 - Intro
 
 A clinical trial:
 
@@ -32,7 +34,7 @@ Blindness:
 - Single : Patient or practioner is unaware of which treatment
 - Double : Both unaware
 
-## Bradford-Hill
+### Bradford-Hill
 
 If all met does not mean causality, just sensible tests.
 
@@ -46,9 +48,9 @@ If all met does not mean causality, just sensible tests.
 - Freedom from bias/confounders
 - Analgous results elsewhere - similir agents have similar results
 
-## Ethics
+### Ethics
 
-### Medical
+#### Medical
 
 Trial design is key
 
@@ -58,22 +60,22 @@ Trial design is key
 - Placebos are ethical. The ethics of the population vs individual
 - Ethics commitee buys in
 
-### Publication
+#### Publication
 
 Alot of money at stake
 
 - Avoid publication bias, only publishing good results
 - Journal contributors must: declare full responsibilty held over trial, had access to data, made decision to publish.
 
-# Chapter 2 - Trial Design
+## Chapter 2 - Trial Design
 
-## Parrallel
+### Parrallel
 
 k treatments, split into k groups. May aim for equal sized groups, though not mandatory.
 
 Requires large numbers to be sure of treatemtn effects. Robust to withdrawls
 
-## In Series
+### In Series
 
 All patients, recieve all k treatments in same order. Allowing for in patient comparison.
 
@@ -88,7 +90,7 @@ Issues:
 - Withdrawls can be problematic
 - Some orders are impossible
 
-## Cross Over
+### Cross Over
 
 Improves upon in series to account for treatment, period, carryover.
 
@@ -98,7 +100,7 @@ In the event of dropouts period one could be used as a parrallel study, though v
 
 Washout may be placed between treatments (no treatment window) to minimise carryover risk.
 
-## Factorial Design
+### Factorial Design
 
 Investigate effect of two or more treatments (factors), by giving combinations. 
 
@@ -114,7 +116,7 @@ Mean response plots are useful for visualising effects:
 
 TODO : PRACTICE No interaction, qualitative, quantitative
 
-## Sequential Design
+### Sequential Design
 
 Simple form, aptients enter as pairs, and randomly allocated A or B.
 
@@ -131,7 +133,7 @@ However:
 - Requires constant attention
 - Boundary calculation is complex
 
-# Chapter 3 - Protocol
+## Chapter 3 - Protocol
 
 Protocol contains:
 
@@ -149,13 +151,13 @@ Protocol deviations are to be expected, but must be recorded. There are two resp
 
 Can always report both!
 
-# Chapter 4 - Randomisation
+## Chapter 4 - Randomisation
 
-## Historic
+### Historic
 
 TODO p24
 
-## Simple Randomisation
+### Simple Randomisation
 
 Generate or look up sequence of numbers. Bin the numbers into equally sized groups.
 
@@ -179,7 +181,7 @@ Positive :
 - Completely unpredictable
 - In long run will create equal groups
 
-## Blocking
+### Blocking
 
 Blocking is where we create clusters of treatment assignments, to ensure balanced groups.
 
@@ -200,7 +202,7 @@ Blocking can also be used for imbalance setting.
 
 Block size should be as large as possible to minimise risk of cracking. But not so large that the last block would be highly imbalanced if split as it reached the end.
 
-## Stratified Randomisation
+### Stratified Randomisation
 
 TODO : Watch the video on this and verify below notes (I'm 99% sure they are good)
 
@@ -217,7 +219,7 @@ F, >50 | A B A B A B B A
 
 Instead of now applying patient count numbers, we move through the list of patients (which should itself be random), sequentially crossing off as we go.
 
-## Minimisation/Adaptive randomisation
+### Minimisation/Adaptive randomisation
 
 Where there are lots of factors strification can become impractical.
 
@@ -233,7 +235,7 @@ Steps:
 
 This is not truely random and could lead to a level of prediction if the assignent history is known. To add randomisation you might add a probability of assignment to the smaller so if it is smaller there is some p between 0.5 and 1 whether it is assigned 
 
-# Chapter 5 - Hypothesis Testing
+## Chapter 5 - Hypothesis Testing
 
 "A null hypothesis which will be adopted unless there is significant evidence from the data that the alternate hypothesis is more viable."
 
@@ -267,7 +269,7 @@ Care should be taken with p-value:
 
 Tests have assumptions!
 
-## Two-Sample T-Test
+### Two-Sample T-Test
 
 One sample required if:
 
@@ -296,7 +298,7 @@ As N gets big, t tends to normal, therefore 1.96 (approx. 2) becomes CI multipli
 
 Assume normally distributed and independent samples
 
-## Chi-Square Test
+### Chi-Square Test
 
 Uses:
 
@@ -316,21 +318,21 @@ Uses:
 
 TODO: Not worked beyond 5.4
 
-## Further Notes
+### Further Notes
 
-### Multiple Testing
+#### Multiple Testing
 
 Just comparing two groups relies heavily on well balanced randomisation.
 
 Using multiple regression we can include and therefore account for covariates (prognostic factors), this is called an ANCOVA (Analysis of Covariance)
 
-### One vs Two sided tests
+#### One vs Two sided tests
 
 Always, unless very strong **prior** knowledge, use a two sided test. One sided are more powerful. 
 
 Eg. If you think something will decrease and go one sided, but it actually increased you would miss it, potentailly missing a harmful effect.
 
-### Pooled or seperate variance
+#### Pooled or seperate variance
 
 Always seperate on the course:
 
@@ -340,7 +342,7 @@ Always seperate on the course:
 
 We use pooled on power tests otherwise it become impractical to assess.
 
-### Testing for equality of variance
+#### Testing for equality of variance
 
 Don't:
 
@@ -352,7 +354,7 @@ Don't:
 TODO 5.6
 
 
-# Chapter 6 - Power
+## Chapter 6 - Power
 
 Essential ethically:
 
@@ -382,7 +384,7 @@ Some lessons from assignment:
 - Don't automatically account for dropouts, only if asked
 
 
-# Chapter 7 - Multiplicity
+## Chapter 7 - Multiplicity
 
 Key takeaways:
 
@@ -407,7 +409,7 @@ Bonferonni correction is extremely conservative correctiuon based on rearranging
 
 $\frac{\alpha}{k}$
 
-### Multiple End Points
+#### Multiple End Points
 
 Apply a therapy and assess multiple outcomes. Eg Give new heart meds, measure pulse, bp standing, bp sitting, etc
 
@@ -415,7 +417,7 @@ Apply a therapy and assess multiple outcomes. Eg Give new heart meds, measure pu
 - In the protocal, declare very limited responses of interest and focus test on these. Caputure and assess others though to verify nothing worrying
 - Multivariate analysis can handle much of the issues of correlation and multiplicity, however very hard to use
 
-### Sub Group Analysis
+#### Sub Group Analysis
 
 Sub groups are patient characteristics. Eg. Age brackets, gender, etc.
 
@@ -431,7 +433,7 @@ Could use:
 
 As well as splitting, we must be very careful doing post hoc combinations. PROTOCOL!
 
-### Interim Analysis
+#### Interim Analysis
 
 Analysing as data streams in from trials.
 
@@ -446,7 +448,7 @@ When adding more data and repeating the tests we do not use bonferroni as not in
 
 DECLARE INTERIM CHECK IN PROTOCOL
 
-### Multiple Regression
+#### Multiple Regression
 
 In multiple regression we typically don't worry about multiplicity, we have purposely chosen to include them.
 
@@ -457,7 +459,7 @@ Solution:
 - Use domain knowledge to inform model, create interactions a priori
 - Use bonferonni
 
-### Repeated Measures
+#### Repeated Measures
 
 Measuring an outcome, on the same person, over time. Eg blood concentration at 1,4,8,16 hours.
 
@@ -634,9 +636,9 @@ Only care about leading diagonal as these are agreements
 In some cases groups may have order, or there may be more than two assessors. Either way more advanced versions required.
 
 
-# Chapter 11 - Not Logistic
+## Chapter 11 - Not Logistic
 
-## Observational studies
+### Observational studies
 
 These are referred to as epidemiological studies
 
@@ -722,11 +724,11 @@ If above 1, raised risk.
 
 TODO 11.3 makes no sense? (it does but revisit)
 
-# Chapter 11 - Logistic
+## Chapter 11 - Logistic
 
 To perfomr regression we estimate the *Natural logarithm of the odds of success* or Logit. Which is 
 
-## Derivation
+### Derivation
 
 $log(\frac{P(Y_i = 1)}{P(Y_i = 0)})$
 
@@ -755,13 +757,13 @@ And so
 $P(Y_i = 1)= \theta_i = 
 \frac{\exp(\beta_0 + \beta'\mathbf{x}_i)}{1+\exp(\beta_0 + \beta'\mathbf{x}_i)}$
 
-## Treatment
+### Treatment
 
 Standard practice is $\beta_1$ is treatement, where x is 0 = placebo or 1 = treatment. So treatment "turns on" $beta_1$
 
 Positive $\beta_1$ the odds of success are greater with treatment, negative means odds of success are greater in placebo.
 
-## Odds ratio
+### Odds ratio
 
 Sometimes Odds ratio is reffered to as relative risk as they are equivalent at small probabilities.
 
@@ -777,7 +779,7 @@ $\frac{P(Y=1|x_1 = 1)}{P(Y=0|x_1 = 1)}/
 
 $OR = \exp(\beta_1)$ CAn also be used for other binary covariates, or two specicified continuous locations.
 
-## Partial Z Test
+### Partial Z Test
 
 $H_0 : \beta_j = 0$
 
@@ -795,7 +797,7 @@ It is useful to know the following as SE may not be given
 
 $SE = \frac{\beta_j}{Z_j}
 
-## In exam
+### In exam
 
 1) Given R output
 2) Calulcate Z, SE, p-value for all of interest if not already given

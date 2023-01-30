@@ -1,5 +1,7 @@
 # Linear Models
 
+> The variance of residual ($e$, $\sigma^2M$) is not the same as the variance of error ($\epsilon$, $\sigma^2I_n$)
+
 ## Intro
 
 Categorical variables are called factors, they may be binary or have levels
