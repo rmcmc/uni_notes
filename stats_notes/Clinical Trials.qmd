@@ -146,10 +146,10 @@ Protocol contains:
 
 Protocol deviations are to be expected, but must be recorded. There are two responses to deviation.
 
-- Per Protocol : Just exclude any partient that deviated. Problems are, power loss, affects randomisation, deviation may be a result of side effects.
-- Intention to Treat : Preffered, requires patients to be retained, though may yield curious answers. TODO - This is puzzling p21
+- Per Protocol : Just exclude any partient that deviated. Problems are, power loss, affects randomisation, deviation may be bias driven ineffective/a result of side effects.
+- Intention to Treat : Preffered, requires patients to be retained, though may yield curious answers. Will exclude patients who are uneligible eg. accidentally made it onto trial but are too young/old
 
-Can always report both!
+Can always and often do report both!
 
 ## Chapter 4 - Randomisation
 
@@ -316,8 +316,6 @@ Uses:
 7) This is a one sided test due to squaring!
 8) Convert the coloumns from counts to percents of column total for reporting
 
-TODO: Not worked beyond 5.4
-
 ### Further Notes
 
 #### Multiple Testing
@@ -348,11 +346,22 @@ Don't:
 
 - Low powered tests
 - Non-sig does not mean equal, only weak evidence
-- If doing one test followed by another you are multiple testing ? TODO - p44 confusing answer I think hinting at multiple testing
+- If a t-test is chosen based on another test then you must condition on this initial test.
 
+### Continuous analyis types
 
-TODO 5.6
+Parrallel (and normal):
 
+- 2 groups - t-test
+- More than 2 - 1-way ANOVA
+
+In series
+- 2 groups - paired t-test on difference
+- More than 2 - 2 way ANOVA
+
+Factorial:
+
+- mulit-way ANOVA
 
 ## Chapter 6 - Power
 
@@ -577,7 +586,18 @@ $N = n(1-\rho)$
 
 ### Notes
 
-- Carryover and period cannot be seperately identified. Therefore we can only test $\lambda_A = \lambda_B$ and not $\lambda_A = \lambda_B = 0$
+- If significant period effects it may be difficult to interpret treatement differences within patient. Due to high depedence on which treatment was administered first.
+- Technically the second treatment is conditional on the first. Some people strongly disagree with carryover tests. Often medical SME knowledge is required to rule out carryover, especially as it is very low powered.
+- A CI fro treatment differences can be calculated with $\frac{\bar{D}_1 - \bar{D}_2}{2} \pm 1.96\sqrt{\frac{1}{4}(\frac{S_{D_1}^2}{n_1} + \frac{S_{D_2}^2}{n_2})}$
+- If worried about normailty a non-parametric Eg Wilcoxon-Mann-Whitney could be used.
+- Crossover trials are most suitable for short acting treatments. You can perform with more than 2 treatments, though effects must be very fast acting and trial design cannot normally allow for exhaustive orderings, so incomplete designs required.
+
+### Crossover Binary responses
+
+We perform a Mainland-Gart test:
+
+- First (**treatment**) compare the preference of period (columns) vs sequence (drug a -> drug b /drug b -> drug a) on the rows. Compare with a $\chi^2$ test.
+- Second test **period** by comparing the treatment (columns) vs sequence (drug a -> drug b /drug b -> drug a) on the rows. Compare with a $\chi^2$ test. 
 
 ## Chapter 9 - Combining trials
 
@@ -749,7 +769,24 @@ Repeat as per relative risk.
 
 If above 1, raised risk.
 
-TODO 11.3 makes no sense? (it does but revisit)
+### Matched Pairs
+
+In matched pairs a each patient is given both treatments (eg. a crossover), results are then provided in tuples (0,0), (1,0)... where each tuple is a patient and the first value is 1/0 for treatment A response and the second is 1/0 for treatment B.
+
+Sticking this into a 2x2 table will give a total of 2n values in the table as each patient is used twice. DO NOT DO THIS or perform a $\chi^2$ test on it as it is invalid. Not indpendent.
+
+Instead a the following table with a **McNemars test**:
+
+  .  | B - Yes | B - no
+----|---------|--------
+A-Yes |   13 | 132
+A - No | 13 |34
+
+- Ignore the diagonals they carry no information (each person thought the treatments were the same, by hypothesis test we are only interested in a difference)
+- If not different the (1,0) and (0,1) should appear with equal frequency, in other words be binomial with a $\theta = \frac{1}{2}$
+- Sum the opposite to leading diagonal and pick the smaller of the two values to calc the following
+
+> $p = 2 \sum^{min}_{x=0} {total \choose x}(0.5)^{total}$ this gives direct probability to compare null or if n is large a normal approximation will work $\frac{(n_{10} - n_{01})^2}{n_{10} + n_{01}}\sim \chi^2$
 
 ## Chapter 11 - Logistic
 

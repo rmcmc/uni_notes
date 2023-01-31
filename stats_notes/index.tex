@@ -213,7 +213,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, borderline west={3pt}{0pt}{shadecolor}, breakable, frame hidden, enhanced, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, breakable, sharp corners, interior hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -507,14 +507,15 @@ two responses to deviation.
 \tightlist
 \item
   Per Protocol : Just exclude any partient that deviated. Problems are,
-  power loss, affects randomisation, deviation may be a result of side
-  effects.
+  power loss, affects randomisation, deviation may be bias driven
+  ineffective/a result of side effects.
 \item
   Intention to Treat : Preffered, requires patients to be retained,
-  though may yield curious answers. TODO - This is puzzling p21
+  though may yield curious answers. Will exclude patients who are
+  uneligible eg. accidentally made it onto trial but are too young/old
 \end{itemize}
 
-Can always report both!
+Can always and often do report both!
 
 \hypertarget{chapter-4---randomisation}{%
 \section{Chapter 4 - Randomisation}\label{chapter-4---randomisation}}
@@ -782,8 +783,6 @@ Uses:
   reporting
 \end{enumerate}
 
-TODO: Not worked beyond 5.4
-
 \hypertarget{further-notes}{%
 \subsection{Further Notes}\label{further-notes}}
 
@@ -840,11 +839,33 @@ Don't:
 \item
   Non-sig does not mean equal, only weak evidence
 \item
-  If doing one test followed by another you are multiple testing ? TODO
-  - p44 confusing answer I think hinting at multiple testing
+  If a t-test is chosen based on another test then you must condition on
+  this initial test.
 \end{itemize}
 
-TODO 5.6
+\hypertarget{continuous-analyis-types}{%
+\subsection{Continuous analyis types}\label{continuous-analyis-types}}
+
+Parrallel (and normal):
+
+\begin{itemize}
+\tightlist
+\item
+  2 groups - t-test
+\item
+  More than 2 - 1-way ANOVA
+\end{itemize}
+
+In series - 2 groups - paired t-test on difference - More than 2 - 2 way
+ANOVA
+
+Factorial:
+
+\begin{itemize}
+\tightlist
+\item
+  mulit-way ANOVA
+\end{itemize}
 
 \hypertarget{chapter-6---power}{%
 \section{Chapter 6 - Power}\label{chapter-6---power}}
@@ -1208,9 +1229,43 @@ clearly less patient.
 \begin{itemize}
 \tightlist
 \item
-  Carryover and period cannot be seperately identified. Therefore we can
-  only test \(\lambda_A = \lambda_B\) and not
-  \(\lambda_A = \lambda_B = 0\)
+  If significant period effects it may be difficult to interpret
+  treatement differences within patient. Due to high depedence on which
+  treatment was administered first.
+\item
+  Technically the second treatment is conditional on the first. Some
+  people strongly disagree with carryover tests. Often medical SME
+  knowledge is required to rule out carryover, especially as it is very
+  low powered.
+\item
+  A CI fro treatment differences can be calculated with
+  \(\frac{\bar{D}_1 - \bar{D}_2}{2} \pm 1.96\sqrt{\frac{1}{4}(\frac{S_{D_1}^2}{n_1} + \frac{S_{D_2}^2}{n_2})}\)
+\item
+  If worried about normailty a non-parametric Eg Wilcoxon-Mann-Whitney
+  could be used.
+\item
+  Crossover trials are most suitable for short acting treatments. You
+  can perform with more than 2 treatments, though effects must be very
+  fast acting and trial design cannot normally allow for exhaustive
+  orderings, so incomplete designs required.
+\end{itemize}
+
+\hypertarget{crossover-binary-responses}{%
+\subsection{Crossover Binary
+responses}\label{crossover-binary-responses}}
+
+We perform a Mainland-Gart test:
+
+\begin{itemize}
+\tightlist
+\item
+  First (\textbf{treatment}) compare the preference of period (columns)
+  vs sequence (drug a -\textgreater{} drug b /drug b -\textgreater{}
+  drug a) on the rows. Compare with a \(\chi^2\) test.
+\item
+  Second test \textbf{period} by comparing the treatment (columns) vs
+  sequence (drug a -\textgreater{} drug b /drug b -\textgreater{} drug
+  a) on the rows. Compare with a \(\chi^2\) test.
 \end{itemize}
 
 \hypertarget{chapter-9---combining-trials}{%
@@ -1472,7 +1527,50 @@ Repeat as per relative risk.
 
 If above 1, raised risk.
 
-TODO 11.3 makes no sense? (it does but revisit)
+\hypertarget{matched-pairs}{%
+\subsection{Matched Pairs}\label{matched-pairs}}
+
+In matched pairs a each patient is given both treatments (eg. a
+crossover), results are then provided in tuples (0,0), (1,0)\ldots{}
+where each tuple is a patient and the first value is 1/0 for treatment A
+response and the second is 1/0 for treatment B.
+
+Sticking this into a 2x2 table will give a total of 2n values in the
+table as each patient is used twice. DO NOT DO THIS or perform a
+\(\chi^2\) test on it as it is invalid. Not indpendent.
+
+Instead a the following table with a \textbf{McNemars test}:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule()
+. & B - Yes & B - no \\
+\midrule()
+\endhead
+A-Yes & 13 & 132 \\
+A - No & 13 & 34 \\
+\bottomrule()
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Ignore the diagonals they carry no information (each person thought
+  the treatments were the same, by hypothesis test we are only
+  interested in a difference)
+\item
+  If not different the (1,0) and (0,1) should appear with equal
+  frequency, in other words be binomial with a \(\theta = \frac{1}{2}\)
+\item
+  Sum the opposite to leading diagonal and pick the smaller of the two
+  values to calc the following
+\end{itemize}
+
+\begin{quote}
+\(p = 2 \sum^{min}_{x=0} {total \choose x}(0.5)^{total}\) this gives
+direct probability to compare null or if n is large a normal
+approximation will work
+\(\frac{(n_{10} - n_{01})^2}{n_{10} + n_{01}}\sim \chi^2\)
+\end{quote}
 
 \hypertarget{chapter-11---logistic}{%
 \section{Chapter 11 - Logistic}\label{chapter-11---logistic}}

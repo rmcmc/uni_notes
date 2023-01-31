@@ -3,3 +3,4 @@ env/
 .RHistory
 .Rproj.user/
 mybook/.quarto/
+*.pdf

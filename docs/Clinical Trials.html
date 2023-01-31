@@ -170,6 +170,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="toc-section-number">3.5.1</span>  Two-Sample T-Test</a></li>
   <li><a href="#chi-square-test" id="toc-chi-square-test" class="nav-link" data-scroll-target="#chi-square-test"><span class="toc-section-number">3.5.2</span>  Chi-Square Test</a></li>
   <li><a href="#further-notes" id="toc-further-notes" class="nav-link" data-scroll-target="#further-notes"><span class="toc-section-number">3.5.3</span>  Further Notes</a></li>
+  <li><a href="#continuous-analyis-types" id="toc-continuous-analyis-types" class="nav-link" data-scroll-target="#continuous-analyis-types"><span class="toc-section-number">3.5.4</span>  Continuous analyis types</a></li>
   </ul></li>
   <li><a href="#chapter-6---power" id="toc-chapter-6---power" class="nav-link" data-scroll-target="#chapter-6---power"><span class="toc-section-number">3.6</span>  Chapter 6 - Power</a></li>
   <li><a href="#chapter-7---multiplicity" id="toc-chapter-7---multiplicity" class="nav-link" data-scroll-target="#chapter-7---multiplicity"><span class="toc-section-number">3.7</span>  Chapter 7 - Multiplicity</a></li>
@@ -177,6 +178,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow"><span class="toc-section-number">3.8.1</span>  Workflow</a></li>
   <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="toc-section-number">3.8.2</span>  Notes</a></li>
+  <li><a href="#crossover-binary-responses" id="toc-crossover-binary-responses" class="nav-link" data-scroll-target="#crossover-binary-responses"><span class="toc-section-number">3.8.3</span>  Crossover Binary responses</a></li>
   </ul></li>
   <li><a href="#chapter-9---combining-trials" id="toc-chapter-9---combining-trials" class="nav-link" data-scroll-target="#chapter-9---combining-trials"><span class="toc-section-number">3.9</span>  Chapter 9 - Combining trials</a>
   <ul class="collapse">
@@ -192,6 +194,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#observational-studies" id="toc-observational-studies" class="nav-link" data-scroll-target="#observational-studies"><span class="toc-section-number">3.11.1</span>  Observational studies</a></li>
   <li><a href="#prospective---relative-risk" id="toc-prospective---relative-risk" class="nav-link" data-scroll-target="#prospective---relative-risk"><span class="toc-section-number">3.11.2</span>  Prospective - Relative Risk</a></li>
   <li><a href="#retrospective---odds-ratio" id="toc-retrospective---odds-ratio" class="nav-link" data-scroll-target="#retrospective---odds-ratio"><span class="toc-section-number">3.11.3</span>  Retrospective - Odds Ratio</a></li>
+  <li><a href="#matched-pairs" id="toc-matched-pairs" class="nav-link" data-scroll-target="#matched-pairs"><span class="toc-section-number">3.11.4</span>  Matched Pairs</a></li>
   </ul></li>
   <li><a href="#chapter-11---logistic" id="toc-chapter-11---logistic" class="nav-link" data-scroll-target="#chapter-11---logistic"><span class="toc-section-number">3.12</span>  Chapter 11 - Logistic</a>
   <ul class="collapse">
@@ -353,10 +356,10 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>Protocol deviations are to be expected, but must be recorded. There are two responses to deviation.</p>
 <ul>
-<li>Per Protocol : Just exclude any partient that deviated. Problems are, power loss, affects randomisation, deviation may be a result of side effects.</li>
-<li>Intention to Treat : Preffered, requires patients to be retained, though may yield curious answers. TODO - This is puzzling p21</li>
+<li>Per Protocol : Just exclude any partient that deviated. Problems are, power loss, affects randomisation, deviation may be bias driven ineffective/a result of side effects.</li>
+<li>Intention to Treat : Preffered, requires patients to be retained, though may yield curious answers. Will exclude patients who are uneligible eg. accidentally made it onto trial but are too young/old</li>
 </ul>
-<p>Can always report both!</p>
+<p>Can always and often do report both!</p>
 </section>
 <section id="chapter-4---randomisation" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="chapter-4---randomisation"><span class="header-section-number">3.4</span> Chapter 4 - Randomisation</h2>
@@ -528,7 +531,6 @@ ul.task-list li input[type="checkbox"] {
 <li>This is a one sided test due to squaring!</li>
 <li>Convert the coloumns from counts to percents of column total for reporting</li>
 </ol>
-<p>TODO: Not worked beyond 5.4</p>
 </section>
 <section id="further-notes" class="level3" data-number="3.5.3">
 <h3 data-number="3.5.3" class="anchored" data-anchor-id="further-notes"><span class="header-section-number">3.5.3</span> Further Notes</h3>
@@ -558,10 +560,22 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Low powered tests</li>
 <li>Non-sig does not mean equal, only weak evidence</li>
-<li>If doing one test followed by another you are multiple testing ? TODO - p44 confusing answer I think hinting at multiple testing</li>
+<li>If a t-test is chosen based on another test then you must condition on this initial test.</li>
 </ul>
-<p>TODO 5.6</p>
 </section>
+</section>
+<section id="continuous-analyis-types" class="level3" data-number="3.5.4">
+<h3 data-number="3.5.4" class="anchored" data-anchor-id="continuous-analyis-types"><span class="header-section-number">3.5.4</span> Continuous analyis types</h3>
+<p>Parrallel (and normal):</p>
+<ul>
+<li>2 groups - t-test</li>
+<li>More than 2 - 1-way ANOVA</li>
+</ul>
+<p>In series - 2 groups - paired t-test on difference - More than 2 - 2 way ANOVA</p>
+<p>Factorial:</p>
+<ul>
+<li>mulit-way ANOVA</li>
+</ul>
 </section>
 </section>
 <section id="chapter-6---power" class="level2" data-number="3.6">
@@ -776,7 +790,19 @@ ul.task-list li input[type="checkbox"] {
 <section id="notes" class="level3" data-number="3.8.2">
 <h3 data-number="3.8.2" class="anchored" data-anchor-id="notes"><span class="header-section-number">3.8.2</span> Notes</h3>
 <ul>
-<li>Carryover and period cannot be seperately identified. Therefore we can only test <span class="math inline">\(\lambda_A = \lambda_B\)</span> and not <span class="math inline">\(\lambda_A = \lambda_B = 0\)</span></li>
+<li>If significant period effects it may be difficult to interpret treatement differences within patient. Due to high depedence on which treatment was administered first.</li>
+<li>Technically the second treatment is conditional on the first. Some people strongly disagree with carryover tests. Often medical SME knowledge is required to rule out carryover, especially as it is very low powered.</li>
+<li>A CI fro treatment differences can be calculated with <span class="math inline">\(\frac{\bar{D}_1 - \bar{D}_2}{2} \pm 1.96\sqrt{\frac{1}{4}(\frac{S_{D_1}^2}{n_1} + \frac{S_{D_2}^2}{n_2})}\)</span></li>
+<li>If worried about normailty a non-parametric Eg Wilcoxon-Mann-Whitney could be used.</li>
+<li>Crossover trials are most suitable for short acting treatments. You can perform with more than 2 treatments, though effects must be very fast acting and trial design cannot normally allow for exhaustive orderings, so incomplete designs required.</li>
+</ul>
+</section>
+<section id="crossover-binary-responses" class="level3" data-number="3.8.3">
+<h3 data-number="3.8.3" class="anchored" data-anchor-id="crossover-binary-responses"><span class="header-section-number">3.8.3</span> Crossover Binary responses</h3>
+<p>We perform a Mainland-Gart test:</p>
+<ul>
+<li>First (<strong>treatment</strong>) compare the preference of period (columns) vs sequence (drug a -&gt; drug b /drug b -&gt; drug a) on the rows. Compare with a <span class="math inline">\(\chi^2\)</span> test.</li>
+<li>Second test <strong>period</strong> by comparing the treatment (columns) vs sequence (drug a -&gt; drug b /drug b -&gt; drug a) on the rows. Compare with a <span class="math inline">\(\chi^2\)</span> test.</li>
 </ul>
 </section>
 </section>
@@ -983,7 +1009,41 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="math inline">\(\text{S.E}[log(OR)] = \sqrt{  \frac{1}{a} +  \frac{1}{b}+  \frac{1}{c}+  \frac{1}{d} }\)</span></p>
 <p>Repeat as per relative risk.</p>
 <p>If above 1, raised risk.</p>
-<p>TODO 11.3 makes no sense? (it does but revisit)</p>
+</section>
+<section id="matched-pairs" class="level3" data-number="3.11.4">
+<h3 data-number="3.11.4" class="anchored" data-anchor-id="matched-pairs"><span class="header-section-number">3.11.4</span> Matched Pairs</h3>
+<p>In matched pairs a each patient is given both treatments (eg. a crossover), results are then provided in tuples (0,0), (1,0)… where each tuple is a patient and the first value is 1/0 for treatment A response and the second is 1/0 for treatment B.</p>
+<p>Sticking this into a 2x2 table will give a total of 2n values in the table as each patient is used twice. DO NOT DO THIS or perform a <span class="math inline">\(\chi^2\)</span> test on it as it is invalid. Not indpendent.</p>
+<p>Instead a the following table with a <strong>McNemars test</strong>:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>.</th>
+<th>B - Yes</th>
+<th>B - no</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A-Yes</td>
+<td>13</td>
+<td>132</td>
+</tr>
+<tr class="even">
+<td>A - No</td>
+<td>13</td>
+<td>34</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Ignore the diagonals they carry no information (each person thought the treatments were the same, by hypothesis test we are only interested in a difference)</li>
+<li>If not different the (1,0) and (0,1) should appear with equal frequency, in other words be binomial with a <span class="math inline">\(\theta = \frac{1}{2}\)</span></li>
+<li>Sum the opposite to leading diagonal and pick the smaller of the two values to calc the following</li>
+</ul>
+<blockquote class="blockquote">
+<p><span class="math inline">\(p = 2 \sum^{min}_{x=0} {total \choose x}(0.5)^{total}\)</span> this gives direct probability to compare null or if n is large a normal approximation will work <span class="math inline">\(\frac{(n_{10} - n_{01})^2}{n_{10} + n_{01}}\sim \chi^2\)</span></p>
+</blockquote>
 </section>
 </section>
 <section id="chapter-11---logistic" class="level2" data-number="3.12">

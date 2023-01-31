@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.10.28)  30 JAN 2023 20:43
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.10.28)  31 JAN 2023 22:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -229,14 +229,14 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 ) (/Users/rossmccullough/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ) (/Users/rossmccullough/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/Users/rossmccullough/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2023-01-16 L3 programming layer (loader) 
+Package: expl3 2023-01-24 L3 programming layer (loader) 
 
 ! LaTeX Error: Mismatched LaTeX support files detected.
 (LaTeX)        Loading 'expl3.sty' aborted!
 (LaTeX)        
 (LaTeX)        The L3 programming layer in the LaTeX format
 (LaTeX)        is dated 2022-09-28, but in your TeX tree the files require
-(LaTeX)        at least 2023-01-16.
+(LaTeX)        at least 2023-01-24.
 
 For immediate help type H <return>.
  ...                                              
