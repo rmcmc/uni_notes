@@ -1,0 +1,9 @@
+# Miscillanous Topics
+
+General Inference and Probability theory
+
+## Fisher Information
+
+Sources 
+- https://arxiv.org/pdf/1705.01064.pdf
+- https://www.youtube.com/watch?v=pneluWj-U-o
