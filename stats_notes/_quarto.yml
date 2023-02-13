@@ -12,8 +12,10 @@ book:
     - summary.qmd
     - Clinical Trials.qmd
     - survival.qmd
-    - linear_models.qmd
     - survival_regression.qmd
+    - linear_models.qmd
+    - glm.qmd
+    - misc_topics.qmd
     - references.qmd
 
 bibliography: references.bib

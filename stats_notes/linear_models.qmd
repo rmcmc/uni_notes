@@ -1,6 +1,6 @@
 # Linear Models
 
-> The variance of residual ($e$, $\sigma^2M$) is not the same as the variance of error ($\epsilon$, $\sigma^2I_n$)
+> The variance of residual ($e$, $\sigma^2M$) is not the same as the variance of random error term ($\epsilon$, $\sigma^2I_n$)
 
 ## Intro
 

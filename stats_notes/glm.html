@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stats_notes - 1&nbsp; Introduction</title>
+<title>stats_notes - 7&nbsp; GLMs - Generalized Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./misc_topics.html" rel="next">
+<link href="./linear_models.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -61,6 +61,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -70,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">GLMs - Generalized Linear Models</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -100,7 +101,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -130,7 +131,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">GLMs - Generalized Linear Models</span></a>
+  <a href="./glm.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">GLMs - Generalized Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./misc_topics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Miscillanous Topics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -143,14 +149,24 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="intro.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#chapter-1---linear-model-refresh" id="toc-chapter-1---linear-model-refresh" class="nav-link active" data-scroll-target="#chapter-1---linear-model-refresh"><span class="toc-section-number">7.1</span>  Chapter 1 - Linear Model Refresh</a></li>
+  <li><a href="#chapter-2---logistic-regression---part-1" id="toc-chapter-2---logistic-regression---part-1" class="nav-link" data-scroll-target="#chapter-2---logistic-regression---part-1"><span class="toc-section-number">7.2</span>  Chapter 2 - Logistic Regression - Part 1</a>
+  <ul class="collapse">
+  <li><a href="#link-function" id="toc-link-function" class="nav-link" data-scroll-target="#link-function"><span class="toc-section-number">7.2.1</span>  Link function</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="glm.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">GLMs - Generalized Linear Models</span></h1>
 </div>
 
 
@@ -165,15 +181,53 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This book is my personal notes for my stats course. It is very rough andf likely full of errors!</p>
-<p>This book has been created with Quarto through VSCode. I highly recommend it.</p>
-<p>General resources:</p>
+<p>An excellent intro can be read here:</p>
+<p>https://stats.stackexchange.com/questions/20523/difference-between-logit-and-probit-models</p>
+<p>EDA</p>
+<p>https://oakleyj.github.io/MAS61004/eda-for-logistic-regression.html</p>
+<section id="chapter-1---linear-model-refresh" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="chapter-1---linear-model-refresh"><span class="header-section-number">7.1</span> Chapter 1 - Linear Model Refresh</h2>
+<p>In linear models we make a number of assumption about the error term <span class="math inline">\(\epsilon\)</span> these may not always hold:</p>
 <ul>
-<li>Ben lambert (youtube)</li>
-<li>Mutual Information (youtube)</li>
+<li>The distribution of data may be skewed or counts based (not normal)</li>
+<li>Data may not be independent, this is offten the case when assessing things over time</li>
+<li>Data may not have constant variance</li>
 </ul>
+<p>GLMs and Random Effects models allow us to adapt to these violations. Some problems associated with fitting a linear model when LM assumptions are violated:</p>
+<ul>
+<li>You exceed reasonable bounds expected by the problem</li>
+<li>You invalidate all your tests. Being gaussian leads to nice properties that mean F and t tests are possible. That is no longer the case.</li>
+</ul>
+</section>
+<section id="chapter-2---logistic-regression---part-1" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="chapter-2---logistic-regression---part-1"><span class="header-section-number">7.2</span> Chapter 2 - Logistic Regression - Part 1</h2>
+<p>We use a link function between the mean (<span class="math inline">\(\mu\)</span>) and the linear predictor to provide constraints to the mean and introduce non-linearity.</p>
+<p>In linear models we assume that <span class="math inline">\(Y \sim N(X\beta, \sigma^2 I)\)</span>. In GLMs the decouple the mean and distribution of <span class="math inline">\(Y\)</span> so <span class="math inline">\(E(Y_i)=\mu_i\)</span>.</p>
+<p>In binary cases data is either 1 or 0, which is Bernoulli distributed, and <span class="math inline">\(P(Y_i =1) = \mu_i\)</span> the parameter in the bernoulli case is between 0 and 1. The use of the a linear model here wouldn’t make sense as we would push <span class="math inline">\(\mu_i\)</span> out of the bounds [0,1]. As this is bernoulli the expectation is <span class="math inline">\(E(Y_i) = \mu_i\)</span>.</p>
+<p>As <span class="math inline">\(x_i^T\beta\)</span> can very between between <span class="math inline">\((-\infty, + \infty)\)</span> then a mapping is required to bring it down to [0,1], or map <span class="math inline">\(\mu\)</span> up to <span class="math inline">\((-\infty, + \infty)\)</span>.</p>
+<p>In this case the <strong>logit</strong> link function:</p>
+<p><span class="math inline">\(\text{logit}(\mu_i) = log(\frac{\mu_i}{1 - \mu_i}) = x_i^T\beta\)</span></p>
+<p>As <span class="math inline">\(P(Y_i =1) = \mu_i\)</span> then <span class="math inline">\(P(Y_i = 0) = 1 - \mu_i\)</span> then the logged term are the odds. It therefore follws that:</p>
+<p><span class="math inline">\(\mu_i = \frac{\exp(x_i^T\beta)}{1 + exp(x_i^T\beta)} = h(x_i^T\beta)\)</span></p>
+<p><span class="math inline">\(h\)</span> is the <strong>inverse link function</strong>.</p>
+<p>TODO: Expand this based on p13</p>
+<p>Due to it’s relationship to the binomial we now have a glm:</p>
+<ul>
+<li>Inverse Link</li>
+<li><span class="math inline">\(E(Y_i) = \mu_i = h(x_i^T\beta)\)</span></li>
+<li><span class="math inline">\(Var(Y_i) = \frac{\mu_i(1- \mu_i)}{n_i}\)</span></li>
+</ul>
+<blockquote class="blockquote">
+<p>Note that the variance is coupled with <span class="math inline">\(\mu\)</span> therefore as the covariates change the variance is allowed to change too, so we can move away from the fixed variance assumption</p>
+</blockquote>
+<section id="link-function" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="link-function"><span class="header-section-number">7.2.1</span> Link function</h3>
+<p>We chose a logit above but there are a number of functions that can map to [0,1]. They must however have an inverse i.e be monotone.</p>
+<p>Another eaxmple is the <strong>probit</strong></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -311,13 +365,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./linear_models.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./misc_topics.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Miscillanous Topics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

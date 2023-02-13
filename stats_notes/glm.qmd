@@ -1,0 +1,59 @@
+# GLMs - Generalized Linear Models
+
+An excellent intro can be read here:
+
+https://stats.stackexchange.com/questions/20523/difference-between-logit-and-probit-models
+
+
+EDA
+
+https://oakleyj.github.io/MAS61004/eda-for-logistic-regression.html
+
+## Chapter 1 - Linear Model Refresh
+
+In linear models we make a number of assumption about the error term $\epsilon$ these may not always hold:
+
+- The distribution of data may be skewed or counts based (not normal)
+- Data may not be independent, this is offten the case when assessing things over time
+- Data may not have constant variance
+
+GLMs and Random Effects models allow us to adapt to these violations. Some problems associated with fitting a linear model when LM assumptions are violated:
+
+- You exceed reasonable bounds expected by the problem
+- You invalidate all your tests. Being gaussian leads to nice properties that mean F and t tests are possible. That is no longer the case.
+
+## Chapter 2 - Logistic Regression - Part 1
+
+We use a link function between the mean ($\mu$) and the linear predictor to provide constraints to the mean and introduce non-linearity.
+
+In linear models we assume that $Y \sim N(X\beta, \sigma^2 I)$. In GLMs the decouple the mean and distribution of $Y$ so $E(Y_i)=\mu_i$.
+
+In binary cases data is either 1 or 0, which is Bernoulli distributed, and $P(Y_i =1) = \mu_i$ the parameter in the bernoulli case is between 0 and 1. The use of the a linear model here wouldn't make sense as we would push $\mu_i$ out of the bounds [0,1]. As this is bernoulli the expectation is $E(Y_i) = \mu_i$. 
+
+As $x_i^T\beta$ can very between between $(-\infty, + \infty)$ then a mapping is required to bring it down to [0,1], or map $\mu$ up to $(-\infty, + \infty)$.
+
+In this case the **logit** link function:
+
+$\text{logit}(\mu_i) = log(\frac{\mu_i}{1 - \mu_i}) = x_i^T\beta$
+
+As $P(Y_i =1) = \mu_i$ then $P(Y_i = 0) = 1 - \mu_i$ then the logged term are the odds. It therefore follws that:
+
+$\mu_i = \frac{\exp(x_i^T\beta)}{1 + exp(x_i^T\beta)} = h(x_i^T\beta)$
+
+$h$ is the **inverse link function**.
+
+TODO: Expand this based on p13
+
+Due to it's relationship to the binomial we now have a glm:
+
+- Inverse Link
+- $E(Y_i) = \mu_i = h(x_i^T\beta)$
+- $Var(Y_i) = \frac{\mu_i(1- \mu_i)}{n_i}$
+
+> Note that the variance is coupled with $\mu$ therefore as the covariates change the variance is allowed to change too, so we can move away from the fixed variance assumption
+
+### Link function
+
+We chose a logit above but there are a number of functions that can map to [0,1]. They must however have an inverse i.e be monotone.
+
+Another eaxmple is the **probit** 

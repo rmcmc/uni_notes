@@ -1,6 +1,10 @@
 # Introduction
 
-This book is my personal notes for my stats course. It is very rough!
+This book is my personal notes for my stats course. It is very rough andf likely full of errors!
 
 This book has been created with Quarto through VSCode. I highly recommend it.
 
+General resources:
+
+- Ben lambert (youtube)
+- Mutual Information (youtube)

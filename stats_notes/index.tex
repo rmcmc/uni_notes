@@ -213,7 +213,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, breakable, sharp corners, interior hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, sharp corners, breakable, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, enhanced, frame hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -239,10 +239,21 @@ To learn more about Quarto books visit
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
 
-This book is my personal notes for my stats course. It is very rough!
+This book is my personal notes for my stats course. It is very rough
+andf likely full of errors!
 
 This book has been created with Quarto through VSCode. I highly
 recommend it.
+
+General resources:
+
+\begin{itemize}
+\tightlist
+\item
+  Ben lambert (youtube)
+\item
+  Mutual Information (youtube)
+\end{itemize}
 
 \bookmarksetup{startatroot}
 
@@ -2226,12 +2237,491 @@ TODO: missing formula for median exponential
 
 \bookmarksetup{startatroot}
 
+\hypertarget{survival-1}{%
+\chapter{Survival}\label{survival-1}}
+
+The first thing we are interested in is setting a baseline for the
+explanatory variables \(\textbf{x}\). Where \(\textbf{x}\) becomes the
+zero vector \(\textbf{0}\). Eg. \(\textbf{x} = (0,0,0...,0)\).
+
+It is very common for age to be standardised around some age of
+interest. Eg 50, so all ages would be given as 5, -10, etc which equates
+to 55 and 40.
+
+The two common methods are :
+
+\begin{itemize}
+\tightlist
+\item
+  Accelarated Failure Time (AFT)
+\item
+  Proportional Hazards (PH)
+\end{itemize}
+
+\hypertarget{aft}{%
+\section{AFT}\label{aft}}
+
+\hypertarget{two-group-example}{%
+\subsection{Two Group Example}\label{two-group-example}}
+
+In the simplests case we model survival times \(T\) as a random
+variable. But with two groups we want to model them both as seperate
+RVs. Where the baseline RV is \(T_0\) and the treatment (or other
+covariate) is given by \(T_1\). As we now have times we can therefore
+model survivor functions \(S\). However in AFTs we don't want \(S_0\)
+and \(S_1\) we want a single survivor function that is scaled.
+
+We therefore look to the following:
+
+\(\text{Group 0 :   } S(t ; x_i=0) = P(T_0>t) = S_0(t))\)
+\(\text{Group 1 :   } S(t ; x_i=1) = P(T_1>t) = P(\frac{T_0}{\psi}> t) = P(T_0>\psi t) = S_0(\psi t))\)
+
+So \(\psi\) ``accelrates time'' and hence AFT and so the RVs are related
+by \(T_1 = \frac{T_0}{\psi}\) and so \(S_1(t) = S_0(\psi t)\).
+
+Thinking back to graphing, any multiplier of a function value is a
+stretch in x, whose magnitude is the reciprical. So a \(\psi >1\) will
+shrink survival time by \(\frac{1}{\psi}\) and a \(\psi <1\) will extend
+survival time.
+
+So \(\psi >1\) accelrates time for the patient (so they are more likely
+to die faster). Less than one Deaccelerates!
+
+\begin{quote}
+Scale factor is \(\frac{1}{\psi}\) , less than 1 means better survival
+times for the patient
+\end{quote}
+
+So \(\psi\) is a function of \(\textbf{x}\), all of our covariates,
+which determine the ``acceleration''
+
+\hypertarget{generalising-to-two-groups}{%
+\subsection{Generalising to two
+groups}\label{generalising-to-two-groups}}
+
+Instead of now having a \(\psi\) to turn on and off we now require
+\(\psi(\textbf{x})\) so that we can create a scaling factor for each
+individual. We therefore assume that (Where \(S_0\) is \(S(t)\) at the
+baseline consitions where \(\textbf{x} = \textbf{0}\)):
+
+\(S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))\)
+
+From this it can be shown that the following are true:
+
+\(f(t;\textbf{x}) = f_0(t\psi(\textbf{x}))\psi(\textbf{x})\)
+
+\(h(t;\textbf{x}) = h_0(t\psi(\textbf{x}))\psi(\textbf{x})\)
+
+This can be derived by showing that that \(t\) being multiplie by
+\(\psi\) and has \(S_0\) applied to it as a function. We know the
+relationship between the survival function and the density fuinction.
+\(S(t) = 1- F(t)\) differentiatiing we get negative density function. A
+function of a function, means that we need to use the chain rul and
+therefore gets the above. From the desnity we can get the hazard. TODO :
+Write out derivation. More details can be found at 25mins, 8/12.
+
+So again: \(T = \frac{T_0}{\psi(\textbf{x})}\)
+
+We are yet to define \(\psi(\textbf{x})\) but tow conditions must be
+met:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\psi(\textbf{x})\geq 0\), so cannot have a negative time
+\item
+  \(\psi(\textbf{0}) = 1\), so that the basline has no strethcing
+  effects.
+\end{itemize}
+
+From this a naturual choice is (it could be any functiion though):
+
+\({\psi(\textbf{x})} = \exp(-\beta'\textbf{x})\)
+
+This gives us our parameters, but excludes the intercept terms.
+Recalling \(T = \frac{T_0}{\psi(\textbf{x})}\) then
+
+\(E[T] = \exp(\beta'\textbf{x})E[T_0]\)
+
+If \(\beta_i x_i\) is positive then the expected survival time increases
+(good fro patient)
+
+\hypertarget{exponetial-case}{%
+\subsection{Exponetial Case}\label{exponetial-case}}
+
+Using the above we can therefore start to create an exponential AFT. We
+already know that for the exponential distribution:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3571}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3571}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2857}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Property
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+equation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+AFT
+\end{minipage} \\
+\midrule()
+\endhead
+\(S(t)_0\) & \(e^{-\lambda t}\) &
+\(S(t;\textbf{x}) = \exp(-\lambda t e^{-\beta'\textbf{x}})\) \\
+\(h(t)_0\) & \(\lambda\) & \(\lambda e^{-\beta'\textbf{x}}\) \\
+\(f(t)_0\) & \(\lambda e^{-\lambda t}\) &
+\(\lambda e^{-\beta'\textbf{x}} \exp(-\lambda t e^{-\beta'\textbf{x}})\) \\
+\bottomrule()
+\end{longtable}
+
+So if \(\textbf{x}_i\) is a p dimensional vector of explanatory
+variables then we ca n by MLE find p+1 parameters
+\((\lambda, \beta_1, \beta_2...\beta_p)\).
+
+MLE is found by usual method, get derivative, set to 0, solve
+iteratively. \(\hat{\lambda}\) and \(\hat{\beta}\) are found any by the
+asymptopic properties of the MLE we know that:
+
+\(\hat{\lambda} \sim N(\lambda, \text{Var}(\hat{\lambda}))\)
+
+We can obtain \(\text{Var}(\hat{\lambda}))\) from the expected/observed
+stuff covered in chapter 3 (TODO: find this out!)
+
+\hypertarget{final-model}{%
+\subsubsection{Final model}\label{final-model}}
+
+If we are extra explicit with \(\lambda_0\) we can say that
+\(T_0 \sim \text{exp}(\lambda_0)\) so
+\(S(t;\textbf{x}) = \exp(-\lambda_0 t e^{-\beta'\textbf{x}})\). Then it
+is more convinient to say that \(\lambda_0 = \exp(-\beta_0)\)
+
+Then we can lift the \(\lambda\) into the exponent. Thus:
+
+\(S(t;\textbf{x}) = \exp(- t e^{(-(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...))})\)
+
+This then looks alot like \(e^{-t\lambda}\) but we now have
+\(e^{-t\lambda(\textbf{x})}\) and so we can conclude:
+
+\(T \sim exp(\lambda(\textbf{x}))\)
+
+So
+\(\lambda(x) = exp(-(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...))\)
+
+And from standard properties we therefor know that
+\(E[T] = \frac{1}{\lambda(\textbf{x})}\) and therefore thre MLE fo the
+mean is:
+
+\(\frac{1}{\hat{\lambda}(x)} = exp(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...)\)
+
+\begin{quote}
+\(\lambda_0 = \exp(-\beta_0)\) or
+\(\lambda_0 = \exp(-\text{Intercept})\) in \texttt{survreg}
+\end{quote}
+
+\hypertarget{weibull-1}{%
+\subsection{Weibull}\label{weibull-1}}
+
+In R we use the following implementation of the weibull distribution,
+it's survivor function is as follows:
+
+\(S(t) = \exp{\(\lambda t )^{\gamma}}\)
+
+SO repeating the same steps as for the exponential we can say that the
+RV \(T_0\) is:
+
+\$T\_0 \sim \text{Weibull}(\lambda\_0, \gamma)
+
+Add the scalling factor:
+
+\(S(t;\textbf{x}) = exp(-(\lambda t e^{-\beta ' \textbf{x}})^{\gamma})\)
+
+Agian let \(\lambda_0 = exp(-\beta_0)\)
+
+\(S(t;\textbf{x}) = exp(-( t e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 ...)})^{\gamma})\)
+
+So
+\(\lambda(\textbf{x}) = e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 ...)}\)
+
+The rate \(\gamma\) is unaffected by the covariates, so only
+\(\lambda(\textbf{x})\) is required.
+
+\hypertarget{testing-exp-vs-weibull}{%
+\subsection{Testing Exp vs Weibull}\label{testing-exp-vs-weibull}}
+
+The defualt distribution in \texttt{survreg} is the weibull.
+
+It will also report the log(scale) in the summary. This is a test that
+\(H_0 \text{ : log(scale)} = 0\), basically whether \(\gamma = 1\) as
+\(\gamma = \frac{1}{scale}\). If we don't reject probably better to
+stick with the exponential as it is the simpler model.
+
+\hypertarget{proportional-hazards}{%
+\section{Proportional Hazards}\label{proportional-hazards}}
+
+In AFTs we were concerned with scaling time by
+\(S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))\), so survivor function
+depends on \(\textbf{x}\).
+
+In proportional hazards, the hazard function depends on \textbf{x}
+through the hazard function so. Agian we consider the baseline \(h_0\)
+where the covariates \(\textbf{x}\) are the zero vector \(\textbf{0}\)
+
+\(h(t;\textbf{x}) = \psi(\textbf{x};\beta) h_0(t)\)
+
+So again it's just deviation from the baseline. Again therefore we need
+a sensible function. There is only one constraint here and that is
+\(\psi(\textbf{x}=0;\beta)\) must equal 1. So
+
+\(\psi(\textbf{x};\beta) = e^{\beta'\textbf{x}}\)
+
+Note that in AFT the exponent is negative, whereas it is positive here.
+We could use negative in AFT to make it consistent with the other
+parameter estimates, eg lambda as the intercept. A negative here would
+make it harder to interpret the hazards.
+
+\hypertarget{why-is-it-called-proportional-hazards}{%
+\subsection{Why is it called proportional
+hazards}\label{why-is-it-called-proportional-hazards}}
+
+The hazard ratio is independent of time. As the baseline hazard cancels
+we are left with a time invariant ratio.
+
+\(\frac{h(t;x_1)}{h(t;x_2)} = \frac{h_0(t)e^{\beta_1 x_1}}{h_0(t)e^{\beta_2 x_2}} = \frac{e^{\beta_1 x_1}}{e^{\beta_2 x_2}}\)
+
+The first part is reffered to as the hazard ratio.
+
+This is a strong assumption, which we must make sure to check.
+
+\hypertarget{advantagedisadvantage}{%
+\subsection{Advantage/Disadvantage}\label{advantagedisadvantage}}
+
+Advantages:
+
+\begin{itemize}
+\tightlist
+\item
+  We don't have to make assumptions on the underlying distribution of
+  the baseline hazard/survival functions. This is mitigates some of the
+  strong assumptions required for AFTs (Weibull vs Exp, etc)
+\item
+  We are directly modelling the effect of the covariate on the hazard.
+  To understand teh effects on hazard we just have to look at the signs
+  of the covariates. In AFTs however it is not alwatys obvious and needs
+  further calculation.
+\end{itemize}
+
+Disadvantages: - As we haven't specified a \(h_0\) then given a vector
+of patient characteristics it it not possible to actually specify the
+hazard.
+
+If you are just interested in which covariates effect hazard/survival
+then PH is fine. If you want to want to actually compute probabilities
+of survival/times, expectations, etc then AFTs are required. So for
+instance in a PH model you would be able to say:
+
+\begin{itemize}
+\tightlist
+\item
+  smoking triples hazard relative to not
+\item
+  treaetment halves hazard relative to placebo
+\end{itemize}
+
+However you could not say that smoking 10 cigs a day decrease expected
+survival time by 2 or probability of a cancer paitient surving more than
+two years on new meds is 0.6.
+
+\hypertarget{estimating-beta}{%
+\subsection{\texorpdfstring{Estimating
+\(\beta\)}{Estimating \textbackslash beta}}\label{estimating-beta}}
+
+We use likeihood methods. However notrmally we would say that
+
+\(Likelihood = \Pi^n_{i=1} f(t_i;\textbf{x}_i)^{\delta_i} S(t_i ; \textbf{x}_i)^{1-\delta_i}\)
+
+This is also equal to (as \(f(t) = h(t)S(t)\))
+
+\(Likelihood = \Pi^n_{i=1} h(t;\textbf{x})^{\delta_i} S(t_i ; \textbf{x}_i)\)
+
+Where \(t_i\) is the min(Failure time, time of right censor) and
+\(\delta_i\) is the indicator function where 1=death, 0 = censor.
+
+However in PH we havent specified \(h_0(t)\) so MLE isn't possible. We
+therefore hae to use partial likelihood.
+
+\hypertarget{partial-likelihood}{%
+\subsubsection{Partial Likelihood}\label{partial-likelihood}}
+
+If we know the times of which people died, then we want to understand
+the probability that they died in that particular observed order order.
+
+\(P(\text{Death}) \propto h\)
+
+TODO : review partial likelihood!
+
+\hypertarget{intrepreting-r-output}{%
+\subsection{Intrepreting R output}\label{intrepreting-r-output}}
+
+The wald score is the coeff/S.E. This is standard normal. It's square is
+the \(\chi^2_1\) which is useful in multi-level factors.
+
+For an set of covariates \(\textbf{x} = (x_1, x_2, x_3....)'\) you will
+get the the following hazard:
+
+\(h(t;\textbf{x} = h_0(t)e^{\beta_1 x_1 + \beta_2 x_2 ...}\).
+
+Where you havea two level factopr Eg treatment. This becomes a binary
+case of x = 0 or 1. Therefore if we calculate the hazard for both case
+we get (assuming treatment has been set as the first variable and A = 0,
+B =1)
+
+\$\text{Treatment A :}
+\(h(t;\textbf{x} = h_0(t)e^{\beta_1(0) + \beta_2 x_2 ...}\)
+
+\$\text{Treatment B :}
+\(h(t;\textbf{x} = h_0(t)e^{\beta_1(1) + \beta_2 x_2 ...}\).
+
+And if we calculate the hazard ratio of
+\(\frac{\text{Treatment B}}{\text{Treatment A}}\) then the terms cancel
+to leave only \(e^{\beta_1}\). And so this is simply the hazard ratio
+for treatment on these covariates. This in turn means that the
+coeffieicnt itself is the log of the hazard ratio.
+
+\hypertarget{significance}{%
+\subsubsection{Significance}\label{significance}}
+
+By asymptopic variance of the MLE
+
+\(\hat{\beta} \sim N(\beta, s.e.(\hat{\beta})^2)\)
+
+So if you have either a two factor or continuous covariate you can
+compare either
+
+\begin{itemize}
+\tightlist
+\item
+  the \(\hat{\beta}/s.e.(\hat{\beta})\) to a \(N(0,1)\)
+\item
+  or \((\hat{\beta}/s.e.(\hat{\beta}))^2\) to a \(\chi_1^2\)
+\end{itemize}
+
+Or where you have \(k >2\) factors you do the following:
+
+\begin{itemize}
+\tightlist
+\item
+  Calculate the \(\chi_i^2 = (\hat{\beta}_i/s.e.(\hat{\beta}_i))^2\) for
+  each of the k-1 variables
+\item
+  \(\sum^{k-1}_{i=1}\chi_i^2\) and compare to the \(\chi_{k-1}^2\) dist.
+\end{itemize}
+
+\hypertarget{process---binary}{%
+\subsubsection{Process - Binary}\label{process---binary}}
+
+\begin{itemize}
+\tightlist
+\item
+  Significance
+\item
+  Direction
+\item
+  Quantify
+\end{itemize}
+
+Say we are interested in a treatment B and A where. B is 1 and A is 0 in
+the model. It is \(\beta_1\) in the model.
+
+The first look at \(e^{\beta_1} = \frac{h{t;x_1=1}}{t;x_1=0}\):
+
+\begin{itemize}
+\tightlist
+\item
+  If \(e^{\beta_1} <1\) Then the factor with value 1 (often the
+  treatment B) \textbf{decreases} the hazard \textbf{relative} to
+  teatment A
+\item
+  If \(e^{\beta_1} >1\) Then the factor with value 1 (often the
+  treatment B) \textbf{Increases} the hazard \textbf{relative} to
+  teatment A
+\end{itemize}
+
+We can put a CI on the Hazard ratio by taking the
+\(e^{\hat{\beta_1} \pm 1.96(s.e.(\hat{\beta_1}))}\). As it is a
+monotonic transform it holds.
+
+The ratio can be directly reported as a percentage which is often easier
+for audience to understand. So a CI of hazard ratio 0.25 to 0.75 would
+be:
+
+``Relapse Hazard on Treatmnt B is likley to be between 25\% ad 75\% of
+realpse hazard on Treatment A.''
+
+\hypertarget{process---continuous}{%
+\subsubsection{Process - Continuous}\label{process---continuous}}
+
+In the case of the continuous what were are doing is calulating the
+following hazard ratio (this example used heart volume):
+
+\(\frac{h(t; \textbf{x}_4 = volume + 1)}{h(t; \textbf{x}_4 = volume)}\)
+
+So how does hazard increase when a continuous unit increase by one.
+Which much like the hazard ratio for a bianry case you will get alot of
+cancellation. Obviously the other covariates just cancel based on the
+baseline and:
+
+\$\frac{e^{\beta_4(x_4+1)}}{e^{\beta_4(x_4)}} = e\^{}\{\beta\_4\} \$
+
+\hypertarget{process---multi-level-factors}{%
+\subsubsection{Process - Multi level
+factors}\label{process---multi-level-factors}}
+
+Take k-1 factors and compute the available \(\chi^2\) sum them and
+compare to the \(\chi^2_{k-1}\). Remeber the baseline is just absorbed
+into the intercept like any linear model.
+
+Remember \(\chi^2\) is one sided and therefore compare directly to 0.95
+and not 0.975.
+
+\hypertarget{in-the-examirl}{%
+\subsubsection{In the exam/IRL}\label{in-the-examirl}}
+
+\begin{quote}
+If you are asked to **Interpret the output uou must do the following:
+
+\begin{itemize}
+\tightlist
+\item
+  Significance : Does p-value drop below threshhold
+\item
+  Direction : Is hazard increased or decreased relative to the baseline
+\item
+  Quantify : Give a 95\% CI for the hazard ratio.
+\end{itemize}
+\end{quote}
+
+TODO:
+
+\begin{itemize}
+\tightlist
+\item
+  Go through and derive log-log
+\item
+  Do the residual stuff
+\item
+  tito correction?
+\item
+  Revisit entire likelihood partial aspect 14:00 - 30:20 last lecture
+\end{itemize}
+
+\bookmarksetup{startatroot}
+
 \hypertarget{linear-models}{%
 \chapter{Linear Models}\label{linear-models}}
 
 \begin{quote}
 The variance of residual (\(e\), \(\sigma^2M\)) is not the same as the
-variance of error (\(\epsilon\), \(\sigma^2I_n\))
+variance of random error term (\(\epsilon\), \(\sigma^2I_n\))
 \end{quote}
 
 \hypertarget{intro}{%
@@ -2916,482 +3406,122 @@ standalone variables themselves
 
 \bookmarksetup{startatroot}
 
-\hypertarget{survival-1}{%
-\chapter{Survival}\label{survival-1}}
+\hypertarget{glms---generalized-linear-models}{%
+\chapter{GLMs - Generalized Linear
+Models}\label{glms---generalized-linear-models}}
 
-The first thing we are interested in is setting a baseline for the
-explanatory variables \(\textbf{x}\). Where \(\textbf{x}\) becomes the
-zero vector \(\textbf{0}\). Eg. \(\textbf{x} = (0,0,0...,0)\).
+An excellent intro can be read here:
 
-It is very common for age to be standardised around some age of
-interest. Eg 50, so all ages would be given as 5, -10, etc which equates
-to 55 and 40.
+https://stats.stackexchange.com/questions/20523/difference-between-logit-and-probit-models
 
-The two common methods are :
+EDA
+
+https://oakleyj.github.io/MAS61004/eda-for-logistic-regression.html
+
+\hypertarget{chapter-1---linear-model-refresh}{%
+\section{Chapter 1 - Linear Model
+Refresh}\label{chapter-1---linear-model-refresh}}
+
+In linear models we make a number of assumption about the error term
+\(\epsilon\) these may not always hold:
 
 \begin{itemize}
 \tightlist
 \item
-  Accelarated Failure Time (AFT)
+  The distribution of data may be skewed or counts based (not normal)
 \item
-  Proportional Hazards (PH)
+  Data may not be independent, this is offten the case when assessing
+  things over time
+\item
+  Data may not have constant variance
 \end{itemize}
 
-\hypertarget{aft}{%
-\section{AFT}\label{aft}}
+GLMs and Random Effects models allow us to adapt to these violations.
+Some problems associated with fitting a linear model when LM assumptions
+are violated:
 
-\hypertarget{two-group-example}{%
-\subsection{Two Group Example}\label{two-group-example}}
+\begin{itemize}
+\tightlist
+\item
+  You exceed reasonable bounds expected by the problem
+\item
+  You invalidate all your tests. Being gaussian leads to nice properties
+  that mean F and t tests are possible. That is no longer the case.
+\end{itemize}
 
-In the simplests case we model survival times \(T\) as a random
-variable. But with two groups we want to model them both as seperate
-RVs. Where the baseline RV is \(T_0\) and the treatment (or other
-covariate) is given by \(T_1\). As we now have times we can therefore
-model survivor functions \(S\). However in AFTs we don't want \(S_0\)
-and \(S_1\) we want a single survivor function that is scaled.
+\hypertarget{chapter-2---logistic-regression---part-1}{%
+\section{Chapter 2 - Logistic Regression - Part
+1}\label{chapter-2---logistic-regression---part-1}}
 
-We therefore look to the following:
+We use a link function between the mean (\(\mu\)) and the linear
+predictor to provide constraints to the mean and introduce
+non-linearity.
 
-\(\text{Group 0 :   } S(t ; x_i=0) = P(T_0>t) = S_0(t))\)
-\(\text{Group 1 :   } S(t ; x_i=1) = P(T_1>t) = P(\frac{T_0}{\psi}> t) = P(T_0>\psi t) = S_0(\psi t))\)
+In linear models we assume that \(Y \sim N(X\beta, \sigma^2 I)\). In
+GLMs the decouple the mean and distribution of \(Y\) so
+\(E(Y_i)=\mu_i\).
 
-So \(\psi\) ``accelrates time'' and hence AFT and so the RVs are related
-by \(T_1 = \frac{T_0}{\psi}\) and so \(S_1(t) = S_0(\psi t)\).
+In binary cases data is either 1 or 0, which is Bernoulli distributed,
+and \(P(Y_i =1) = \mu_i\) the parameter in the bernoulli case is between
+0 and 1. The use of the a linear model here wouldn't make sense as we
+would push \(\mu_i\) out of the bounds {[}0,1{]}. As this is bernoulli
+the expectation is \(E(Y_i) = \mu_i\).
 
-Thinking back to graphing, any multiplier of a function value is a
-stretch in x, whose magnitude is the reciprical. So a \(\psi >1\) will
-shrink survival time by \(\frac{1}{\psi}\) and a \(\psi <1\) will extend
-survival time.
+As \(x_i^T\beta\) can very between between \((-\infty, + \infty)\) then
+a mapping is required to bring it down to {[}0,1{]}, or map \(\mu\) up
+to \((-\infty, + \infty)\).
 
-So \(\psi >1\) accelrates time for the patient (so they are more likely
-to die faster). Less than one Deaccelerates!
+In this case the \textbf{logit} link function:
+
+\(\text{logit}(\mu_i) = log(\frac{\mu_i}{1 - \mu_i}) = x_i^T\beta\)
+
+As \(P(Y_i =1) = \mu_i\) then \(P(Y_i = 0) = 1 - \mu_i\) then the logged
+term are the odds. It therefore follws that:
+
+\(\mu_i = \frac{\exp(x_i^T\beta)}{1 + exp(x_i^T\beta)} = h(x_i^T\beta)\)
+
+\(h\) is the \textbf{inverse link function}.
+
+TODO: Expand this based on p13
+
+Due to it's relationship to the binomial we now have a glm:
+
+\begin{itemize}
+\tightlist
+\item
+  Inverse Link
+\item
+  \(E(Y_i) = \mu_i = h(x_i^T\beta)\)
+\item
+  \(Var(Y_i) = \frac{\mu_i(1- \mu_i)}{n_i}\)
+\end{itemize}
 
 \begin{quote}
-Scale factor is \(\frac{1}{\psi}\) , less than 1 means better survival
-times for the patient
+Note that the variance is coupled with \(\mu\) therefore as the
+covariates change the variance is allowed to change too, so we can move
+away from the fixed variance assumption
 \end{quote}
 
-So \(\psi\) is a function of \(\textbf{x}\), all of our covariates,
-which determine the ``acceleration''
+\hypertarget{link-function}{%
+\subsection{Link function}\label{link-function}}
 
-\hypertarget{generalising-to-two-groups}{%
-\subsection{Generalising to two
-groups}\label{generalising-to-two-groups}}
+We chose a logit above but there are a number of functions that can map
+to {[}0,1{]}. They must however have an inverse i.e be monotone.
 
-Instead of now having a \(\psi\) to turn on and off we now require
-\(\psi(\textbf{x})\) so that we can create a scaling factor for each
-individual. We therefore assume that (Where \(S_0\) is \(S(t)\) at the
-baseline consitions where \(\textbf{x} = \textbf{0}\)):
+Another eaxmple is the \textbf{probit}
 
-\(S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))\)
+\bookmarksetup{startatroot}
 
-From this it can be shown that the following are true:
+\hypertarget{miscillanous-topics}{%
+\chapter{Miscillanous Topics}\label{miscillanous-topics}}
 
-\(f(t;\textbf{x}) = f_0(t\psi(\textbf{x}))\psi(\textbf{x})\)
+General Inference and Probability theory
 
-\(h(t;\textbf{x}) = h_0(t\psi(\textbf{x}))\psi(\textbf{x})\)
+\hypertarget{fisher-information}{%
+\section{Fisher Information}\label{fisher-information}}
 
-This can be derived by showing that that \(t\) being multiplie by
-\(\psi\) and has \(S_0\) applied to it as a function. We know the
-relationship between the survival function and the density fuinction.
-\(S(t) = 1- F(t)\) differentiatiing we get negative density function. A
-function of a function, means that we need to use the chain rul and
-therefore gets the above. From the desnity we can get the hazard. TODO :
-Write out derivation. More details can be found at 25mins, 8/12.
-
-So again: \(T = \frac{T_0}{\psi(\textbf{x})}\)
-
-We are yet to define \(\psi(\textbf{x})\) but tow conditions must be
-met:
-
-\begin{itemize}
-\tightlist
-\item
-  \(\psi(\textbf{x})\geq 0\), so cannot have a negative time
-\item
-  \(\psi(\textbf{0}) = 1\), so that the basline has no strethcing
-  effects.
-\end{itemize}
-
-From this a naturual choice is (it could be any functiion though):
-
-\({\psi(\textbf{x})} = \exp(-\beta'\textbf{x})\)
-
-This gives us our parameters, but excludes the intercept terms.
-Recalling \(T = \frac{T_0}{\psi(\textbf{x})}\) then
-
-\(E[T] = \exp(\beta'\textbf{x})E[T_0]\)
-
-If \(\beta_i x_i\) is positive then the expected survival time increases
-(good fro patient)
-
-\hypertarget{exponetial-case}{%
-\subsection{Exponetial Case}\label{exponetial-case}}
-
-Using the above we can therefore start to create an exponential AFT. We
-already know that for the exponential distribution:
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3571}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3571}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2857}}@{}}
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-Property
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-equation
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-AFT
-\end{minipage} \\
-\midrule()
-\endhead
-\(S(t)_0\) & \(e^{-\lambda t}\) &
-\(S(t;\textbf{x}) = \exp(-\lambda t e^{-\beta'\textbf{x}})\) \\
-\(h(t)_0\) & \(\lambda\) & \(\lambda e^{-\beta'\textbf{x}}\) \\
-\(f(t)_0\) & \(\lambda e^{-\lambda t}\) &
-\(\lambda e^{-\beta'\textbf{x}} \exp(-\lambda t e^{-\beta'\textbf{x}})\) \\
-\bottomrule()
-\end{longtable}
-
-So if \(\textbf{x}_i\) is a p dimensional vector of explanatory
-variables then we ca n by MLE find p+1 parameters
-\((\lambda, \beta_1, \beta_2...\beta_p)\).
-
-MLE is found by usual method, get derivative, set to 0, solve
-iteratively. \(\hat{\lambda}\) and \(\hat{\beta}\) are found any by the
-asymptopic properties of the MLE we know that:
-
-\(\hat{\lambda} \sim N(\lambda, \text{Var}(\hat{\lambda}))\)
-
-We can obtain \(\text{Var}(\hat{\lambda}))\) from the expected/observed
-stuff covered in chapter 3 (TODO: find this out!)
-
-\hypertarget{final-model}{%
-\subsubsection{Final model}\label{final-model}}
-
-If we are extra explicit with \(\lambda_0\) we can say that
-\(T_0 \sim \text{exp}(\lambda_0)\) so
-\(S(t;\textbf{x}) = \exp(-\lambda_0 t e^{-\beta'\textbf{x}})\). Then it
-is more convinient to say that \(\lambda_0 = \exp(-\beta_0)\)
-
-Then we can lift the \(\lambda\) into the exponent. Thus:
-
-\(S(t;\textbf{x}) = \exp(- t e^{(-(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...))})\)
-
-This then looks alot like \(e^{-t\lambda}\) but we now have
-\(e^{-t\lambda(\textbf{x})}\) and so we can conclude:
-
-\(T \sim exp(\lambda(\textbf{x}))\)
-
-So
-\(\lambda(x) = exp(-(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...))\)
-
-And from standard properties we therefor know that
-\(E[T] = \frac{1}{\lambda(\textbf{x})}\) and therefore thre MLE fo the
-mean is:
-
-\(\frac{1}{\hat{\lambda}(x)} = exp(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...)\)
-
-\begin{quote}
-\(\lambda_0 = \exp(-\beta_0)\) or
-\(\lambda_0 = \exp(-\text{Intercept})\) in \texttt{survreg}
-\end{quote}
-
-\hypertarget{weibull-1}{%
-\subsection{Weibull}\label{weibull-1}}
-
-In R we use the following implementation of the weibull distribution,
-it's survivor function is as follows:
-
-\(S(t) = \exp{\(\lambda t )^{\gamma}}\)
-
-SO repeating the same steps as for the exponential we can say that the
-RV \(T_0\) is:
-
-\$T\_0 \sim \text{Weibull}(\lambda\_0, \gamma)
-
-Add the scalling factor:
-
-\(S(t;\textbf{x}) = exp(-(\lambda t e^{-\beta ' \textbf{x}})^{\gamma})\)
-
-Agian let \(\lambda_0 = exp(-\beta_0)\)
-
-\(S(t;\textbf{x}) = exp(-( t e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 ...)})^{\gamma})\)
-
-So
-\(\lambda(\textbf{x}) = e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 ...)}\)
-
-The rate \(\gamma\) is unaffected by the covariates, so only
-\(\lambda(\textbf{x})\) is required.
-
-\hypertarget{testing-exp-vs-weibull}{%
-\subsection{Testing Exp vs Weibull}\label{testing-exp-vs-weibull}}
-
-The defualt distribution in \texttt{survreg} is the weibull.
-
-It will also report the log(scale) in the summary. This is a test that
-\(H_0 \text{ : log(scale)} = 0\), basically whether \(\gamma = 1\) as
-\(\gamma = \frac{1}{scale}\). If we don't reject probably better to
-stick with the exponential as it is the simpler model.
-
-\hypertarget{proportional-hazards}{%
-\section{Proportional Hazards}\label{proportional-hazards}}
-
-In AFTs we were concerned with scaling time by
-\(S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))\), so survivor function
-depends on \(\textbf{x}\).
-
-In proportional hazards, the hazard function depends on \textbf{x}
-through the hazard function so. Agian we consider the baseline \(h_0\)
-where the covariates \(\textbf{x}\) are the zero vector \(\textbf{0}\)
-
-\(h(t;\textbf{x}) = \psi(\textbf{x};\beta) h_0(t)\)
-
-So again it's just deviation from the baseline. Again therefore we need
-a sensible function. There is only one constraint here and that is
-\(\psi(\textbf{x}=0;\beta)\) must equal 1. So
-
-\(\psi(\textbf{x};\beta) = e^{\beta'\textbf{x}}\)
-
-Note that in AFT the exponent is negative, whereas it is positive here.
-We could use negative in AFT to make it consistent with the other
-parameter estimates, eg lambda as the intercept. A negative here would
-make it harder to interpret the hazards.
-
-\hypertarget{why-is-it-called-proportional-hazards}{%
-\subsection{Why is it called proportional
-hazards}\label{why-is-it-called-proportional-hazards}}
-
-The hazard ratio is independent of time. As the baseline hazard cancels
-we are left with a time invariant ratio.
-
-\(\frac{h(t;x_1)}{h(t;x_2)} = \frac{h_0(t)e^{\beta_1 x_1}}{h_0(t)e^{\beta_2 x_2}} = \frac{e^{\beta_1 x_1}}{e^{\beta_2 x_2}}\)
-
-The first part is reffered to as the hazard ratio.
-
-This is a strong assumption, which we must make sure to check.
-
-\hypertarget{advantagedisadvantage}{%
-\subsection{Advantage/Disadvantage}\label{advantagedisadvantage}}
-
-Advantages:
-
-\begin{itemize}
-\tightlist
-\item
-  We don't have to make assumptions on the underlying distribution of
-  the baseline hazard/survival functions. This is mitigates some of the
-  strong assumptions required for AFTs (Weibull vs Exp, etc)
-\item
-  We are directly modelling the effect of the covariate on the hazard.
-  To understand teh effects on hazard we just have to look at the signs
-  of the covariates. In AFTs however it is not alwatys obvious and needs
-  further calculation.
-\end{itemize}
-
-Disadvantages: - As we haven't specified a \(h_0\) then given a vector
-of patient characteristics it it not possible to actually specify the
-hazard.
-
-If you are just interested in which covariates effect hazard/survival
-then PH is fine. If you want to want to actually compute probabilities
-of survival/times, expectations, etc then AFTs are required. So for
-instance in a PH model you would be able to say:
-
-\begin{itemize}
-\tightlist
-\item
-  smoking triples hazard relative to not
-\item
-  treaetment halves hazard relative to placebo
-\end{itemize}
-
-However you could not say that smoking 10 cigs a day decrease expected
-survival time by 2 or probability of a cancer paitient surving more than
-two years on new meds is 0.6.
-
-\hypertarget{estimating-beta}{%
-\subsection{\texorpdfstring{Estimating
-\(\beta\)}{Estimating \textbackslash beta}}\label{estimating-beta}}
-
-We use likeihood methods. However notrmally we would say that
-
-\(Likelihood = \Pi^n_{i=1} f(t_i;\textbf{x}_i)^{\delta_i} S(t_i ; \textbf{x}_i)^{1-\delta_i}\)
-
-This is also equal to (as \(f(t) = h(t)S(t)\))
-
-\(Likelihood = \Pi^n_{i=1} h(t;\textbf{x})^{\delta_i} S(t_i ; \textbf{x}_i)\)
-
-Where \(t_i\) is the min(Failure time, time of right censor) and
-\(\delta_i\) is the indicator function where 1=death, 0 = censor.
-
-However in PH we havent specified \(h_0(t)\) so MLE isn't possible. We
-therefore hae to use partial likelihood.
-
-\hypertarget{partial-likelihood}{%
-\subsubsection{Partial Likelihood}\label{partial-likelihood}}
-
-If we know the times of which people died, then we want to understand
-the probability that they died in that particular observed order order.
-
-\(P(\text{Death}) \propto h\)
-
-TODO : review partial likelihood!
-
-\hypertarget{intrepreting-r-output}{%
-\subsection{Intrepreting R output}\label{intrepreting-r-output}}
-
-The wald score is the coeff/S.E. This is standard normal. It's square is
-the \(\chi^2_1\) which is useful in multi-level factors.
-
-For an set of covariates \(\textbf{x} = (x_1, x_2, x_3....)'\) you will
-get the the following hazard:
-
-\(h(t;\textbf{x} = h_0(t)e^{\beta_1 x_1 + \beta_2 x_2 ...}\).
-
-Where you havea two level factopr Eg treatment. This becomes a binary
-case of x = 0 or 1. Therefore if we calculate the hazard for both case
-we get (assuming treatment has been set as the first variable and A = 0,
-B =1)
-
-\$\text{Treatment A :}
-\(h(t;\textbf{x} = h_0(t)e^{\beta_1(0) + \beta_2 x_2 ...}\)
-
-\$\text{Treatment B :}
-\(h(t;\textbf{x} = h_0(t)e^{\beta_1(1) + \beta_2 x_2 ...}\).
-
-And if we calculate the hazard ratio of
-\(\frac{\text{Treatment B}}{\text{Treatment A}}\) then the terms cancel
-to leave only \(e^{\beta_1}\). And so this is simply the hazard ratio
-for treatment on these covariates. This in turn means that the
-coeffieicnt itself is the log of the hazard ratio.
-
-\hypertarget{significance}{%
-\subsubsection{Significance}\label{significance}}
-
-By asymptopic variance of the MLE
-
-\(\hat{\beta} \sim N(\beta, s.e.(\hat{\beta})^2)\)
-
-So if you have either a two factor or continuous covariate you can
-compare either
-
-\begin{itemize}
-\tightlist
-\item
-  the \(\hat{\beta}/s.e.(\hat{\beta})\) to a \(N(0,1)\)
-\item
-  or \((\hat{\beta}/s.e.(\hat{\beta}))^2\) to a \(\chi_1^2\)
-\end{itemize}
-
-Or where you have \(k >2\) factors you do the following:
-
-\begin{itemize}
-\tightlist
-\item
-  Calculate the \(\chi_i^2 = (\hat{\beta}_i/s.e.(\hat{\beta}_i))^2\) for
-  each of the k-1 variables
-\item
-  \(\sum^{k-1}_{i=1}\chi_i^2\) and compare to the \(\chi_{k-1}^2\) dist.
-\end{itemize}
-
-\hypertarget{process---binary}{%
-\subsubsection{Process - Binary}\label{process---binary}}
-
-\begin{itemize}
-\tightlist
-\item
-  Significance
-\item
-  Direction
-\item
-  Quantify
-\end{itemize}
-
-Say we are interested in a treatment B and A where. B is 1 and A is 0 in
-the model. It is \(\beta_1\) in the model.
-
-The first look at \(e^{\beta_1} = \frac{h{t;x_1=1}}{t;x_1=0}\):
-
-\begin{itemize}
-\tightlist
-\item
-  If \(e^{\beta_1} <1\) Then the factor with value 1 (often the
-  treatment B) \textbf{decreases} the hazard \textbf{relative} to
-  teatment A
-\item
-  If \(e^{\beta_1} >1\) Then the factor with value 1 (often the
-  treatment B) \textbf{Increases} the hazard \textbf{relative} to
-  teatment A
-\end{itemize}
-
-We can put a CI on the Hazard ratio by taking the
-\(e^{\hat{\beta_1} \pm 1.96(s.e.(\hat{\beta_1}))}\). As it is a
-monotonic transform it holds.
-
-The ratio can be directly reported as a percentage which is often easier
-for audience to understand. So a CI of hazard ratio 0.25 to 0.75 would
-be:
-
-``Relapse Hazard on Treatmnt B is likley to be between 25\% ad 75\% of
-realpse hazard on Treatment A.''
-
-\hypertarget{process---continuous}{%
-\subsubsection{Process - Continuous}\label{process---continuous}}
-
-In the case of the continuous what were are doing is calulating the
-following hazard ratio (this example used heart volume):
-
-\(\frac{h(t; \textbf{x}_4 = volume + 1)}{h(t; \textbf{x}_4 = volume)}\)
-
-So how does hazard increase when a continuous unit increase by one.
-Which much like the hazard ratio for a bianry case you will get alot of
-cancellation. Obviously the other covariates just cancel based on the
-baseline and:
-
-\$\frac{e^{\beta_4(x_4+1)}}{e^{\beta_4(x_4)}} = e\^{}\{\beta\_4\} \$
-
-\hypertarget{process---multi-level-factors}{%
-\subsubsection{Process - Multi level
-factors}\label{process---multi-level-factors}}
-
-Take k-1 factors and compute the available \(\chi^2\) sum them and
-compare to the \(\chi^2_{k-1}\). Remeber the baseline is just absorbed
-into the intercept like any linear model.
-
-Remember \(\chi^2\) is one sided and therefore compare directly to 0.95
-and not 0.975.
-
-\hypertarget{in-the-examirl}{%
-\subsubsection{In the exam/IRL}\label{in-the-examirl}}
-
-\begin{quote}
-If you are asked to **Interpret the output uou must do the following:
-
-\begin{itemize}
-\tightlist
-\item
-  Significance : Does p-value drop below threshhold
-\item
-  Direction : Is hazard increased or decreased relative to the baseline
-\item
-  Quantify : Give a 95\% CI for the hazard ratio.
-\end{itemize}
-\end{quote}
-
-TODO:
-
-\begin{itemize}
-\tightlist
-\item
-  Go through and derive log-log
-\item
-  Do the residual stuff
-\item
-  tito correction?
-\item
-  Revisit entire likelihood partial aspect 14:00 - 30:20 last lecture
-\end{itemize}
+Sources - https://arxiv.org/pdf/1705.01064.pdf -
+https://www.youtube.com/watch?v=pneluWj-U-o
 
 \bookmarksetup{startatroot}
 
