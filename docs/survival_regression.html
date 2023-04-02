@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stats_notes - 6&nbsp; Survival</title>
+<title>stats_notes - 5&nbsp; Survival</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
-<link href="./linear_models.html" rel="prev">
+<link href="./linear_models.html" rel="next">
+<link href="./survival.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Survival</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -121,12 +121,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./linear_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Models</span></a>
+  <a href="./survival_regression.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Survival</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./survival_regression.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival</span></a>
+  <a href="./linear_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">GLMs - Generalized Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./misc_topics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Miscillanous Topics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -143,20 +153,20 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#aft" id="toc-aft" class="nav-link active" data-scroll-target="#aft"><span class="toc-section-number">6.1</span>  AFT</a>
+  <li><a href="#aft" id="toc-aft" class="nav-link active" data-scroll-target="#aft"><span class="toc-section-number">5.1</span>  AFT</a>
   <ul class="collapse">
-  <li><a href="#two-group-example" id="toc-two-group-example" class="nav-link" data-scroll-target="#two-group-example"><span class="toc-section-number">6.1.1</span>  Two Group Example</a></li>
-  <li><a href="#generalising-to-two-groups" id="toc-generalising-to-two-groups" class="nav-link" data-scroll-target="#generalising-to-two-groups"><span class="toc-section-number">6.1.2</span>  Generalising to two groups</a></li>
-  <li><a href="#exponetial-case" id="toc-exponetial-case" class="nav-link" data-scroll-target="#exponetial-case"><span class="toc-section-number">6.1.3</span>  Exponetial Case</a></li>
-  <li><a href="#weibull" id="toc-weibull" class="nav-link" data-scroll-target="#weibull"><span class="toc-section-number">6.1.4</span>  Weibull</a></li>
-  <li><a href="#testing-exp-vs-weibull" id="toc-testing-exp-vs-weibull" class="nav-link" data-scroll-target="#testing-exp-vs-weibull"><span class="toc-section-number">6.1.5</span>  Testing Exp vs Weibull</a></li>
+  <li><a href="#two-group-example" id="toc-two-group-example" class="nav-link" data-scroll-target="#two-group-example"><span class="toc-section-number">5.1.1</span>  Two Group Example</a></li>
+  <li><a href="#generalising-to-two-groups" id="toc-generalising-to-two-groups" class="nav-link" data-scroll-target="#generalising-to-two-groups"><span class="toc-section-number">5.1.2</span>  Generalising to two groups</a></li>
+  <li><a href="#exponetial-case" id="toc-exponetial-case" class="nav-link" data-scroll-target="#exponetial-case"><span class="toc-section-number">5.1.3</span>  Exponetial Case</a></li>
+  <li><a href="#weibull" id="toc-weibull" class="nav-link" data-scroll-target="#weibull"><span class="toc-section-number">5.1.4</span>  Weibull</a></li>
+  <li><a href="#testing-exp-vs-weibull" id="toc-testing-exp-vs-weibull" class="nav-link" data-scroll-target="#testing-exp-vs-weibull"><span class="toc-section-number">5.1.5</span>  Testing Exp vs Weibull</a></li>
   </ul></li>
-  <li><a href="#proportional-hazards" id="toc-proportional-hazards" class="nav-link" data-scroll-target="#proportional-hazards"><span class="toc-section-number">6.2</span>  Proportional Hazards</a>
+  <li><a href="#proportional-hazards" id="toc-proportional-hazards" class="nav-link" data-scroll-target="#proportional-hazards"><span class="toc-section-number">5.2</span>  Proportional Hazards</a>
   <ul class="collapse">
-  <li><a href="#why-is-it-called-proportional-hazards" id="toc-why-is-it-called-proportional-hazards" class="nav-link" data-scroll-target="#why-is-it-called-proportional-hazards"><span class="toc-section-number">6.2.1</span>  Why is it called proportional hazards</a></li>
-  <li><a href="#advantagedisadvantage" id="toc-advantagedisadvantage" class="nav-link" data-scroll-target="#advantagedisadvantage"><span class="toc-section-number">6.2.2</span>  Advantage/Disadvantage</a></li>
-  <li><a href="#estimating-beta" id="toc-estimating-beta" class="nav-link" data-scroll-target="#estimating-beta"><span class="toc-section-number">6.2.3</span>  Estimating <span class="math inline">\(\beta\)</span></a></li>
-  <li><a href="#intrepreting-r-output" id="toc-intrepreting-r-output" class="nav-link" data-scroll-target="#intrepreting-r-output"><span class="toc-section-number">6.2.4</span>  Intrepreting R output</a></li>
+  <li><a href="#why-is-it-called-proportional-hazards" id="toc-why-is-it-called-proportional-hazards" class="nav-link" data-scroll-target="#why-is-it-called-proportional-hazards"><span class="toc-section-number">5.2.1</span>  Why is it called proportional hazards</a></li>
+  <li><a href="#advantagedisadvantage" id="toc-advantagedisadvantage" class="nav-link" data-scroll-target="#advantagedisadvantage"><span class="toc-section-number">5.2.2</span>  Advantage/Disadvantage</a></li>
+  <li><a href="#estimating-beta" id="toc-estimating-beta" class="nav-link" data-scroll-target="#estimating-beta"><span class="toc-section-number">5.2.3</span>  Estimating <span class="math inline">\(\beta\)</span></a></li>
+  <li><a href="#intrepreting-r-output" id="toc-intrepreting-r-output" class="nav-link" data-scroll-target="#intrepreting-r-output"><span class="toc-section-number">5.2.4</span>  Intrepreting R output</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="survival_regression.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
@@ -166,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Survival</span></h1>
 </div>
 
 
@@ -188,10 +198,10 @@ ul.task-list li input[type="checkbox"] {
 <li>Accelarated Failure Time (AFT)</li>
 <li>Proportional Hazards (PH)</li>
 </ul>
-<section id="aft" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="aft"><span class="header-section-number">6.1</span> AFT</h2>
-<section id="two-group-example" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="two-group-example"><span class="header-section-number">6.1.1</span> Two Group Example</h3>
+<section id="aft" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="aft"><span class="header-section-number">5.1</span> AFT</h2>
+<section id="two-group-example" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="two-group-example"><span class="header-section-number">5.1.1</span> Two Group Example</h3>
 <p>In the simplests case we model survival times <span class="math inline">\(T\)</span> as a random variable. But with two groups we want to model them both as seperate RVs. Where the baseline RV is <span class="math inline">\(T_0\)</span> and the treatment (or other covariate) is given by <span class="math inline">\(T_1\)</span>. As we now have times we can therefore model survivor functions <span class="math inline">\(S\)</span>. However in AFTs we don’t want <span class="math inline">\(S_0\)</span> and <span class="math inline">\(S_1\)</span> we want a single survivor function that is scaled.</p>
 <p>We therefore look to the following:</p>
 <p><span class="math inline">\(\text{Group 0 :   } S(t ; x_i=0) = P(T_0&gt;t) = S_0(t))\)</span> <span class="math inline">\(\text{Group 1 :   } S(t ; x_i=1) = P(T_1&gt;t) = P(\frac{T_0}{\psi}&gt; t) = P(T_0&gt;\psi t) = S_0(\psi t))\)</span></p>
@@ -203,8 +213,8 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 <p>So <span class="math inline">\(\psi\)</span> is a function of <span class="math inline">\(\textbf{x}\)</span>, all of our covariates, which determine the “acceleration”</p>
 </section>
-<section id="generalising-to-two-groups" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="generalising-to-two-groups"><span class="header-section-number">6.1.2</span> Generalising to two groups</h3>
+<section id="generalising-to-two-groups" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="generalising-to-two-groups"><span class="header-section-number">5.1.2</span> Generalising to two groups</h3>
 <p>Instead of now having a <span class="math inline">\(\psi\)</span> to turn on and off we now require <span class="math inline">\(\psi(\textbf{x})\)</span> so that we can create a scaling factor for each individual. We therefore assume that (Where <span class="math inline">\(S_0\)</span> is <span class="math inline">\(S(t)\)</span> at the baseline consitions where <span class="math inline">\(\textbf{x} = \textbf{0}\)</span>):</p>
 <p><span class="math inline">\(S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))\)</span></p>
 <p>From this it can be shown that the following are true:</p>
@@ -223,8 +233,8 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="math inline">\(E[T] = \exp(\beta'\textbf{x})E[T_0]\)</span></p>
 <p>If <span class="math inline">\(\beta_i x_i\)</span> is positive then the expected survival time increases (good fro patient)</p>
 </section>
-<section id="exponetial-case" class="level3" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="exponetial-case"><span class="header-section-number">6.1.3</span> Exponetial Case</h3>
+<section id="exponetial-case" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="exponetial-case"><span class="header-section-number">5.1.3</span> Exponetial Case</h3>
 <p>Using the above we can therefore start to create an exponential AFT. We already know that for the exponential distribution:</p>
 <table class="table">
 <colgroup>
@@ -261,8 +271,8 @@ ul.task-list li input[type="checkbox"] {
 <p>MLE is found by usual method, get derivative, set to 0, solve iteratively. <span class="math inline">\(\hat{\lambda}\)</span> and <span class="math inline">\(\hat{\beta}\)</span> are found any by the asymptopic properties of the MLE we know that:</p>
 <p><span class="math inline">\(\hat{\lambda} \sim N(\lambda, \text{Var}(\hat{\lambda}))\)</span></p>
 <p>We can obtain <span class="math inline">\(\text{Var}(\hat{\lambda}))\)</span> from the expected/observed stuff covered in chapter 3 (TODO: find this out!)</p>
-<section id="final-model" class="level4" data-number="6.1.3.1">
-<h4 data-number="6.1.3.1" class="anchored" data-anchor-id="final-model"><span class="header-section-number">6.1.3.1</span> Final model</h4>
+<section id="final-model" class="level4" data-number="5.1.3.1">
+<h4 data-number="5.1.3.1" class="anchored" data-anchor-id="final-model"><span class="header-section-number">5.1.3.1</span> Final model</h4>
 <p>If we are extra explicit with <span class="math inline">\(\lambda_0\)</span> we can say that <span class="math inline">\(T_0 \sim \text{exp}(\lambda_0)\)</span> so <span class="math inline">\(S(t;\textbf{x}) = \exp(-\lambda_0 t e^{-\beta'\textbf{x}})\)</span>. Then it is more convinient to say that <span class="math inline">\(\lambda_0 = \exp(-\beta_0)\)</span></p>
 <p>Then we can lift the <span class="math inline">\(\lambda\)</span> into the exponent. Thus:</p>
 <p><span class="math inline">\(S(t;\textbf{x}) = \exp(- t e^{(-(\beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 ...))})\)</span></p>
@@ -276,8 +286,8 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 </section>
 </section>
-<section id="weibull" class="level3" data-number="6.1.4">
-<h3 data-number="6.1.4" class="anchored" data-anchor-id="weibull"><span class="header-section-number">6.1.4</span> Weibull</h3>
+<section id="weibull" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="weibull"><span class="header-section-number">5.1.4</span> Weibull</h3>
 <p>In R we use the following implementation of the weibull distribution, it’s survivor function is as follows:</p>
 <p><span class="math inline">\(S(t) = \exp{\(\lambda t )^{\gamma}}\)</span></p>
 <p>SO repeating the same steps as for the exponential we can say that the RV <span class="math inline">\(T_0\)</span> is:</p>
@@ -289,29 +299,29 @@ ul.task-list li input[type="checkbox"] {
 <p>So <span class="math inline">\(\lambda(\textbf{x}) = e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 ...)}\)</span></p>
 <p>The rate <span class="math inline">\(\gamma\)</span> is unaffected by the covariates, so only <span class="math inline">\(\lambda(\textbf{x})\)</span> is required.</p>
 </section>
-<section id="testing-exp-vs-weibull" class="level3" data-number="6.1.5">
-<h3 data-number="6.1.5" class="anchored" data-anchor-id="testing-exp-vs-weibull"><span class="header-section-number">6.1.5</span> Testing Exp vs Weibull</h3>
+<section id="testing-exp-vs-weibull" class="level3" data-number="5.1.5">
+<h3 data-number="5.1.5" class="anchored" data-anchor-id="testing-exp-vs-weibull"><span class="header-section-number">5.1.5</span> Testing Exp vs Weibull</h3>
 <p>The defualt distribution in <code>survreg</code> is the weibull.</p>
 <p>It will also report the log(scale) in the summary. This is a test that <span class="math inline">\(H_0 \text{ : log(scale)} = 0\)</span>, basically whether <span class="math inline">\(\gamma = 1\)</span> as <span class="math inline">\(\gamma = \frac{1}{scale}\)</span>. If we don’t reject probably better to stick with the exponential as it is the simpler model.</p>
 </section>
 </section>
-<section id="proportional-hazards" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="proportional-hazards"><span class="header-section-number">6.2</span> Proportional Hazards</h2>
+<section id="proportional-hazards" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="proportional-hazards"><span class="header-section-number">5.2</span> Proportional Hazards</h2>
 <p>In AFTs we were concerned with scaling time by <span class="math inline">\(S(t;\textbf{x}) = S_0(t\psi(\textbf{x}))\)</span>, so survivor function depends on <span class="math inline">\(\textbf{x}\)</span>.</p>
 <p>In proportional hazards, the hazard function depends on through the hazard function so. Agian we consider the baseline <span class="math inline">\(h_0\)</span> where the covariates <span class="math inline">\(\textbf{x}\)</span> are the zero vector <span class="math inline">\(\textbf{0}\)</span></p>
 <p><span class="math inline">\(h(t;\textbf{x}) = \psi(\textbf{x};\beta) h_0(t)\)</span></p>
 <p>So again it’s just deviation from the baseline. Again therefore we need a sensible function. There is only one constraint here and that is <span class="math inline">\(\psi(\textbf{x}=0;\beta)\)</span> must equal 1. So</p>
 <p><span class="math inline">\(\psi(\textbf{x};\beta) = e^{\beta'\textbf{x}}\)</span></p>
 <p>Note that in AFT the exponent is negative, whereas it is positive here. We could use negative in AFT to make it consistent with the other parameter estimates, eg lambda as the intercept. A negative here would make it harder to interpret the hazards.</p>
-<section id="why-is-it-called-proportional-hazards" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="why-is-it-called-proportional-hazards"><span class="header-section-number">6.2.1</span> Why is it called proportional hazards</h3>
+<section id="why-is-it-called-proportional-hazards" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="why-is-it-called-proportional-hazards"><span class="header-section-number">5.2.1</span> Why is it called proportional hazards</h3>
 <p>The hazard ratio is independent of time. As the baseline hazard cancels we are left with a time invariant ratio.</p>
 <p><span class="math inline">\(\frac{h(t;x_1)}{h(t;x_2)} = \frac{h_0(t)e^{\beta_1 x_1}}{h_0(t)e^{\beta_2 x_2}} = \frac{e^{\beta_1 x_1}}{e^{\beta_2 x_2}}\)</span></p>
 <p>The first part is reffered to as the hazard ratio.</p>
 <p>This is a strong assumption, which we must make sure to check.</p>
 </section>
-<section id="advantagedisadvantage" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="advantagedisadvantage"><span class="header-section-number">6.2.2</span> Advantage/Disadvantage</h3>
+<section id="advantagedisadvantage" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="advantagedisadvantage"><span class="header-section-number">5.2.2</span> Advantage/Disadvantage</h3>
 <p>Advantages:</p>
 <ul>
 <li>We don’t have to make assumptions on the underlying distribution of the baseline hazard/survival functions. This is mitigates some of the strong assumptions required for AFTs (Weibull vs Exp, etc)</li>
@@ -325,23 +335,23 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>However you could not say that smoking 10 cigs a day decrease expected survival time by 2 or probability of a cancer paitient surving more than two years on new meds is 0.6.</p>
 </section>
-<section id="estimating-beta" class="level3" data-number="6.2.3">
-<h3 data-number="6.2.3" class="anchored" data-anchor-id="estimating-beta"><span class="header-section-number">6.2.3</span> Estimating <span class="math inline">\(\beta\)</span></h3>
+<section id="estimating-beta" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="estimating-beta"><span class="header-section-number">5.2.3</span> Estimating <span class="math inline">\(\beta\)</span></h3>
 <p>We use likeihood methods. However notrmally we would say that</p>
 <p><span class="math inline">\(Likelihood = \Pi^n_{i=1} f(t_i;\textbf{x}_i)^{\delta_i} S(t_i ; \textbf{x}_i)^{1-\delta_i}\)</span></p>
 <p>This is also equal to (as <span class="math inline">\(f(t) = h(t)S(t)\)</span>)</p>
 <p><span class="math inline">\(Likelihood = \Pi^n_{i=1} h(t;\textbf{x})^{\delta_i} S(t_i ; \textbf{x}_i)\)</span></p>
 <p>Where <span class="math inline">\(t_i\)</span> is the min(Failure time, time of right censor) and <span class="math inline">\(\delta_i\)</span> is the indicator function where 1=death, 0 = censor.</p>
 <p>However in PH we havent specified <span class="math inline">\(h_0(t)\)</span> so MLE isn’t possible. We therefore hae to use partial likelihood.</p>
-<section id="partial-likelihood" class="level4" data-number="6.2.3.1">
-<h4 data-number="6.2.3.1" class="anchored" data-anchor-id="partial-likelihood"><span class="header-section-number">6.2.3.1</span> Partial Likelihood</h4>
+<section id="partial-likelihood" class="level4" data-number="5.2.3.1">
+<h4 data-number="5.2.3.1" class="anchored" data-anchor-id="partial-likelihood"><span class="header-section-number">5.2.3.1</span> Partial Likelihood</h4>
 <p>If we know the times of which people died, then we want to understand the probability that they died in that particular observed order order.</p>
 <p><span class="math inline">\(P(\text{Death}) \propto h\)</span></p>
 <p>TODO : review partial likelihood!</p>
 </section>
 </section>
-<section id="intrepreting-r-output" class="level3" data-number="6.2.4">
-<h3 data-number="6.2.4" class="anchored" data-anchor-id="intrepreting-r-output"><span class="header-section-number">6.2.4</span> Intrepreting R output</h3>
+<section id="intrepreting-r-output" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="intrepreting-r-output"><span class="header-section-number">5.2.4</span> Intrepreting R output</h3>
 <p>The wald score is the coeff/S.E. This is standard normal. It’s square is the <span class="math inline">\(\chi^2_1\)</span> which is useful in multi-level factors.</p>
 <p>For an set of covariates <span class="math inline">\(\textbf{x} = (x_1, x_2, x_3....)'\)</span> you will get the the following hazard:</p>
 <p><span class="math inline">\(h(t;\textbf{x} = h_0(t)e^{\beta_1 x_1 + \beta_2 x_2 ...}\)</span>.</p>
@@ -349,8 +359,8 @@ ul.task-list li input[type="checkbox"] {
 <p>$ <span class="math inline">\(h(t;\textbf{x} = h_0(t)e^{\beta_1(0) + \beta_2 x_2 ...}\)</span></p>
 <p>$ <span class="math inline">\(h(t;\textbf{x} = h_0(t)e^{\beta_1(1) + \beta_2 x_2 ...}\)</span>.</p>
 <p>And if we calculate the hazard ratio of <span class="math inline">\(\frac{\text{Treatment B}}{\text{Treatment A}}\)</span> then the terms cancel to leave only <span class="math inline">\(e^{\beta_1}\)</span>. And so this is simply the hazard ratio for treatment on these covariates. This in turn means that the coeffieicnt itself is the log of the hazard ratio.</p>
-<section id="significance" class="level4" data-number="6.2.4.1">
-<h4 data-number="6.2.4.1" class="anchored" data-anchor-id="significance"><span class="header-section-number">6.2.4.1</span> Significance</h4>
+<section id="significance" class="level4" data-number="5.2.4.1">
+<h4 data-number="5.2.4.1" class="anchored" data-anchor-id="significance"><span class="header-section-number">5.2.4.1</span> Significance</h4>
 <p>By asymptopic variance of the MLE</p>
 <p><span class="math inline">\(\hat{\beta} \sim N(\beta, s.e.(\hat{\beta})^2)\)</span></p>
 <p>So if you have either a two factor or continuous covariate you can compare either</p>
@@ -364,8 +374,8 @@ ul.task-list li input[type="checkbox"] {
 <li><span class="math inline">\(\sum^{k-1}_{i=1}\chi_i^2\)</span> and compare to the <span class="math inline">\(\chi_{k-1}^2\)</span> dist.</li>
 </ul>
 </section>
-<section id="process---binary" class="level4" data-number="6.2.4.2">
-<h4 data-number="6.2.4.2" class="anchored" data-anchor-id="process---binary"><span class="header-section-number">6.2.4.2</span> Process - Binary</h4>
+<section id="process---binary" class="level4" data-number="5.2.4.2">
+<h4 data-number="5.2.4.2" class="anchored" data-anchor-id="process---binary"><span class="header-section-number">5.2.4.2</span> Process - Binary</h4>
 <ul>
 <li>Significance</li>
 <li>Direction</li>
@@ -381,20 +391,20 @@ ul.task-list li input[type="checkbox"] {
 <p>The ratio can be directly reported as a percentage which is often easier for audience to understand. So a CI of hazard ratio 0.25 to 0.75 would be:</p>
 <p>“Relapse Hazard on Treatmnt B is likley to be between 25% ad 75% of realpse hazard on Treatment A.”</p>
 </section>
-<section id="process---continuous" class="level4" data-number="6.2.4.3">
-<h4 data-number="6.2.4.3" class="anchored" data-anchor-id="process---continuous"><span class="header-section-number">6.2.4.3</span> Process - Continuous</h4>
+<section id="process---continuous" class="level4" data-number="5.2.4.3">
+<h4 data-number="5.2.4.3" class="anchored" data-anchor-id="process---continuous"><span class="header-section-number">5.2.4.3</span> Process - Continuous</h4>
 <p>In the case of the continuous what were are doing is calulating the following hazard ratio (this example used heart volume):</p>
 <p><span class="math inline">\(\frac{h(t; \textbf{x}_4 = volume + 1)}{h(t; \textbf{x}_4 = volume)}\)</span></p>
 <p>So how does hazard increase when a continuous unit increase by one. Which much like the hazard ratio for a bianry case you will get alot of cancellation. Obviously the other covariates just cancel based on the baseline and:</p>
 <p>$ = e^{_4} $</p>
 </section>
-<section id="process---multi-level-factors" class="level4" data-number="6.2.4.4">
-<h4 data-number="6.2.4.4" class="anchored" data-anchor-id="process---multi-level-factors"><span class="header-section-number">6.2.4.4</span> Process - Multi level factors</h4>
+<section id="process---multi-level-factors" class="level4" data-number="5.2.4.4">
+<h4 data-number="5.2.4.4" class="anchored" data-anchor-id="process---multi-level-factors"><span class="header-section-number">5.2.4.4</span> Process - Multi level factors</h4>
 <p>Take k-1 factors and compute the available <span class="math inline">\(\chi^2\)</span> sum them and compare to the <span class="math inline">\(\chi^2_{k-1}\)</span>. Remeber the baseline is just absorbed into the intercept like any linear model.</p>
 <p>Remember <span class="math inline">\(\chi^2\)</span> is one sided and therefore compare directly to 0.95 and not 0.975.</p>
 </section>
-<section id="in-the-examirl" class="level4" data-number="6.2.4.5">
-<h4 data-number="6.2.4.5" class="anchored" data-anchor-id="in-the-examirl"><span class="header-section-number">6.2.4.5</span> In the exam/IRL</h4>
+<section id="in-the-examirl" class="level4" data-number="5.2.4.5">
+<h4 data-number="5.2.4.5" class="anchored" data-anchor-id="in-the-examirl"><span class="header-section-number">5.2.4.5</span> In the exam/IRL</h4>
 <blockquote class="blockquote">
 <p>If you are asked to **Interpret the output uou must do the following:</p>
 <ul>
@@ -552,13 +562,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./linear_models.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Models</span></span>
+      <a href="./survival.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Survival</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./linear_models.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
