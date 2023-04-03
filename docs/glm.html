@@ -158,6 +158,15 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#link-function" id="toc-link-function" class="nav-link" data-scroll-target="#link-function"><span class="toc-section-number">7.2.1</span>  Link function</a></li>
   </ul></li>
+  <li><a href="#glm---maths-and-theory" id="toc-glm---maths-and-theory" class="nav-link" data-scroll-target="#glm---maths-and-theory"><span class="toc-section-number">7.3</span>  GLM - Maths and Theory</a>
+  <ul class="collapse">
+  <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean"><span class="toc-section-number">7.3.1</span>  Mean</a></li>
+  <li><a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance"><span class="toc-section-number">7.3.2</span>  Variance</a></li>
+  <li><a href="#pdfpmf" id="toc-pdfpmf" class="nav-link" data-scroll-target="#pdfpmf"><span class="toc-section-number">7.3.3</span>  PDF/PMF</a></li>
+  <li><a href="#exponential-family" id="toc-exponential-family" class="nav-link" data-scroll-target="#exponential-family"><span class="toc-section-number">7.3.4</span>  Exponential family</a></li>
+  <li><a href="#common-exponential-forms" id="toc-common-exponential-forms" class="nav-link" data-scroll-target="#common-exponential-forms"><span class="toc-section-number">7.3.5</span>  Common exponential forms</a></li>
+  <li><a href="#canonical-link" id="toc-canonical-link" class="nav-link" data-scroll-target="#canonical-link"><span class="toc-section-number">7.3.6</span>  Canonical Link</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="glm.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -224,6 +233,105 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="link-function"><span class="header-section-number">7.2.1</span> Link function</h3>
 <p>We chose a logit above but there are a number of functions that can map to [0,1]. They must however have an inverse i.e be monotone.</p>
 <p>Another eaxmple is the <strong>probit</strong></p>
+</section>
+</section>
+<section id="glm---maths-and-theory" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="glm---maths-and-theory"><span class="header-section-number">7.3</span> GLM - Maths and Theory</h2>
+<section id="mean" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="mean"><span class="header-section-number">7.3.1</span> Mean</h3>
+<p>Let <span class="math inline">\(\eta = x_i^T\beta\)</span> equal the linear predictor, and <span class="math inline">\(E(Y_i) = \mu_i\)</span>. Then:</p>
+<p><span class="math inline">\(g(\mu_i) = \eta_i\)</span> and <span class="math inline">\(g\)</span> is the <strong>Link</strong></p>
+<p><span class="math inline">\(h(\eta_i) = \mu_i\)</span> and <span class="math inline">\(h\)</span> is the <strong>Inverse Link</strong></p>
+<p><span class="math inline">\(g\)</span> must be monotonic and invertable. It enables the means to be non-linear in the parameters.</p>
+<blockquote class="blockquote">
+<p>The link function converts the mean to the linear predictor. The inverse link converts the linear predictor to the mean.</p>
+</blockquote>
+</section>
+<section id="variance" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="variance"><span class="header-section-number">7.3.2</span> Variance</h3>
+<p>The variance is <span class="math inline">\(Var(Y_i) = \frac{\phi}{w_i} V(\mu_i)\)</span> where:</p>
+<ul>
+<li><span class="math inline">\(\phi\)</span> is a scalar called the scale or dispersion parameter and depends on the distribution (it may be known or require estimating and can be used when over dispersion is present)</li>
+<li><span class="math inline">\(w_i\)</span> are the weights</li>
+<li><span class="math inline">\(V(\mu_i)\)</span> is the Variance Function</li>
+</ul>
+<p>The variance can now be non-constant and change with the mean</p>
+<blockquote class="blockquote">
+<p>The variance does not depend on the link fiunction</p>
+</blockquote>
+</section>
+<section id="pdfpmf" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="pdfpmf"><span class="header-section-number">7.3.3</span> PDF/PMF</h3>
+<p>The general form is given as</p>
+<p><span class="math inline">\(f_i(y: \theta_i, \phi) = \exp\{ w_i \frac{y\theta_i - b(\theta_i)}{\phi} + c(y,\phi)\}\)</span></p>
+<p>For a single observation :</p>
+<p><span class="math inline">\(f(y: \theta, \phi) = \exp\{ \frac{y\theta - b(\theta)}{\phi / w} + c(y,\phi)\}\)</span></p>
+<p>And:</p>
+<p><span class="math inline">\(E(Y_i) = b'(\theta)\)</span></p>
+<p><span class="math inline">\(Var(Y_i) = \frac{\phi}{w}b''(\theta)\)</span></p>
+<p>(<span class="math inline">\(\theta\)</span> is used as in terms of <span class="math inline">\(\mu\)</span> the pdf and moments would become less elegant)</p>
+</section>
+<section id="exponential-family" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="exponential-family"><span class="header-section-number">7.3.4</span> Exponential family</h3>
+<p>There are a number of distributions that belong to the exponential family, and it has a useful, tractable properties. These included Normal, Poisson, Binomial, Gamma and more. Their properties allow us to calculate the E and Var as before.</p>
+</section>
+<section id="common-exponential-forms" class="level3" data-number="7.3.5">
+<h3 data-number="7.3.5" class="anchored" data-anchor-id="common-exponential-forms"><span class="header-section-number">7.3.5</span> Common exponential forms</h3>
+<p>Note the binomial version here is where <span class="math inline">\(Y\)</span> is the proportion <span class="math inline">\([0,1]\)</span></p>
+<table class="table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 15%">
+<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Distribution</th>
+<th><span class="math inline">\(\phi\)</span></th>
+<th><span class="math inline">\(w\)</span></th>
+<th><span class="math inline">\(b'(\theta) =\mu\)</span></th>
+<th><span class="math inline">\(b''(\theta)\)</span></th>
+<th><span class="math inline">\(b(\theta)\)</span></th>
+<th><span class="math inline">\(c(y,\phi)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normal <span class="math inline">\(Y\sim N(\theta, \phi)\)</span></td>
+<td><span class="math inline">\(\phi\)</span></td>
+<td>1</td>
+<td><span class="math inline">\(\theta\)</span></td>
+<td>1</td>
+<td><span class="math inline">\(\theta^2 /2\)</span></td>
+<td><span class="math inline">\(-(y^2 / \phi +log(2\pi\phi))/2\)</span></td>
+</tr>
+<tr class="even">
+<td>Poisson <span class="math inline">\(Y\sim Po(e^{\theta})\)</span></td>
+<td>1</td>
+<td>1</td>
+<td><span class="math inline">\(e^{\theta}\)</span></td>
+<td><span class="math inline">\(e^{\theta}\)</span></td>
+<td><span class="math inline">\(e^{\theta}\)</span></td>
+<td><span class="math inline">\(-log(y!)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Binomial <span class="math inline">\(nY\sim Bin(n, e^{\theta}/(e^{\theta} +1)\)</span></td>
+<td>1</td>
+<td>n</td>
+<td><span class="math inline">\(e^{\theta}/(e^{\theta} +1)\)</span></td>
+<td><span class="math inline">\(\mu(1-\mu)\)</span></td>
+<td><span class="math inline">\(log(e^{\theta} +1)\)</span></td>
+<td><span class="math inline">\(log{n \choose ny}\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="canonical-link" class="level3" data-number="7.3.6">
+<h3 data-number="7.3.6" class="anchored" data-anchor-id="canonical-link"><span class="header-section-number">7.3.6</span> Canonical Link</h3>
 
 
 </section>

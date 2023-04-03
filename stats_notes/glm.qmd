@@ -57,3 +57,80 @@ Due to it's relationship to the binomial we now have a glm:
 We chose a logit above but there are a number of functions that can map to [0,1]. They must however have an inverse i.e be monotone.
 
 Another eaxmple is the **probit** 
+
+
+## GLM - Maths and Theory
+
+### Mean
+
+Let $\eta = x_i^T\beta$ equal the linear predictor, and $E(Y_i) = \mu_i$. Then:
+
+$g(\mu_i) = \eta_i$ and $g$ is the **Link**
+
+$h(\eta_i) = \mu_i$ and $h$ is the **Inverse Link**
+
+$g$ must be monotonic and invertable. It enables the means to be non-linear in the parameters.
+
+> The link function converts the mean to the linear predictor. The inverse link converts the linear predictor to the mean.
+
+### Variance
+
+The variance is $Var(Y_i) = \frac{\phi}{w_i} V(\mu_i)$ where:
+
+- $\phi$ is a scalar called the scale or dispersion parameter and depends on the distribution (it may be known or require estimating and can be used when over dispersion is present)
+- $w_i$ are the weights
+- $V(\mu_i)$ is the Variance Function
+
+The variance can now be non-constant and change with the mean
+
+> The variance does not depend on the link fiunction
+
+### PDF/PMF
+
+The general form is given as 
+
+$f_i(y: \theta_i, \phi) = \exp\{ w_i \frac{y\theta_i - b(\theta_i)}{\phi} + c(y,\phi)\}$
+
+For a single observation :
+
+$f(y: \theta, \phi) = \exp\{ \frac{y\theta - b(\theta)}{\phi / w} + c(y,\phi)\}$
+
+And:
+
+$E(Y_i) = b'(\theta)$
+
+$Var(Y_i) = \frac{\phi}{w}b''(\theta)$
+
+($\theta$ is used as in terms of $\mu$ the pdf and moments would become less elegant)
+
+### Exponential family
+
+There are a number of distributions that belong to the exponential family, and it has a useful, tractable properties. These included Normal, Poisson, Binomial, Gamma and more. Their properties allow us to calculate the E and Var as before.
+
+### Common exponential forms
+
+Note the binomial version here is where $Y$ is the proportion $[0,1]$
+
+| Distribution | $\phi$ | $w$ | $b'(\theta) =\mu$ | $b''(\theta)$ |  $b(\theta)$ | $c(y,\phi)$ |
+|-------------------|--------|-----|--------------|---------------|--------------|-------------|
+| Normal $Y\sim N(\theta, \phi)$ | $\phi$ | 1 | $\theta$ | 1 | $\theta^2 /2$ | $-(y^2 / \phi +log(2\pi\phi))/2$|
+| Poisson $Y\sim Po(e^{\theta})$ | 1 | 1 | $e^{\theta}$ | $e^{\theta}$ | $e^{\theta}$ | $-log(y!)$|
+| Binomial $nY\sim Bin(n, e^{\theta}/(e^{\theta} +1)$ | 1 | n | $e^{\theta}/(e^{\theta} +1)$ | $\mu(1-\mu)$ | $log(e^{\theta} +1)$ | $log{n \choose ny}$|
+
+### Canonical Link
+
+The canonical link for a distribution is the one in which $\theta_i  = x_i^T\beta$ or $g=(\b'^{-1})$
+
+** MUST PRACTICE THIS, see task 3**
+
+### 3.3 Estimation
+
+IRLS is implemented in the IRLS notebook
+
+TODO - Do section
+
+
+
+
+
+
